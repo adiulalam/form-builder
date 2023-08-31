@@ -1,16 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
     provider     = "mysql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url          = env("DATABASE_URL")
     relationMode = "prisma"
 }
@@ -19,6 +12,59 @@ model Example {
     id        String   @id @default(uuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Form {
+    id        String     @id @default(uuid())
+    status    Status     @default(DRAFT)
+    title     String
+    userId    String
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    questions Question[]
+
+    @@index([userId])
+}
+
+enum Status {
+    DRAFT
+    COMPLETED
+}
+
+model Question {
+    id        String   @id @default(uuid())
+    question  String
+    order     Int      @unique @default(autoincrement())
+    type      Type?
+    formId    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+    options   Option[]
+
+    @@index([formId])
+}
+
+model Option {
+    id         String   @id @default(uuid())
+    value      String
+    questionId String
+    order      Int      @unique @default(autoincrement())
+    showInput  Boolean  @default(false)
+    inputText  String?
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+    @@index([questionId])
+}
+
+enum Type {
+    DROPDOWN
+    RADIO
+    INPUT
+    CHECKBOX
 }
 
 // Necessary for Next auth
@@ -59,6 +105,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    forms         Form[]
 }
 
 model VerificationToken {
