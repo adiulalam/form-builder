@@ -14,15 +14,43 @@ model Example {
     updatedAt DateTime @updatedAt
 }
 
+model Submission {
+    id                String             @id @default(uuid())
+    userId            String
+    formId            String
+    createdAt         DateTime           @default(now())
+    updatedAt         DateTime           @updatedAt
+    form              Form               @relation(fields: [formId], references: [id], onDelete: Cascade)
+    user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+    submissionOptions SubmissionOption[]
+
+    @@index([formId])
+    @@index([userId])
+}
+
+model SubmissionOption {
+    id           String     @id @default(uuid())
+    submissionId String
+    optionId     String
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt
+    submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+    option       Option     @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+    @@index([submissionId])
+    @@index([optionId])
+}
+
 model Form {
-    id        String     @id @default(uuid())
-    status    Status     @default(DRAFT)
-    title     String
-    userId    String
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-    questions Question[]
+    id          String       @id @default(uuid())
+    status      Status       @default(DRAFT)
+    title       String
+    userId      String
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    questions   Question[]
+    submissions Submission[]
 
     @@index([userId])
 }
@@ -47,15 +75,16 @@ model Question {
 }
 
 model Option {
-    id         String   @id @default(uuid())
-    value      String
-    questionId String
-    order      Int      @unique @default(autoincrement())
-    showInput  Boolean  @default(false)
-    inputText  String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
-    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    id                String             @id @default(uuid())
+    value             String
+    questionId        String
+    order             Int                @unique @default(autoincrement())
+    showInput         Boolean            @default(false)
+    inputText         String?
+    createdAt         DateTime           @default(now())
+    updatedAt         DateTime           @updatedAt
+    question          Question           @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    submissionOptions SubmissionOption[]
 
     @@index([questionId])
 }
@@ -98,14 +127,15 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(uuid())
+    id            String       @id @default(uuid())
     name          String?
-    email         String?   @unique
+    email         String?      @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
     forms         Form[]
+    submissions   Submission[]
 }
 
 model VerificationToken {
