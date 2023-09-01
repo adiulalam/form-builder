@@ -31,3 +31,11 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 ```bash
 npx prisma studio
 ```
+
+```bash
+npx prisma migrate reset
+```
+
+```bash
+npx prisma db push
+```
