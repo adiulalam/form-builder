@@ -2,12 +2,11 @@ type NavbarPages = { name: string; route: string }[];
 
 export const navbarPages: NavbarPages = [
   { name: "Home", route: "/" },
-  { name: "About Us", route: "/about" },
-  { name: "Contact Us", route: "/contact" },
+  { name: "About Me", route: "https://adiulalamadil.me/#/" },
 ];
 
 export const userPages: NavbarPages = [
   { name: "Profile", route: "/profile" },
-  { name: "Account", route: "/account" },
+  { name: "Forms", route: "/forms" },
   { name: "Dashboard", route: "/dashboard" },
 ];

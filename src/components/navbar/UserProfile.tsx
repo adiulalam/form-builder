@@ -1,4 +1,4 @@
-import { userPages } from "@/utils/Navbar.config";
+import { userPages } from "@/utils/navbar.config";
 import {
   Box,
   IconButton,

@@ -2,7 +2,7 @@ import { type MouseEvent, useState } from "react";
 import { Box, IconButton, Typography, Menu, MenuItem } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { NavbarLogo } from ".";
-import { navbarPages } from "@/utils/Navbar.config";
+import { navbarPages } from "@/utils/navbar.config";
 import { useRouter } from "next/router";
 
 export const NavbarMobile = () => {

@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { NavbarLogo } from ".";
-import { navbarPages } from "@/utils/Navbar.config";
+import { navbarPages } from "@/utils/navbar.config";
 import { useRouter } from "next/router";
 
 export const NavbarDesktop = () => {
