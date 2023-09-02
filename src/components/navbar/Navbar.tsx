@@ -1,9 +1,13 @@
-import { AppBar, Toolbar, Container } from "@mui/material";
+import { AppBar, Toolbar, Container, Switch } from "@mui/material";
 import { UserProfile, NavbarMobile, NavbarDesktop } from ".";
+import type { Dispatch, SetStateAction } from "react";
 
-const pages = ["Products", "Pricing", "Blog"];
+type NavBarType = {
+  setMode: Dispatch<SetStateAction<"light" | "dark">>;
+  mode: "light" | "dark";
+};
 
-export const Navbar = () => {
+export const Navbar = ({ setMode, mode }: NavBarType) => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -13,6 +17,13 @@ export const Navbar = () => {
           <NavbarDesktop />
 
           <UserProfile />
+
+          {process.env.NODE_ENV === "development" && (
+            <Switch
+              checked={mode === "dark"}
+              onChange={() => setMode(mode === "light" ? "dark" : "light")}
+            />
+          )}
         </Toolbar>
       </Container>
     </AppBar>

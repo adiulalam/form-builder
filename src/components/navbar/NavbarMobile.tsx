@@ -2,35 +2,26 @@ import { type MouseEvent, useState } from "react";
 import { Box, IconButton, Typography, Menu, MenuItem } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { NavbarLogo } from ".";
-
-const pages = ["Products", "Pricing", "Blog"];
+import { navbarPages } from "@/utils/Navbar.config";
+import { useRouter } from "next/router";
 
 export const NavbarMobile = () => {
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) =>
     setAnchorElNav(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const handleCloseNavMenu = () => setAnchorElNav(null);
 
   return (
     <>
-      <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={handleOpenNavMenu}
-          color="inherit"
-        >
+      <Box className="flex grow md:hidden">
+        <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
           <MenuIcon />
         </IconButton>
         <Menu
-          id="menu-appbar"
+          className="block md:hidden"
           anchorEl={anchorElNav}
           anchorOrigin={{
             vertical: "bottom",
@@ -43,13 +34,17 @@ export const NavbarMobile = () => {
           }}
           open={Boolean(anchorElNav)}
           onClose={handleCloseNavMenu}
-          sx={{
-            display: { xs: "block", md: "none" },
-          }}
         >
-          {pages.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">{page}</Typography>
+          {navbarPages.map((page, index) => (
+            <MenuItem
+              key={index}
+              onClick={() => {
+                handleCloseNavMenu();
+                void router.push(page.route);
+              }}
+              selected={router.pathname === page.route}
+            >
+              <Typography>{page.name}</Typography>
             </MenuItem>
           ))}
         </Menu>

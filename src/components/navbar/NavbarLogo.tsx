@@ -3,38 +3,18 @@ import { DynamicForm as DynamicFormIcon } from "@mui/icons-material";
 import Link from "next/link";
 
 export const NavbarLogo = ({ isMobile }: { isMobile: boolean }) => {
-  const display = isMobile
-    ? { xs: "flex", md: "none" }
-    : { xs: "none", md: "flex" };
+  const display = isMobile ? "flex md:hidden grow" : "hidden md:flex grow-0";
+
   return (
-    <Box
-      sx={{
-        display,
-        alignItems: "center",
-        justifyContent: "center",
-        flexGrow: isMobile ? 1 : 0,
-      }}
-    >
-      <Link href="/" className="flex grow flex-row items-center justify-center">
-        <DynamicFormIcon
-          sx={{
-            display,
-            mr: 1,
-          }}
-        />
+    <Box className={`${display} items-center justify-center`}>
+      <Link
+        href="/"
+        className="flex grow flex-row items-center justify-center gap-3"
+      >
+        <DynamicFormIcon />
         <Typography
           variant={isMobile ? "h5" : "h6"}
-          noWrap
-          sx={{
-            mr: 2,
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-            flexGrow: isMobile ? 1 : 0,
-            display,
-          }}
+          className={`${display} mr-4 whitespace-nowrap font-mono font-bold tracking-[.3rem]`}
         >
           FILDER
         </Typography>

@@ -1,3 +1,4 @@
+import { userPages } from "@/utils/Navbar.config";
 import {
   Box,
   IconButton,
@@ -7,49 +8,81 @@ import {
   Tooltip,
   MenuItem,
   Button,
+  Skeleton,
 } from "@mui/material";
 import { type MouseEvent, useState } from "react";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { useRouter } from "next/router";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export const UserProfile = () => {
+  const { data: sessionData, status } = useSession();
+  const router = useRouter();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) =>
     setAnchorElUser(event.currentTarget);
 
   const handleCloseUserMenu = () => setAnchorElUser(null);
-  return true ? (
-    <Box sx={{ flexGrow: 0 }}>
+  return status === "loading" ? (
+    <Skeleton animation="wave" variant="rounded" width={40} height={40} />
+  ) : status === "authenticated" ? (
+    <Box className="grow-0">
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar
+            alt={sessionData.user.name ?? ""}
+            src={sessionData.user.image ?? ""}
+          />
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "45px" }}
-        id="menu-appbar"
+        className="mt-2"
         anchorEl={anchorElUser}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: "bottom",
+          horizontal: "left",
         }}
         keepMounted
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
+        <Box>
+          {userPages.map((page, index) => (
+            <MenuItem
+              key={index}
+              onClick={() => {
+                handleCloseUserMenu();
+                void router.push(page.route);
+              }}
+              selected={router.pathname === page.route}
+            >
+              <Typography>{page.name}</Typography>
+            </MenuItem>
+          ))}
+          <MenuItem
+            onClick={() => {
+              handleCloseUserMenu();
+              void signOut();
+            }}
+          >
+            <Typography>Sign Out</Typography>
           </MenuItem>
-        ))}
+        </Box>
       </Menu>
     </Box>
   ) : (
-    <Button sx={{ flexGrow: 0 }}>Sign In</Button>
+    <Button
+      className="text-white hover:text-slight grow-0"
+      variant="contained"
+      color="primary"
+      size="large"
+      onClick={() => void signIn("auth0")}
+    >
+      Sign In
+    </Button>
   );
 };

@@ -1,21 +1,25 @@
 import { Box, Button } from "@mui/material";
 import { NavbarLogo } from ".";
-
-const pages = ["Products", "Pricing", "Blog"];
+import { navbarPages } from "@/utils/Navbar.config";
+import { useRouter } from "next/router";
 
 export const NavbarDesktop = () => {
+  const router = useRouter();
+
   return (
     <>
       <NavbarLogo isMobile={false} />
 
-      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-        {pages.map((page) => (
+      <Box className="hidden grow md:flex">
+        {navbarPages.map((page, index) => (
           <Button
-            key={page}
-            onClick={() => null}
-            sx={{ my: 2, color: "white", display: "block" }}
+            key={index}
+            onClick={() => void router.push(page.route)}
+            variant={router.pathname === page.route ? "outlined" : "text"}
+            color={router.pathname === page.route ? "secondary" : "primary"}
+            className={`text-white hover:text-slight m-2 block`}
           >
-            {page}
+            {page.name}
           </Button>
         ))}
       </Box>

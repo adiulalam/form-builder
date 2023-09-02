@@ -1,8 +1,8 @@
+import "@/styles/globals.css";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import { api } from "@/utils/api";
-import "@/styles/globals.css";
 import { Navbar } from "@/components/navbar";
 import { useMemo, useState } from "react";
 import {
@@ -11,6 +11,8 @@ import {
   createTheme,
   responsiveFontSizes,
 } from "@mui/material";
+import { themeColors } from "@/utils/themeColors";
+import { Footer } from "@/components/footer";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -23,10 +25,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
         palette: {
           mode,
           primary: {
-            main: "#5893df",
+            light: themeColors.primary.light,
+            main: themeColors.primary.main,
+            dark: themeColors.primary.dark,
           },
           secondary: {
-            main: "#2ec5d3",
+            light: themeColors.secondary.light,
+            main: themeColors.secondary.main,
+            dark: themeColors.secondary.dark,
           },
         },
         shape: {
@@ -51,8 +57,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <Navbar />
+        <Navbar mode={mode} setMode={setMode} />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </SessionProvider>
   );
