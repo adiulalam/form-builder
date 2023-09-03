@@ -76,9 +76,8 @@ export const UserProfile = () => {
     </Box>
   ) : (
     <Button
-      className="text-white hover:text-slight grow-0"
+      className="grow-0 text-white hover:text-slight dark:bg-primary"
       variant="contained"
-      color="primary"
       size="large"
       onClick={() => void signIn("auth0")}
     >

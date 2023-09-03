@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Container, Switch } from "@mui/material";
 import { UserProfile, NavbarMobile, NavbarDesktop } from ".";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 
 type NavBarType = {
   setMode: Dispatch<SetStateAction<"light" | "dark">>;
@@ -8,6 +8,13 @@ type NavBarType = {
 };
 
 export const Navbar = ({ setMode, mode }: NavBarType) => {
+  useEffect(() => {
+    if (mode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [mode]);
   return (
     <AppBar position="static">
       <Container maxWidth="xl">

@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { api } from "@/utils/api";
+import { Button } from "@mui/material";
 
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -16,12 +17,12 @@ export default function Home() {
       </Head>
       <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <h1 className="text-white text-5xl font-extrabold tracking-tight sm:text-[5rem]">
+          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
             <Link
-              className="bg-white/10 text-white hover:bg-white/20 flex max-w-xs flex-col gap-4 rounded-xl p-4"
+              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
               href="https://create.t3.gg/en/usage/first-steps"
               target="_blank"
             >
@@ -32,7 +33,7 @@ export default function Home() {
               </div>
             </Link>
             <Link
-              className="bg-white/10 text-white hover:bg-white/20 flex max-w-xs flex-col gap-4 rounded-xl p-4"
+              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
               href="https://create.t3.gg/en/introduction"
               target="_blank"
             >
@@ -44,7 +45,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-white text-2xl">
+            <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
             <AuthShowcase />
@@ -65,12 +66,12 @@ function AuthShowcase() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-white text-center text-2xl">
+      <p className="text-center text-2xl text-white">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="bg-white/10 text-white hover:bg-white/20 rounded-full px-10 py-3 font-semibold no-underline transition"
+        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
         onClick={
           sessionData ? () => void signOut() : () => void signIn("auth0")
         }
@@ -78,14 +79,15 @@ function AuthShowcase() {
         {sessionData ? "Sign out" : "Sign in"}
       </button>
 
-      <button
-        className="bg-white/10 text-white hover:bg-white/20 rounded-full px-10 py-3 font-semibold no-underline transition"
-        onClick={() =>
-          void signIn("auth0", undefined, { screen_hint: "signup" })
-        }
+      <Button
+        // className="grow-0 text-white hover:text-slight"
+        variant="contained"
+        color="error"
+        size="large"
+        onClick={() => void signIn("auth0")}
       >
-        Sign Up
-      </button>
+        Sign In
+      </Button>
     </div>
   );
 }
