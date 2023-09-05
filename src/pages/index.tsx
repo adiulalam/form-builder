@@ -1,11 +1,14 @@
-import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 
 import { api } from "@/utils/api";
 import { Button } from "@mui/material";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 export default function Home() {
+  const { data: sessionData } = useSession();
+  console.log("🚀 ~ file: index.tsx:10 ~ Home ~ sessionData:", sessionData);
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
@@ -45,10 +48,11 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
+            {/* <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
+            </p> */}
+
+            {sessionData && <AuthShowcase sessionData={sessionData} />}
           </div>
         </div>
       </main>
@@ -56,38 +60,17 @@ export default function Home() {
   );
 }
 
-function AuthShowcase() {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
+function AuthShowcase({ sessionData }: { sessionData: Session }) {
+  const { data } = api.form.getPosts.useQuery(
+    { id: sessionData.user.id },
     { enabled: sessionData?.user !== undefined },
   );
 
+  console.log("🚀 ~ file: index.tsx:14 ~ Home ~ forms:", data);
+
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={
-          sessionData ? () => void signOut() : () => void signIn("auth0")
-        }
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-
-      <Button
-        // className="grow-0 text-white hover:text-slight"
-        variant="contained"
-        color="error"
-        size="large"
-        onClick={() => void signIn("auth0")}
-      >
-        Sign In
-      </Button>
+      Authed
     </div>
   );
 }
