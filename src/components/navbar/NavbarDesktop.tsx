@@ -2,7 +2,6 @@ import { Box, Button } from "@mui/material";
 import { NavbarLogo } from ".";
 import { navbarPages } from "@/utils/navbar.config";
 import { useRouter } from "next/router";
-
 import { useTheme } from "@mui/material/styles";
 
 export const NavbarDesktop = () => {
