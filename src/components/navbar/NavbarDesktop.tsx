@@ -3,8 +3,14 @@ import { NavbarLogo } from ".";
 import { navbarPages } from "@/utils/navbar.config";
 import { useRouter } from "next/router";
 
+import { useTheme } from "@mui/material/styles";
+
 export const NavbarDesktop = () => {
   const router = useRouter();
+
+  const {
+    palette: { mode },
+  } = useTheme();
 
   return (
     <>
@@ -17,7 +23,9 @@ export const NavbarDesktop = () => {
             onClick={() => void router.push(page.route)}
             variant={router.pathname === page.route ? "outlined" : "text"}
             color={router.pathname === page.route ? "secondary" : "primary"}
-            className={`text-white hover:text-slight m-2 block`}
+            className={`${
+              mode === "dark" ? "bg-inherit" : "bg-pdark"
+            } m-2 block text-white hover:text-slight`}
           >
             {page.name}
           </Button>

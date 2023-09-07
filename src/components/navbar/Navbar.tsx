@@ -1,13 +1,9 @@
-import { AppBar, Toolbar, Container, Switch } from "@mui/material";
+import type { NavbarDarkType } from "@/types/navbar.types";
+import { AppBar, Toolbar, Container } from "@mui/material";
 import { UserProfile, NavbarMobile, NavbarDesktop } from ".";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { useEffect } from "react";
 
-type NavBarType = {
-  setMode: Dispatch<SetStateAction<"light" | "dark">>;
-  mode: "light" | "dark";
-};
-
-export const Navbar = ({ setMode, mode }: NavBarType) => {
+export const Navbar = ({ setMode, mode }: NavbarDarkType) => {
   useEffect(() => {
     if (mode === "dark") {
       document.documentElement.classList.add("dark");
@@ -23,14 +19,7 @@ export const Navbar = ({ setMode, mode }: NavBarType) => {
 
           <NavbarDesktop />
 
-          <UserProfile />
-
-          {process.env.NODE_ENV === "development" && (
-            <Switch
-              checked={mode === "dark"}
-              onChange={() => setMode(mode === "light" ? "dark" : "light")}
-            />
-          )}
+          <UserProfile mode={mode} setMode={setMode} />
         </Toolbar>
       </Container>
     </AppBar>

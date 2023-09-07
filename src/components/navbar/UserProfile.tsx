@@ -1,3 +1,4 @@
+import type { NavbarDarkType } from "@/types/navbar.types";
 import { userPages } from "@/utils/navbar.config";
 import {
   Box,
@@ -9,20 +10,23 @@ import {
   MenuItem,
   Button,
   Skeleton,
+  Switch,
 } from "@mui/material";
 import { type MouseEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export const UserProfile = () => {
-  const { data: sessionData, status } = useSession();
+export const UserProfile = ({ setMode, mode }: NavbarDarkType) => {
   const router = useRouter();
+  const { data: sessionData, status } = useSession();
+
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) =>
     setAnchorElUser(event.currentTarget);
 
   const handleCloseUserMenu = () => setAnchorElUser(null);
+
   return status === "loading" ? (
     <Skeleton animation="wave" variant="rounded" width={40} height={40} />
   ) : status === "authenticated" ? (
@@ -30,8 +34,8 @@ export const UserProfile = () => {
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
-            alt={sessionData.user.name ?? ""}
-            src={sessionData.user.image ?? ""}
+            alt={sessionData.user?.name ?? ""}
+            src={sessionData.user?.image ?? ""}
           />
         </IconButton>
       </Tooltip>
@@ -71,17 +75,33 @@ export const UserProfile = () => {
           >
             <Typography>Sign Out</Typography>
           </MenuItem>
+          {process.env.NODE_ENV === "development" && (
+            <MenuItem className="flex items-center justify-center p-0">
+              <Switch
+                checked={mode === "dark"}
+                onChange={() => setMode(mode === "light" ? "dark" : "light")}
+              />
+            </MenuItem>
+          )}
         </Box>
       </Menu>
     </Box>
   ) : (
-    <Button
-      className="grow-0 text-white hover:text-slight dark:bg-primary"
-      variant="contained"
-      size="large"
-      onClick={() => void signIn("auth0")}
-    >
-      Sign In
-    </Button>
+    <Box>
+      <Button
+        className="grow-0 bg-pdark text-white hover:text-slight dark:bg-primary"
+        variant="contained"
+        size="large"
+        onClick={() => void signIn("auth0")}
+      >
+        Sign In
+      </Button>
+      {process.env.NODE_ENV === "development" && (
+        <Switch
+          checked={mode === "dark"}
+          onChange={() => setMode(mode === "light" ? "dark" : "light")}
+        />
+      )}
+    </Box>
   );
 };

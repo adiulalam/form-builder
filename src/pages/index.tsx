@@ -1,15 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import { api } from "@/utils/api";
-import { Button } from "@mui/material";
-import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
+// import { api } from "@/utils/api";
 
 export default function Home() {
-  const { data: sessionData } = useSession();
-  console.log("🚀 ~ file: index.tsx:10 ~ Home ~ sessionData:", sessionData);
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
     <>
@@ -47,30 +42,9 @@ export default function Home() {
               </div>
             </Link>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            {/* <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p> */}
-
-            {sessionData && <AuthShowcase sessionData={sessionData} />}
-          </div>
+          <div className="flex flex-col items-center gap-2"></div>
         </div>
       </main>
     </>
-  );
-}
-
-function AuthShowcase({ sessionData }: { sessionData: Session }) {
-  const { data } = api.form.getPosts.useQuery(
-    { id: sessionData.user.id },
-    { enabled: sessionData?.user !== undefined },
-  );
-
-  console.log("🚀 ~ file: index.tsx:14 ~ Home ~ forms:", data);
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      Authed
-    </div>
   );
 }
