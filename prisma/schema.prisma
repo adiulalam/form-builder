@@ -44,6 +44,8 @@ model SubmissionOption {
 model Form {
     id          String       @id @default(uuid())
     status      Status       @default(DRAFT)
+    isFavourite Boolean      @default(false)
+    isShareable Boolean      @default(false)
     title       String
     userId      String
     createdAt   DateTime     @default(now())
