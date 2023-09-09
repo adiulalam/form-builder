@@ -3,7 +3,7 @@ import { type GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
-import { FormAdd, FormCard } from "@/components/form";
+import { FormAdd, FormCard, FormSort } from "@/components/form";
 import { Box } from "@mui/material";
 
 export default function Forms({ userSession }: { userSession: Session }) {
@@ -20,6 +20,8 @@ export default function Forms({ userSession }: { userSession: Session }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] p-1">
+        <FormSort />
+
         <Box className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4 space-y-2">
           {formsData?.data.forms.map((formData, index) => (
             <FormCard key={index} {...formData} />

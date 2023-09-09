@@ -1,4 +1,5 @@
 import { FormAdd } from "./FormAdd";
 import { FormCard } from "./FormCard";
+import { FormSort } from "./FormSort";
 
-export { FormCard, FormAdd };
+export { FormCard, FormAdd, FormSort };
