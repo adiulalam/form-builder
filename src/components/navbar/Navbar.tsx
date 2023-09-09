@@ -1,16 +1,7 @@
-import type { NavbarDarkType } from "@/types/navbar.types";
 import { AppBar, Toolbar, Container } from "@mui/material";
 import { UserProfile, NavbarMobile, NavbarDesktop } from ".";
-import { useEffect } from "react";
 
-export const Navbar = ({ setMode, mode }: NavbarDarkType) => {
-  useEffect(() => {
-    if (mode === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [mode]);
+export const Navbar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -19,7 +10,7 @@ export const Navbar = ({ setMode, mode }: NavbarDarkType) => {
 
           <NavbarDesktop />
 
-          <UserProfile mode={mode} setMode={setMode} />
+          <UserProfile />
         </Toolbar>
       </Container>
     </AppBar>

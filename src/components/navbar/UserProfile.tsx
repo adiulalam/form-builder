@@ -1,4 +1,3 @@
-import type { NavbarDarkType } from "@/types/navbar.types";
 import { userPages } from "@/utils/navbar.config";
 import {
   Box,
@@ -10,13 +9,15 @@ import {
   MenuItem,
   Button,
   Skeleton,
-  Switch,
 } from "@mui/material";
 import { type MouseEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useThemeMode } from "@/hooks/useThemeMode";
+import { ThemeSwitcher } from ".";
 
-export const UserProfile = ({ setMode, mode }: NavbarDarkType) => {
+export const UserProfile = () => {
+  const { mode, setMode } = useThemeMode();
   const router = useRouter();
   const { data: sessionData, status } = useSession();
 
@@ -77,10 +78,7 @@ export const UserProfile = ({ setMode, mode }: NavbarDarkType) => {
           </MenuItem>
           {process.env.NODE_ENV === "development" && (
             <MenuItem className="flex items-center justify-center p-0">
-              <Switch
-                checked={mode === "dark"}
-                onChange={() => setMode(mode === "light" ? "dark" : "light")}
-              />
+              <ThemeSwitcher checked={mode === "dark"} onChange={setMode} />
             </MenuItem>
           )}
         </Box>
@@ -97,10 +95,7 @@ export const UserProfile = ({ setMode, mode }: NavbarDarkType) => {
         Sign In
       </Button>
       {process.env.NODE_ENV === "development" && (
-        <Switch
-          checked={mode === "dark"}
-          onChange={() => setMode(mode === "light" ? "dark" : "light")}
-        />
+        <ThemeSwitcher checked={mode === "dark"} onChange={setMode} />
       )}
     </Box>
   );

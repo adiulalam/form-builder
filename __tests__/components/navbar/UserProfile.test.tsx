@@ -1,4 +1,3 @@
-import type { NavbarDarkType } from "@/types/navbar.types";
 import { UserProfile } from "@/components/navbar";
 import { render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
@@ -7,17 +6,13 @@ import { userPages } from "@/utils/navbar.config";
 jest.mock("next-auth/react");
 
 describe("Test the 'UserProfile' component", () => {
-  const props: NavbarDarkType = {
-    mode: "light",
-    setMode: () => null,
-  };
   it("Should mock unauthenticated user", () => {
     (useSession as jest.Mock).mockReturnValueOnce({
       data: {},
       status: "unauthenticated",
     });
 
-    render(<UserProfile {...props} />);
+    render(<UserProfile />);
 
     expect(screen.getByText(/SIGN IN/i)).toBeInTheDocument();
 
@@ -36,7 +31,7 @@ describe("Test the 'UserProfile' component", () => {
       status: "authenticated",
     });
 
-    render(<UserProfile {...props} />);
+    render(<UserProfile />);
 
     userPages.forEach((page) =>
       expect(screen.getByText(page.name)).toBeInTheDocument(),

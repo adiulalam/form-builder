@@ -6,19 +6,63 @@ import { api } from "@/utils/api";
 import { Navbar } from "@/components/navbar";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Footer } from "@/components/footer";
-import { useTheme } from "@/hooks/useTheme";
+import { useThemeMode } from "@/hooks/useThemeMode";
+import { useMemo, useEffect } from "react";
+import { createTheme, responsiveFontSizes } from "@mui/material";
+import { themeColors } from "@/utils/themeColors";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const { theme, mode, setMode } = useTheme();
+  const { mode } = useThemeMode();
+
+  const themeOption = useMemo(
+    () => ({
+      palette: {
+        mode,
+        primary: {
+          light: themeColors.primary.light,
+          main: themeColors.primary.main,
+          dark: themeColors.primary.dark,
+        },
+        secondary: {
+          light: themeColors.secondary.light,
+          main: themeColors.secondary.main,
+          dark: themeColors.secondary.dark,
+        },
+      },
+      shape: {
+        borderRadius: 10,
+      },
+      components: {
+        MuiPaper: {
+          styleOverrides: {
+            root: {
+              borderRadius: 0,
+            },
+          },
+        },
+      },
+    }),
+    [mode],
+  );
+
+  const theme = responsiveFontSizes(createTheme(themeOption));
+
+  useEffect(() => {
+    if (mode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [mode]);
 
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <Navbar mode={mode} setMode={setMode} />
+        <Navbar />
         <Component {...pageProps} />
         <Footer />
       </ThemeProvider>
