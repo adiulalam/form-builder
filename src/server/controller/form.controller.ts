@@ -1,16 +1,17 @@
 import { TRPCError } from "@trpc/server";
-import type { ParamsInput } from "../schema/form.schema";
+import type { SortByInput } from "../schema/form.schema";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
 
 export const getPostsHandler = async ({
-  paramsInput,
+  sortByInput,
 }: {
-  paramsInput: ParamsInput;
+  sortByInput: SortByInput;
 }) => {
   try {
     const forms = await prisma.form.findMany({
-      where: { userId: paramsInput.id },
+      orderBy: { [sortByInput.sort]: sortByInput.order },
+      where: { userId: sortByInput.id },
     });
 
     return {

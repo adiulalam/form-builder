@@ -5,10 +5,14 @@ import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
 import { FormAdd, FormCard, FormSort } from "@/components/form";
 import { Box } from "@mui/material";
+import { useFormSort } from "@/hooks/useFormSort";
 
 export default function Forms({ userSession }: { userSession: Session }) {
+  const { order, sort } = useFormSort();
   const { data: formsData } = api.form.getPosts.useQuery({
     id: userSession.user.id,
+    order,
+    sort,
   });
   console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", formsData);
 

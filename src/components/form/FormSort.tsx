@@ -1,13 +1,20 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import { type MenuProps } from "@mui/material/Menu";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
+import { useState } from "react";
+import { styled, alpha } from "@mui/material/styles";
 import {
   Sort as SortIcon,
   TextRotateUp as TextRotateUpIcon,
   TextRotationDown as TextRotationDownIcon,
 } from "@mui/icons-material";
-import { Box, IconButton, MenuItem, Menu, Button } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  MenuItem,
+  Menu,
+  Button,
+  Typography,
+} from "@mui/material";
+import { useFormSort } from "@/hooks/useFormSort";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -52,39 +59,53 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
+const sortItems: { name: string; value: string }[] = [
+  { name: "Name", value: "title" },
+  { name: "Status", value: "status" },
+  { name: "Updated At", value: "updatedAt" },
+];
+
 export const FormSort = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const { order, setOrder, sort, setSort } = useFormSort();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   return (
     <div>
       <Button
         variant="outlined"
         disableElevation
-        onClick={handleClick}
-        endIcon={<SortIcon />}
+        onClick={(e) => setAnchorEl(e.currentTarget)}
       >
-        Sort
+        <Typography className="mr-2 hidden sm:block">SORT</Typography>
+        <SortIcon />
       </Button>
-      <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem disableRipple>
-          <Box className="flex flex-grow" onClick={handleClose}>
-            Edit
-          </Box>
-          <IconButton onClick={() => console.log("clicked")}>
-            <TextRotateUpIcon className="mr-0" />
-          </IconButton>
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
-        </MenuItem>
+      <StyledMenu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+      >
+        {sortItems.map((item, index) => (
+          <MenuItem disableRipple key={index} selected={item.value === sort}>
+            <Box
+              className="flex flex-grow"
+              onClick={() => {
+                setSort(item.value);
+                setAnchorEl(null);
+              }}
+            >
+              {item.name}
+            </Box>
+            {item.value === sort && (
+              <IconButton onClick={() => setOrder()}>
+                {order === "asc" ? (
+                  <TextRotateUpIcon className="mr-0" />
+                ) : (
+                  <TextRotationDownIcon className="mr-0" />
+                )}
+              </IconButton>
+            )}
+          </MenuItem>
+        ))}
       </StyledMenu>
     </div>
   );
