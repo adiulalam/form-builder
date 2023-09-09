@@ -11,7 +11,7 @@ export const getPostsHandler = async ({
   try {
     const forms = await prisma.form.findMany({
       orderBy: { [sortByInput.sort]: sortByInput.order },
-      where: { userId: sortByInput.id },
+      where: { userId: sortByInput.userId },
     });
 
     return {

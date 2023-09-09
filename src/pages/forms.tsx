@@ -10,7 +10,7 @@ import { useFormSort } from "@/hooks/useFormSort";
 export default function Forms({ userSession }: { userSession: Session }) {
   const { order, sort } = useFormSort();
   const { data: formsData } = api.form.getPosts.useQuery({
-    id: userSession.user.id,
+    userId: userSession.user.id,
     order,
     sort,
   });

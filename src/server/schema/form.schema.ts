@@ -5,18 +5,15 @@ export const createFormSchema = z.object({
   title: z.string({
     required_error: "Title is required",
   }),
-  status: z.nativeEnum(Status, {
-    required_error: "Status is required",
-  }),
   userId: z
     .string({
-      required_error: "Category is required",
+      required_error: "User id is required",
     })
     .uuid(),
 });
 
 export const sortByParams = z.object({
-  id: z.string().uuid(),
+  userId: z.string().uuid(),
   sort: z.string({
     required_error: "Sort key is required",
   }),
