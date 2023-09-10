@@ -1,9 +1,15 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { getPostsHandler } from "@/server/controller/form.controller";
-import { sortByParams } from "@/server/schema/form.schema";
+import {
+  createFormHandler,
+  getFormsHandler,
+} from "@/server/controller/form.controller";
+import { createFormSchema, sortByParams } from "@/server/schema/form.schema";
 
 export const formRouter = createTRPCRouter({
-  getPosts: protectedProcedure
+  createForm: protectedProcedure
+    .input(createFormSchema)
+    .mutation(({ input }) => createFormHandler({ input })),
+  getForms: protectedProcedure
     .input(sortByParams)
-    .query(({ input }) => getPostsHandler({ sortByInput: input })),
+    .query(({ input }) => getFormsHandler({ input })),
 });

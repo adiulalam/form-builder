@@ -23,7 +23,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
 
 export const FormCard = (formData: Form) => {
-  console.log("🚀 ~ file: card.tsx:26 ~ FormCard ~ status:", formData);
+  // console.log("🚀 ~ file: card.tsx:26 ~ FormCard ~ status:", formData);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
