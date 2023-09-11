@@ -57,9 +57,9 @@ export const FormCard = () => {
               <MenuItem onClick={handleClose}>Delete</MenuItem>
 
               {formData.status === "DRAFT" ? (
-                <MenuItem onClick={handleClose}>Mark as Draft</MenuItem>
-              ) : (
                 <MenuItem onClick={handleClose}>Mark as Completed</MenuItem>
+              ) : (
+                <MenuItem onClick={handleClose}>Mark as Draft</MenuItem>
               )}
             </Menu>
           </Box>
