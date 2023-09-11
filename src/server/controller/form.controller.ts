@@ -24,6 +24,13 @@ export const getFormsHandler = async ({
       where: { userId },
     });
 
+    if (!forms) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
     return {
       status: "success",
       results: forms.length,
@@ -57,14 +64,21 @@ export const createFormHandler = async ({
       userId,
     };
 
-    const post = await prisma.form.create({
+    const form = await prisma.form.create({
       data,
     });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
 
     return {
       status: "success",
       data: {
-        post,
+        form,
       },
     };
   } catch (err) {
@@ -72,7 +86,7 @@ export const createFormHandler = async ({
       if (err.code === "P2002") {
         throw new TRPCError({
           code: "CONFLICT",
-          message: "Form with that title already exists",
+          message: "Form with that id already exists",
         });
       }
 
@@ -97,7 +111,7 @@ export const updateFormFavouriteHandler = async ({
   try {
     const userId = session.user.id;
 
-    const post = await prisma.form.update({
+    const form = await prisma.form.update({
       where: {
         id: paramsInput.id,
         userId,
@@ -105,21 +119,60 @@ export const updateFormFavouriteHandler = async ({
       data: input,
     });
 
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
     return {
       status: "success",
       data: {
-        post,
+        form,
       },
     };
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === "P2002") {
-        throw new TRPCError({
-          code: "CONFLICT",
-          message: "Form with that title already exists",
-        });
-      }
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
 
+export const deleteFormHandler = async ({
+  session,
+  input,
+}: {
+  session: Session;
+  input: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const form = await prisma.form.delete({
+      where: {
+        id: input.id,
+        userId,
+      },
+    });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: null,
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: err.message,

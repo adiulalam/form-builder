@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FormContext } from "@/store/FormProvider";
-import { useState } from "react";
 import {
   FormatAlignCenter as FormatAlignCenterIcon,
   MoreVert as MoreVertIcon,
   Share as ShareIcon,
+  FormatAlignJustify as FormatAlignJustifyIcon,
 } from "@mui/icons-material";
 import {
   Divider,
@@ -18,22 +18,19 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
+import { FormFavourite, FormDelete } from ".";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { FormFavourite } from "./FormFavourite";
 dayjs.extend(localizedFormat);
 
 export const FormCard = () => {
-  const formData = useContext(FormContext);
-  console.log("🚀 ~ file: card.tsx:26 ~ FormCard ~ status:", formData);
+  const { title, status, updatedAt } = useContext(FormContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
   return (
     <Card className="flex w-full flex-col sm:max-w-sm">
@@ -51,12 +48,12 @@ export const FormCard = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              {formData.status === "DRAFT" && (
+              {status === "DRAFT" && (
                 <MenuItem onClick={handleClose}>Edit</MenuItem>
               )}
-              <MenuItem onClick={handleClose}>Delete</MenuItem>
+              <FormDelete handleClose={() => handleClose()} />
 
-              {formData.status === "DRAFT" ? (
+              {status === "DRAFT" ? (
                 <MenuItem onClick={handleClose}>Mark as Completed</MenuItem>
               ) : (
                 <MenuItem onClick={handleClose}>Mark as Draft</MenuItem>
@@ -64,29 +61,25 @@ export const FormCard = () => {
             </Menu>
           </Box>
         }
-        title={<Typography variant="h5">{formData.title}</Typography>}
+        title={<Typography variant="h5">{title}</Typography>}
         subheader={
           <Box className="flex flex-row flex-wrap items-center gap-2">
             <Typography variant="subtitle1">
-              {dayjs(formData.updatedAt).format("LL")}
+              {dayjs(updatedAt).format("LL")}
             </Typography>
 
             <Divider orientation="vertical" variant="middle" flexItem />
 
-            <Typography variant="subtitle2">{formData.status}</Typography>
+            <Typography variant="subtitle2">{status}</Typography>
           </Box>
         }
       />
-      <FormatAlignCenterIcon
-        sx={{
-          fontSize: 200,
-          display: "flex",
-          width: "100%",
-          alignSelf: "center",
-          justifySelf: "center",
-          textAlign: "center",
-        }}
-      />
+
+      {status === "DRAFT" ? (
+        <FormatAlignCenterIcon className="w-1/1 flex self-center text-[12rem]" />
+      ) : (
+        <FormatAlignJustifyIcon className="w-1/1 flex self-center text-[12rem]" />
+      )}
 
       <CardActions disableSpacing className="flex flex-row justify-end">
         <FormFavourite />

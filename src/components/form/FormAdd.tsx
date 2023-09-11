@@ -8,10 +8,7 @@ export const FormAdd = () => {
   const { refetch } = useContext(FormsContext);
 
   const { mutate } = api.form.createForm.useMutation({
-    onSuccess: (data) => {
-      console.log("🚀 ~ file: FormAdd.tsx:14 ~ onSuccess ~ data:", data);
-      refetch();
-    },
+    onSuccess: () => refetch(),
   });
 
   const onClickHandler = () => {
