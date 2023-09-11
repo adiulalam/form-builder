@@ -7,6 +7,7 @@ import { FormAdd, FormCard, FormSort } from "@/components/form";
 import { Box } from "@mui/material";
 import { useFormSort } from "@/hooks/useFormSort";
 import { FormsProvider } from "@/store/FormsProvider";
+import { FormProvider } from "@/store/FormProvider";
 
 export default function Forms({ userSession }: { userSession: Session }) {
   const { order, sort } = useFormSort();
@@ -35,7 +36,9 @@ export default function Forms({ userSession }: { userSession: Session }) {
 
           <Box className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4 space-y-2">
             {formsData?.data.forms.map((formData, index) => (
-              <FormCard key={index} {...formData} />
+              <FormProvider key={index} store={formData}>
+                <FormCard />
+              </FormProvider>
             ))}
           </Box>
           <FormAdd />

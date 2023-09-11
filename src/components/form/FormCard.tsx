@@ -1,4 +1,5 @@
-import type { Form } from "@prisma/client";
+import { useContext } from "react";
+import { FormContext } from "@/store/FormProvider";
 import { useState } from "react";
 import {
   FormatAlignCenter as FormatAlignCenterIcon,
@@ -22,8 +23,10 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
 
-export const FormCard = (formData: Form) => {
-  // console.log("🚀 ~ file: card.tsx:26 ~ FormCard ~ status:", formData);
+export const FormCard = () => {
+  const formData = useContext(FormContext);
+  console.log("🚀 ~ file: card.tsx:26 ~ FormCard ~ status:", formData);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
