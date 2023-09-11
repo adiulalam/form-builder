@@ -5,7 +5,6 @@ import {
   FormatAlignCenter as FormatAlignCenterIcon,
   MoreVert as MoreVertIcon,
   Share as ShareIcon,
-  FavoriteBorder as FavoriteBorderIcon,
 } from "@mui/icons-material";
 import {
   Divider,
@@ -21,6 +20,7 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import { FormFavourite } from "./FormFavourite";
 dayjs.extend(localizedFormat);
 
 export const FormCard = () => {
@@ -89,11 +89,7 @@ export const FormCard = () => {
       />
 
       <CardActions disableSpacing className="flex flex-row justify-end">
-        <Tooltip title="Mark as favourite">
-          <IconButton>
-            <FavoriteBorderIcon />
-          </IconButton>
-        </Tooltip>
+        <FormFavourite />
         <Tooltip title="Share link">
           <IconButton>
             <ShareIcon />

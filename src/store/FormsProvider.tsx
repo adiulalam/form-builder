@@ -2,12 +2,12 @@ import { type ReactNode, createContext } from "react";
 
 type FormsContextType = {
   refetch: () => void;
-  userId: string;
+  // userId: string;
 };
 
 export const FormsContext = createContext<FormsContextType>({
   refetch: () => null,
-  userId: "",
+  // userId: "",
 });
 
 export const FormsProvider = ({

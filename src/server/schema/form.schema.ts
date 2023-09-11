@@ -5,15 +5,9 @@ export const createFormSchema = z.object({
   title: z.string({
     required_error: "Title is required",
   }),
-  userId: z
-    .string({
-      required_error: "User id is required",
-    })
-    .uuid(),
 });
 
-export const sortByParams = z.object({
-  userId: z.string().uuid(),
+export const readAllSchema = z.object({
   sort: z.string({
     required_error: "Sort key is required",
   }),
@@ -36,7 +30,17 @@ export const updateFormSchema = z.object({
     .partial(),
 });
 
+export const updateFormFavouriteSchema = z.object({
+  params,
+  body: z.object({
+    isFavourite: z.boolean(),
+  }),
+});
+
 export type CreateFormInput = TypeOf<typeof createFormSchema>;
 export type ParamsInput = TypeOf<typeof params>;
-export type SortByInput = TypeOf<typeof sortByParams>;
+export type ReadAllInput = TypeOf<typeof readAllSchema>;
 export type UpdateFormInput = TypeOf<typeof updateFormSchema>["body"];
+export type UpdateFormFavouriteInput = TypeOf<
+  typeof updateFormFavouriteSchema
+>["body"];

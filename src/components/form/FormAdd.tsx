@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { FormsContext } from "@/store/FormsProvider";
 
 export const FormAdd = () => {
-  const { userId, refetch } = useContext(FormsContext);
+  const { refetch } = useContext(FormsContext);
 
   const { mutate } = api.form.createForm.useMutation({
     onSuccess: (data) => {
@@ -15,7 +15,7 @@ export const FormAdd = () => {
   });
 
   const onClickHandler = () => {
-    mutate({ userId, title: "Untitled" });
+    mutate({ title: "Untitled" });
   };
 
   return (

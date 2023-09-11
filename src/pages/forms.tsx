@@ -1,4 +1,3 @@
-import { type Session } from "next-auth";
 import { type GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
@@ -9,10 +8,9 @@ import { useFormSort } from "@/hooks/useFormSort";
 import { FormsProvider } from "@/store/FormsProvider";
 import { FormProvider } from "@/store/FormProvider";
 
-export default function Forms({ userSession }: { userSession: Session }) {
+export default function Forms() {
   const { order, sort } = useFormSort();
   const { data: formsData, refetch } = api.form.getForms.useQuery({
-    userId: userSession.user.id,
     order,
     sort,
   });
@@ -20,7 +18,6 @@ export default function Forms({ userSession }: { userSession: Session }) {
 
   const store = {
     refetch,
-    userId: userSession.user.id,
   };
 
   return (
