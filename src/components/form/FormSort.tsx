@@ -1,5 +1,5 @@
 import { type MenuProps } from "@mui/material/Menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
   Sort as SortIcon,
@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormSort } from "@/hooks/useFormSort";
+import { useRouter } from "next/router";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -67,8 +68,47 @@ const sortItems: { name: string; value: string }[] = [
 ];
 
 export const FormSort = () => {
-  const { order, setOrder, sort, setSort } = useFormSort();
+  const { setOrder, setSort } = useFormSort();
+  const { pathname, query, replace, push } = useRouter();
+  const { sort, order } = query as { sort: string; order: "asc" | "desc" };
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  useEffect(() => {
+    const sortMatched = sortItems.some((item) => item.value === sort);
+    const orderMatched = order === "asc" || order === "desc";
+
+    if (sortMatched && orderMatched) {
+      setSort(sort);
+      setOrder(order);
+    } else {
+      void replace({ pathname, query: "sort=title&order=asc" }, undefined, {
+        shallow: true,
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sort, order]);
+
+  const onClickHandler = ({
+    sort,
+    order,
+  }: {
+    sort: string;
+    order: "asc" | "desc";
+  }) => {
+    void push(
+      {
+        pathname,
+        query: `sort=${sort}&order=${order}`,
+      },
+      undefined,
+      {
+        shallow: true,
+      },
+    );
+    setAnchorEl(null);
+  };
 
   return (
     <div>
@@ -76,6 +116,7 @@ export const FormSort = () => {
         variant="outlined"
         disableElevation
         onClick={(e) => setAnchorEl(e.currentTarget)}
+        size="large"
       >
         <Typography className="mr-2 hidden sm:block">SORT</Typography>
         <SortIcon />
@@ -89,15 +130,19 @@ export const FormSort = () => {
           <MenuItem disableRipple key={index} selected={item.value === sort}>
             <Box
               className="flex flex-grow"
-              onClick={() => {
-                setSort(item.value);
-                setAnchorEl(null);
-              }}
+              onClick={() => onClickHandler({ sort: item.value, order })}
             >
               {item.name}
             </Box>
             {item.value === sort && (
-              <IconButton onClick={() => setOrder()}>
+              <IconButton
+                onClick={() =>
+                  onClickHandler({
+                    sort,
+                    order: order === "asc" ? "desc" : "asc",
+                  })
+                }
+              >
                 {order === "asc" ? (
                   <TextRotateUpIcon className="mr-0" />
                 ) : (

@@ -16,6 +16,10 @@ export const readAllSchema = z.object({
   }),
 });
 
+export const searchAllSchema = z.object({
+  title: z.string().optional(),
+});
+
 export const params = z.object({
   id: z.string().uuid(),
 });
@@ -40,6 +44,7 @@ export const updateFormFavouriteSchema = z.object({
 export type CreateFormInput = TypeOf<typeof createFormSchema>;
 export type ParamsInput = TypeOf<typeof params>;
 export type ReadAllInput = TypeOf<typeof readAllSchema>;
+export type SearchAllInput = TypeOf<typeof searchAllSchema>;
 export type UpdateFormInput = TypeOf<typeof updateFormSchema>["body"];
 export type UpdateFormFavouriteInput = TypeOf<
   typeof updateFormFavouriteSchema

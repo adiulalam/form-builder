@@ -4,6 +4,7 @@ import type {
   CreateFormInput,
   ParamsInput,
   ReadAllInput,
+  SearchAllInput,
   UpdateFormFavouriteInput,
 } from "../schema/form.schema";
 import { prisma } from "../db";
@@ -28,6 +29,45 @@ export const getFormsHandler = async ({
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      results: forms.length,
+      data: {
+        forms,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const getSearchFormsHandler = async ({
+  input,
+  session,
+}: {
+  input: SearchAllInput;
+  session: Session;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const forms = await prisma.form.findMany({
+      where: { userId, title: { contains: input.title } },
+    });
+
+    if (!forms) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Forms not found",
       });
     }
 

@@ -21,10 +21,11 @@ import {
 import { FormFavourite, FormDelete } from ".";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import Link from "next/link";
 dayjs.extend(localizedFormat);
 
 export const FormCard = () => {
-  const { title, status, updatedAt } = useContext(FormContext);
+  const { id, title, status, updatedAt } = useContext(FormContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +50,7 @@ export const FormCard = () => {
               onClose={handleClose}
             >
               {status === "DRAFT" && (
-                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem onClick={handleClose}>Edit Name</MenuItem>
               )}
               <FormDelete handleClose={() => handleClose()} />
 
@@ -63,7 +64,10 @@ export const FormCard = () => {
         }
         title={<Typography variant="h5">{title}</Typography>}
         subheader={
-          <Box className="flex flex-row flex-wrap items-center gap-2">
+          <Link
+            className="flex flex-row flex-wrap items-center gap-2"
+            href={`/form/${id}`}
+          >
             <Typography variant="subtitle1">
               {dayjs(updatedAt).format("LL")}
             </Typography>
@@ -71,15 +75,17 @@ export const FormCard = () => {
             <Divider orientation="vertical" variant="middle" flexItem />
 
             <Typography variant="subtitle2">{status}</Typography>
-          </Box>
+          </Link>
         }
       />
 
-      {status === "DRAFT" ? (
-        <FormatAlignCenterIcon className="w-1/1 flex self-center text-[12rem]" />
-      ) : (
-        <FormatAlignJustifyIcon className="w-1/1 flex self-center text-[12rem]" />
-      )}
+      <Link className="w-1/1 flex self-center" href={`/form/${id}`}>
+        {status === "DRAFT" ? (
+          <FormatAlignCenterIcon className="text-[12rem]" />
+        ) : (
+          <FormatAlignJustifyIcon className="text-[12rem]" />
+        )}
+      </Link>
 
       <CardActions disableSpacing className="flex flex-row justify-end">
         <FormFavourite />
