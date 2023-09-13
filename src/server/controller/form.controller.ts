@@ -50,6 +50,98 @@ export const getFormsHandler = async ({
   }
 };
 
+export const getPrivateFormHandler = async ({
+  session,
+  input,
+}: {
+  session: Session;
+  input: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const form = await prisma.form.findFirstOrThrow({
+      where: {
+        id: input.id,
+        userId,
+      },
+      include: {
+        questions: {
+          include: {
+            options: true,
+          },
+        },
+      },
+    });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        form,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const getPublicFormHandler = async ({
+  input,
+}: {
+  input: ParamsInput;
+}) => {
+  try {
+    const form = await prisma.form.findFirstOrThrow({
+      where: {
+        id: input.id,
+        isShareable: true,
+      },
+      include: {
+        questions: {
+          include: {
+            options: true,
+          },
+        },
+      },
+    });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        form,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
 export const getSearchFormsHandler = async ({
   input,
   session,

@@ -1,14 +1,13 @@
 import { Add as AddIcon } from "@mui/icons-material";
 import { Fab } from "@mui/material";
 import { api } from "@/utils/api";
-import { useContext } from "react";
-import { FormsContext } from "@/store/FormsProvider";
+import { useRouter } from "next/router";
 
 export const FormAdd = () => {
-  const { refetch } = useContext(FormsContext);
+  const { push } = useRouter();
 
   const { mutate } = api.form.createForm.useMutation({
-    onSuccess: () => refetch(),
+    onSuccess: ({ data }) => push(`/form/${data.form.id}`),
   });
 
   const onClickHandler = () => {

@@ -1,14 +1,29 @@
-import { type Session } from "next-auth";
 import { type GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { z } from "zod";
 
-export default function Forms({ userSession }: { userSession: Session }) {
-  const { data: formsData } = api.form.getPosts.useQuery({
-    id: userSession.user.id,
-  });
-  console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", formsData);
+const isValidID = (uuid: string): boolean => {
+  try {
+    const data = z.object({ uuid: z.string().uuid() }).parse({ uuid });
+    return !!data.uuid;
+  } catch (e) {
+    return false;
+  }
+};
+
+export default function Forms() {
+  const router = useRouter();
+  const { id } = router.query as { id: string };
+  const isValidUUID = isValidID(id);
+
+  const { data: formData } = api.form.getPrivateForm.useQuery(
+    { id },
+    { enabled: isValidUUID },
+  );
+  console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", formData);
 
   return (
     <>

@@ -3,6 +3,8 @@ import {
   createFormHandler,
   deleteFormHandler,
   getFormsHandler,
+  getPrivateFormHandler,
+  getPublicFormHandler,
   getSearchFormsHandler,
   updateFormFavouriteHandler,
 } from "@/server/controller/form.controller";
@@ -34,6 +36,14 @@ export const formRouter = createTRPCRouter({
     .query(({ input, ctx: { session } }) =>
       getFormsHandler({ session, input }),
     ),
+  getPrivateForm: protectedProcedure
+    .input(params)
+    .query(({ input, ctx: { session } }) =>
+      getPrivateFormHandler({ session, input }),
+    ),
+  getPublicForm: protectedProcedure
+    .input(params)
+    .query(({ input }) => getPublicFormHandler({ input })),
   getSearchForms: protectedProcedure
     .input(searchAllSchema)
     .query(({ input, ctx: { session } }) =>
