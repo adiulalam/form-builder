@@ -1,5 +1,5 @@
 import { Add as AddIcon } from "@mui/icons-material";
-import { Fab } from "@mui/material";
+import { Fab, Tooltip } from "@mui/material";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 
@@ -15,12 +15,14 @@ export const FormAdd = () => {
   };
 
   return (
-    <Fab
-      className="fixed bottom-8 right-8 bg-primary"
-      size="large"
-      onClick={onClickHandler}
-    >
-      <AddIcon />
-    </Fab>
+    <Tooltip title="Add Form">
+      <Fab
+        className="fixed bottom-8 right-8 bg-primary"
+        size="large"
+        onClick={onClickHandler}
+      >
+        <AddIcon />
+      </Fab>
+    </Tooltip>
   );
 };
