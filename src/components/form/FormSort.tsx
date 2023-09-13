@@ -82,7 +82,7 @@ export const FormSort = () => {
       setSort(sort);
       setOrder(order);
     } else {
-      void replace({ pathname, query: "sort=title&order=asc" }, undefined, {
+      void replace({ pathname, query: "sort=updatedAt&order=asc" }, undefined, {
         shallow: true,
       });
     }
