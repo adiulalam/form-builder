@@ -82,9 +82,13 @@ export const FormSort = () => {
       setSort(sort);
       setOrder(order);
     } else {
-      void replace({ pathname, query: "sort=updatedAt&order=asc" }, undefined, {
-        shallow: true,
-      });
+      void replace(
+        { pathname, query: "sort=updatedAt&order=desc" },
+        undefined,
+        {
+          shallow: true,
+        },
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -3,18 +3,25 @@ import Head from "next/head";
 import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
 import { FormAdd, FormCard, FormSearch, FormSort } from "@/components/form";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useFormSort } from "@/hooks/useFormSort";
 import { FormsProvider } from "@/store/FormsProvider";
 import { FormProvider } from "@/store/FormProvider";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Forms() {
   const { order, sort } = useFormSort();
-  const { data: formsData, refetch } = api.form.getForms.useQuery({
-    order,
-    sort,
-  });
-  console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", formsData);
+  const { data, refetch, fetchNextPage, hasNextPage } =
+    api.form.getForms.useInfiniteQuery(
+      {
+        order,
+        sort,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      },
+    );
+  console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", data);
 
   const store = {
     refetch,
@@ -37,13 +44,29 @@ export default function Forms() {
             <FormSearch />
           </Box>
 
-          <Box className="m-auto flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
-            {formsData?.data.forms.map((formData, index) => (
-              <FormProvider key={index} store={formData}>
-                <FormCard />
-              </FormProvider>
-            ))}
-          </Box>
+          <InfiniteScroll
+            next={fetchNextPage}
+            hasMore={hasNextPage ?? false}
+            loader={<Typography>Loading...</Typography>}
+            dataLength={
+              data?.pages.reduce(
+                (total, page) => total + page.data.forms.length,
+                0,
+              ) ?? 0
+            }
+          >
+            <Box className="m-auto flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
+              {data?.pages.map(
+                (formsData) =>
+                  formsData?.data.forms.map((formData) => (
+                    <FormProvider key={formData.id} store={formData}>
+                      <FormCard />
+                    </FormProvider>
+                  )),
+              )}
+            </Box>
+          </InfiniteScroll>
+
           <FormAdd />
         </FormsProvider>
       </main>

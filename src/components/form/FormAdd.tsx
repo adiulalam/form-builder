@@ -16,7 +16,7 @@ export const FormAdd = () => {
 
   return (
     <Fab
-      className="absolute bottom-8 right-8 bg-primary"
+      className="fixed bottom-8 right-8 bg-primary"
       size="large"
       onClick={onClickHandler}
     >

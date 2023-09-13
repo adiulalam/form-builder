@@ -14,6 +14,7 @@ export const readAllSchema = z.object({
   order: z.enum(["asc", "desc"], {
     required_error: "Order key is required",
   }),
+  cursor: z.string().nullish(),
 });
 
 export const searchAllSchema = z.object({

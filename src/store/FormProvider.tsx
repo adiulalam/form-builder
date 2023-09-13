@@ -5,6 +5,7 @@ export const FormContext = createContext<Form>({
   id: "",
   status: "DRAFT",
   isFavourite: false,
+  isShareable: false,
   title: "",
   userId: "",
   createdAt: new Date(),

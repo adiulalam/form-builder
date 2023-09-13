@@ -18,12 +18,24 @@ export const getFormsHandler = async ({
   session: Session;
 }) => {
   try {
+    const limit = 5;
+
     const userId = session.user.id;
+    const { cursor } = input;
 
     const forms = await prisma.form.findMany({
+      take: limit + 1,
       orderBy: { [input.sort]: input.order },
       where: { userId },
+
+      cursor: cursor ? { id: cursor } : undefined,
     });
+
+    let nextCursor: typeof cursor | undefined = undefined;
+    if (forms.length > limit) {
+      const nextItem = forms.pop();
+      nextCursor = nextItem?.id;
+    }
 
     if (!forms) {
       throw new TRPCError({
@@ -35,6 +47,7 @@ export const getFormsHandler = async ({
     return {
       status: "success",
       results: forms.length,
+      nextCursor,
       data: {
         forms,
       },
