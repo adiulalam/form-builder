@@ -44,28 +44,30 @@ export default function Forms() {
             <FormSearch />
           </Box>
 
-          <InfiniteScroll
-            next={fetchNextPage}
-            hasMore={hasNextPage ?? false}
-            loader={<Typography>Loading...</Typography>}
-            dataLength={
-              data?.pages.reduce(
-                (total, page) => total + page.data.forms.length,
-                0,
-              ) ?? 0
-            }
-          >
-            <Box className="m-auto flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
-              {data?.pages.map(
-                (formsData) =>
-                  formsData?.data.forms.map((formData) => (
-                    <FormProvider key={formData.id} store={formData}>
-                      <FormCard />
-                    </FormProvider>
-                  )),
-              )}
-            </Box>
-          </InfiniteScroll>
+          <Box className="m-auto h-full w-full">
+            <InfiniteScroll
+              next={fetchNextPage}
+              hasMore={hasNextPage ?? false}
+              loader={<Typography>Loading...</Typography>}
+              dataLength={
+                data?.pages.reduce(
+                  (total, page) => total + page.data.forms.length,
+                  0,
+                ) ?? 0
+              }
+            >
+              <Box className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
+                {data?.pages.map(
+                  (formsData) =>
+                    formsData?.data.forms.map((formData) => (
+                      <FormProvider key={formData.id} store={formData}>
+                        <FormCard />
+                      </FormProvider>
+                    )),
+                )}
+              </Box>
+            </InfiniteScroll>
+          </Box>
 
           <FormAdd />
         </FormsProvider>

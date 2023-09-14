@@ -21,18 +21,23 @@ export const FormSearch = () => {
   const handleOnChange = (value: string) => void functionDebounce(value);
   return (
     <Autocomplete
-      id="asynchronous-demo"
-      //   sx={{ minWidth: 300 }}
       fullWidth
       disableClearable
       isOptionEqualToValue={(option, value) => option.title === value.title}
       getOptionLabel={(option) => option.title}
       options={options?.data.forms ?? []}
       loading={isFetching}
-      //   inputValue={input}
       onInputChange={(_, value) => void handleOnChange(value)}
+      sx={{
+        "& .MuiFormLabel-root": {
+          color: "white",
+        },
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+          border: "1px solid #eee",
+        },
+      }}
       renderOption={(props, option) => (
-        <Link href={`/form/${option.id}`} key={option.id}>
+        <Link href={`/form/${option.id}`} key={option.id} color="inherit">
           <li {...props}>{option.title}</li>
         </Link>
       )}
@@ -42,7 +47,7 @@ export const FormSearch = () => {
           label="Search"
           InputProps={{
             ...params.InputProps,
-            type: "search",
+            style: { color: "white" },
             endAdornment: (
               <Fragment>
                 {isFetching && <CircularProgress color="inherit" size={20} />}
