@@ -3,15 +3,16 @@ import Head from "next/head";
 import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
 import { FormAdd, FormCard, FormSearch, FormSort } from "@/components/form";
-import { Box, Typography } from "@mui/material";
+import { Box, Grow, Typography } from "@mui/material";
 import { useFormSort } from "@/hooks/useFormSort";
 import { FormsProvider } from "@/store/FormsProvider";
 import { FormProvider } from "@/store/FormProvider";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { TransitionGroup } from "react-transition-group";
 
 export default function Forms() {
   const { order, sort } = useFormSort();
-  const { data, refetch, fetchNextPage, hasNextPage } =
+  const { data, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
     api.form.getForms.useInfiniteQuery(
       {
         order,
@@ -48,7 +49,7 @@ export default function Forms() {
             <InfiniteScroll
               next={fetchNextPage}
               hasMore={hasNextPage ?? false}
-              loader={<Typography>Loading...</Typography>}
+              loader={isFetchingNextPage && <Typography>Loading...</Typography>}
               dataLength={
                 data?.pages.reduce(
                   (total, page) => total + page.data.forms.length,
@@ -56,16 +57,20 @@ export default function Forms() {
                 ) ?? 0
               }
             >
-              <Box className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
+              <TransitionGroup className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
                 {data?.pages.map(
                   (formsData) =>
                     formsData?.data.forms.map((formData) => (
-                      <FormProvider key={formData.id} store={formData}>
-                        <FormCard />
-                      </FormProvider>
+                      <Grow key={formData.id}>
+                        <Box className="flex w-full sm:max-w-sm">
+                          <FormProvider store={formData}>
+                            <FormCard />
+                          </FormProvider>
+                        </Box>
+                      </Grow>
                     )),
                 )}
-              </Box>
+              </TransitionGroup>
             </InfiniteScroll>
           </Box>
 

@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, Zoom } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext } from "react";
 import { FormsContext } from "@/store/FormsProvider";
@@ -23,7 +23,13 @@ export const FormFavourite = () => {
   return (
     <Tooltip title="Mark as favourite">
       <IconButton onClick={onClickHandler}>
-        {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        {isFavourite ? (
+          <Zoom in={isFavourite}>
+            <FavoriteIcon />
+          </Zoom>
+        ) : (
+          <FavoriteBorderIcon />
+        )}
       </IconButton>
     </Tooltip>
   );
