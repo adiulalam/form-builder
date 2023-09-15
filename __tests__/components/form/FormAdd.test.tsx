@@ -1,9 +1,10 @@
 import { FormAdd } from "@/components/form";
 import { render, screen } from "@testing-library/react";
+import { AllWithTRPC } from "./FormProvider.test";
 
 describe("Test the 'FormAdd' component", () => {
   it("Should return valid button", () => {
-    render(<FormAdd />);
+    render(<FormAdd />, { wrapper: AllWithTRPC });
 
     const button = screen.getByRole("button");
 
