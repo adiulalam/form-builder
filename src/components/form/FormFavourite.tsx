@@ -1,7 +1,6 @@
 import { IconButton, Tooltip, Zoom } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext } from "react";
-import { FormsContext } from "@/store/FormsProvider";
 import {
   FavoriteBorder as FavoriteBorderIcon,
   Favorite as FavoriteIcon,
@@ -10,10 +9,10 @@ import { FormContext } from "@/store/FormProvider";
 
 export const FormFavourite = () => {
   const { isFavourite, id } = useContext(FormContext);
-  const { refetch } = useContext(FormsContext);
+  const { form } = api.useContext();
 
   const { mutate } = api.form.updateFormFavourite.useMutation({
-    onSuccess: () => refetch(),
+    onSuccess: () => form.getForms.invalidate(),
   });
 
   const onClickHandler = () => {

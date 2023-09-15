@@ -5,14 +5,13 @@ import { getSession } from "next-auth/react";
 import { FormAdd, FormCard, FormSearch, FormSort } from "@/components/form";
 import { Box, Grow, Typography } from "@mui/material";
 import { useFormSort } from "@/hooks/useFormSort";
-import { FormsProvider } from "@/store/FormsProvider";
 import { FormProvider } from "@/store/FormProvider";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TransitionGroup } from "react-transition-group";
 
 export default function Forms() {
   const { order, sort } = useFormSort();
-  const { data, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     api.form.getForms.useInfiniteQuery(
       {
         order,
@@ -24,10 +23,6 @@ export default function Forms() {
     );
   console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", data);
 
-  const store = {
-    refetch,
-  };
-
   return (
     <>
       <Head>
@@ -36,46 +31,44 @@ export default function Forms() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col flex-nowrap items-center justify-center gap-4 bg-gradient-to-b from-[#2e026d] to-[#15162c] p-2">
-        <FormsProvider store={store}>
-          <Box
-            className="flex w-full flex-row items-center gap-2"
-            maxWidth={"xl"}
+        <Box
+          className="flex w-full flex-row items-center gap-2"
+          maxWidth={"xl"}
+        >
+          <FormSort />
+          <FormSearch />
+        </Box>
+
+        <Box className="m-auto h-full w-full">
+          <InfiniteScroll
+            next={fetchNextPage}
+            hasMore={hasNextPage ?? false}
+            loader={isFetchingNextPage && <Typography>Loading...</Typography>}
+            dataLength={
+              data?.pages.reduce(
+                (total, page) => total + page.data.forms.length,
+                0,
+              ) ?? 0
+            }
           >
-            <FormSort />
-            <FormSearch />
-          </Box>
+            <TransitionGroup className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
+              {data?.pages.map(
+                (formsData) =>
+                  formsData?.data.forms.map((formData) => (
+                    <Grow key={formData.id}>
+                      <Box className="flex w-full sm:max-w-sm">
+                        <FormProvider store={formData}>
+                          <FormCard />
+                        </FormProvider>
+                      </Box>
+                    </Grow>
+                  )),
+              )}
+            </TransitionGroup>
+          </InfiniteScroll>
+        </Box>
 
-          <Box className="m-auto h-full w-full">
-            <InfiniteScroll
-              next={fetchNextPage}
-              hasMore={hasNextPage ?? false}
-              loader={isFetchingNextPage && <Typography>Loading...</Typography>}
-              dataLength={
-                data?.pages.reduce(
-                  (total, page) => total + page.data.forms.length,
-                  0,
-                ) ?? 0
-              }
-            >
-              <TransitionGroup className="flex h-full w-full flex-row flex-wrap items-center justify-evenly gap-4">
-                {data?.pages.map(
-                  (formsData) =>
-                    formsData?.data.forms.map((formData) => (
-                      <Grow key={formData.id}>
-                        <Box className="flex w-full sm:max-w-sm">
-                          <FormProvider store={formData}>
-                            <FormCard />
-                          </FormProvider>
-                        </Box>
-                      </Grow>
-                    )),
-                )}
-              </TransitionGroup>
-            </InfiniteScroll>
-          </Box>
-
-          <FormAdd />
-        </FormsProvider>
+        <FormAdd />
       </main>
     </>
   );
