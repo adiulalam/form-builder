@@ -29,7 +29,7 @@ export const updateFormSchema = z.object({
   params,
   body: z
     .object({
-      title: z.string(),
+      title: z.string().min(1),
       status: z.nativeEnum(Status),
     })
     .partial(),
@@ -42,11 +42,29 @@ export const updateFormFavouriteSchema = z.object({
   }),
 });
 
+export const updateFormStatusSchema = z.object({
+  params,
+  body: z.object({
+    status: z.nativeEnum(Status),
+  }),
+});
+
+export const updateFormTitleSchema = z.object({
+  params,
+  body: z.object({
+    title: z.string().min(1),
+  }),
+});
+
 export type CreateFormInput = TypeOf<typeof createFormSchema>;
 export type ParamsInput = TypeOf<typeof params>;
 export type ReadAllInput = TypeOf<typeof readAllSchema>;
 export type SearchAllInput = TypeOf<typeof searchAllSchema>;
 export type UpdateFormInput = TypeOf<typeof updateFormSchema>["body"];
+export type UpdateFormTitleInput = TypeOf<typeof updateFormTitleSchema>["body"];
+export type UpdateFormStatusInput = TypeOf<
+  typeof updateFormStatusSchema
+>["body"];
 export type UpdateFormFavouriteInput = TypeOf<
   typeof updateFormFavouriteSchema
 >["body"];

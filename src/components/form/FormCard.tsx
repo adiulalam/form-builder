@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { FormContext } from "@/store/FormProvider";
 import {
-  FormatAlignCenter as FormatAlignCenterIcon,
+  EditNote as EditNoteIcon,
   MoreVert as MoreVertIcon,
   Share as ShareIcon,
   FormatAlignJustify as FormatAlignJustifyIcon,
@@ -18,20 +18,25 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import { FormFavourite, FormDelete } from ".";
+import { FormFavourite, FormDelete, FormStatus, FormTitle } from ".";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import Link from "next/link";
 dayjs.extend(localizedFormat);
 
 export const FormCard = () => {
-  const { id, title, status, updatedAt } = useContext(FormContext);
-
+  const { id, status, updatedAt } = useContext(FormContext);
+  const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => setAnchorEl(null);
+
+  const handleEditTitle = () => {
+    setIsReadOnly(false);
+    handleClose();
+  };
 
   return (
     <Card className="flex w-full flex-col sm:max-w-sm">
@@ -50,19 +55,18 @@ export const FormCard = () => {
               onClose={handleClose}
             >
               {status === "DRAFT" && (
-                <MenuItem onClick={handleClose}>Edit Name</MenuItem>
+                <MenuItem onClick={handleEditTitle}>Edit Name</MenuItem>
               )}
+
               <FormDelete handleClose={() => handleClose()} />
 
-              {status === "DRAFT" ? (
-                <MenuItem onClick={handleClose}>Mark as Completed</MenuItem>
-              ) : (
-                <MenuItem onClick={handleClose}>Mark as Draft</MenuItem>
-              )}
+              <FormStatus handleClose={() => handleClose()} />
             </Menu>
           </Box>
         }
-        title={<Typography variant="h5">{title}</Typography>}
+        title={
+          <FormTitle isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
+        }
         subheader={
           <Link
             className="flex flex-row flex-wrap items-center gap-2"
@@ -81,7 +85,7 @@ export const FormCard = () => {
 
       <Link className="w-1/1 flex self-center" href={`/form/${id}`}>
         {status === "DRAFT" ? (
-          <FormatAlignCenterIcon className="text-[12rem]" />
+          <EditNoteIcon className="text-[12rem]" />
         ) : (
           <FormatAlignJustifyIcon className="text-[12rem]" />
         )}

@@ -6,6 +6,8 @@ import type {
   ReadAllInput,
   SearchAllInput,
   UpdateFormFavouriteInput,
+  UpdateFormStatusInput,
+  UpdateFormTitleInput,
 } from "../schema/form.schema";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
@@ -250,6 +252,94 @@ export const updateFormFavouriteHandler = async ({
   paramsInput,
 }: {
   input: UpdateFormFavouriteInput;
+  session: Session;
+  paramsInput: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const form = await prisma.form.update({
+      where: {
+        id: paramsInput.id,
+        userId,
+      },
+      data: input,
+    });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        form,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const updateFormStatusHandler = async ({
+  input,
+  session,
+  paramsInput,
+}: {
+  input: UpdateFormStatusInput;
+  session: Session;
+  paramsInput: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const form = await prisma.form.update({
+      where: {
+        id: paramsInput.id,
+        userId,
+      },
+      data: input,
+    });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        form,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const updateFormTitleHandler = async ({
+  input,
+  session,
+  paramsInput,
+}: {
+  input: UpdateFormTitleInput;
   session: Session;
   paramsInput: ParamsInput;
 }) => {
