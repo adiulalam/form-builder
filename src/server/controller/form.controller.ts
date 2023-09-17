@@ -21,16 +21,15 @@ export const getFormsHandler = async ({
   session: Session;
 }) => {
   try {
-    const limit = 5;
+    const limit = 20;
 
     const userId = session.user.id;
-    const { cursor } = input;
+    const { cursor, sort, order } = input;
 
     const forms = await prisma.form.findMany({
       take: limit + 1,
-      orderBy: { [input.sort]: input.order },
+      orderBy: { [sort]: order },
       where: { userId },
-
       cursor: cursor ? { id: cursor } : undefined,
     });
 
