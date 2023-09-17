@@ -68,9 +68,7 @@ export const FormShare = () => {
           />
 
           {isShareable && (
-            <FormShareClipboard
-              text={`https://${process.env.NEXTAUTH_URL}/share/${id}`}
-            />
+            <FormShareClipboard text={`${window.location.host}/share/${id}`} />
           )}
         </DialogContent>
         <DialogActions>
