@@ -8,11 +8,14 @@ import {
 import { FormContext } from "@/store/FormProvider";
 
 export const FormFavourite = () => {
-  const { isFavourite, id } = useContext(FormContext);
+  const { isFavourite, id, questions } = useContext(FormContext);
   const { form } = api.useContext();
 
   const { mutate } = api.form.updateFormFavourite.useMutation({
-    onSuccess: () => form.getForms.invalidate(),
+    onSuccess: () =>
+      questions
+        ? form.getPrivateForm.invalidate({ id })
+        : form.getForms.invalidate(),
   });
 
   const onClickHandler = () => {

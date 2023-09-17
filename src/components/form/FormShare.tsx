@@ -20,11 +20,14 @@ import { FormShareClipboard } from "./FormShareClipboard";
 export const FormShare = () => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const { isShareable, id } = useContext(FormContext);
+  const { isShareable, id, questions } = useContext(FormContext);
   const { form } = api.useContext();
 
   const { mutate, isLoading } = api.form.updateFormShare.useMutation({
-    onSuccess: () => form.getForms.invalidate(),
+    onSuccess: () =>
+      questions
+        ? form.getPrivateForm.invalidate({ id })
+        : form.getForms.invalidate(),
   });
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

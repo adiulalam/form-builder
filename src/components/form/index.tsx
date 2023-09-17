@@ -2,6 +2,7 @@ import { FormAdd } from "./FormAdd";
 import { FormCard } from "./FormCard";
 import { FormDelete } from "./FormDelete";
 import { FormFavourite } from "./FormFavourite";
+import { FormNavbar } from "./FormNavbar";
 import { FormSearch } from "./FormSearch";
 import { FormShare } from "./FormShare";
 import { FormShareClipboard } from "./FormShareClipboard";
@@ -20,4 +21,5 @@ export {
   FormTitle,
   FormShare,
   FormShareClipboard,
+  FormNavbar,
 };

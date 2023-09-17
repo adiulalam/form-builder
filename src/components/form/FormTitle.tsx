@@ -7,18 +7,22 @@ import { FormContext } from "@/store/FormProvider";
 export const FormTitle = ({
   isReadOnly,
   setIsReadOnly,
+  isClickEdit = false,
 }: {
+  isClickEdit?: boolean;
   isReadOnly: boolean;
   setIsReadOnly: Dispatch<SetStateAction<boolean>>;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { id, title } = useContext(FormContext);
+  const { id, title, questions } = useContext(FormContext);
   const [input, setInput] = useState<string>(title);
 
   const { form } = api.useContext();
   const { mutate } = api.form.updateFormTitle.useMutation({
-    onSuccess: () => form.getForms.invalidate(),
+    onSuccess: () =>
+      questions
+        ? form.getPrivateForm.invalidate({ id })
+        : form.getForms.invalidate(),
   });
 
   const onSubmitHandler = (
@@ -40,16 +44,17 @@ export const FormTitle = ({
   }, [isReadOnly]);
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={onSubmitHandler} className="w-auto">
       <Input
         fullWidth
         readOnly={isReadOnly}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        disableUnderline={isReadOnly}
+        disableUnderline={isReadOnly && !isClickEdit}
         inputRef={inputRef}
         onBlur={onSubmitHandler}
         className="text-2xl"
+        onClick={() => isClickEdit && setIsReadOnly(false)}
       />
     </form>
   );
