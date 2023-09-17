@@ -49,6 +49,7 @@ export const FormTitle = ({
         disableUnderline={isReadOnly}
         inputRef={inputRef}
         onBlur={onSubmitHandler}
+        className="text-2xl"
       />
     </form>
   );

@@ -169,6 +169,7 @@ export const getSearchFormsHandler = async ({
     const userId = session.user.id;
 
     const forms = await prisma.form.findMany({
+      take: 5,
       where: { userId, title: { contains: input.title } },
     });
 
