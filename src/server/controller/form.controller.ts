@@ -6,6 +6,7 @@ import type {
   ReadAllInput,
   SearchAllInput,
   UpdateFormFavouriteInput,
+  UpdateFormShareInput,
   UpdateFormStatusInput,
   UpdateFormTitleInput,
 } from "../schema/form.schema";
@@ -252,6 +253,50 @@ export const updateFormFavouriteHandler = async ({
   paramsInput,
 }: {
   input: UpdateFormFavouriteInput;
+  session: Session;
+  paramsInput: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const form = await prisma.form.update({
+      where: {
+        id: paramsInput.id,
+        userId,
+      },
+      data: input,
+    });
+
+    if (!form) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Form with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        form,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const updateFormShareHandler = async ({
+  input,
+  session,
+  paramsInput,
+}: {
+  input: UpdateFormShareInput;
   session: Session;
   paramsInput: ParamsInput;
 }) => {

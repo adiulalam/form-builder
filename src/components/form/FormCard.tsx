@@ -3,7 +3,6 @@ import { FormContext } from "@/store/FormProvider";
 import {
   EditNote as EditNoteIcon,
   MoreVert as MoreVertIcon,
-  Share as ShareIcon,
   FormatAlignJustify as FormatAlignJustifyIcon,
 } from "@mui/icons-material";
 import {
@@ -18,7 +17,7 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import { FormFavourite, FormDelete, FormStatus, FormTitle } from ".";
+import { FormFavourite, FormDelete, FormStatus, FormTitle, FormShare } from ".";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import Link from "next/link";
@@ -93,11 +92,8 @@ export const FormCard = () => {
 
       <CardActions disableSpacing className="flex flex-row justify-end">
         <FormFavourite />
-        <Tooltip title="Share link">
-          <IconButton>
-            <ShareIcon />
-          </IconButton>
-        </Tooltip>
+
+        <FormShare />
       </CardActions>
     </Card>
   );

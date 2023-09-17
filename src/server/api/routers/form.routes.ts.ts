@@ -7,6 +7,7 @@ import {
   getPublicFormHandler,
   getSearchFormsHandler,
   updateFormFavouriteHandler,
+  updateFormShareHandler,
   updateFormStatusHandler,
   updateFormTitleHandler,
 } from "@/server/controller/form.controller";
@@ -16,6 +17,7 @@ import {
   readAllSchema,
   searchAllSchema,
   updateFormFavouriteSchema,
+  updateFormShareSchema,
   updateFormStatusSchema,
   updateFormTitleSchema,
 } from "@/server/schema/form.schema";
@@ -30,6 +32,15 @@ export const formRouter = createTRPCRouter({
     .input(updateFormFavouriteSchema)
     .mutation(({ input, ctx: { session } }) =>
       updateFormFavouriteHandler({
+        session,
+        paramsInput: input.params,
+        input: input.body,
+      }),
+    ),
+  updateFormShare: protectedProcedure
+    .input(updateFormShareSchema)
+    .mutation(({ input, ctx: { session } }) =>
+      updateFormShareHandler({
         session,
         paramsInput: input.params,
         input: input.body,

@@ -42,6 +42,13 @@ export const updateFormFavouriteSchema = z.object({
   }),
 });
 
+export const updateFormShareSchema = z.object({
+  params,
+  body: z.object({
+    isShareable: z.boolean(),
+  }),
+});
+
 export const updateFormStatusSchema = z.object({
   params,
   body: z.object({
@@ -68,3 +75,4 @@ export type UpdateFormStatusInput = TypeOf<
 export type UpdateFormFavouriteInput = TypeOf<
   typeof updateFormFavouriteSchema
 >["body"];
+export type UpdateFormShareInput = TypeOf<typeof updateFormShareSchema>["body"];
