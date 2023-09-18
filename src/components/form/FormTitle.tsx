@@ -55,6 +55,7 @@ export const FormTitle = ({
         onBlur={onSubmitHandler}
         className="text-2xl"
         onClick={() => isClickEdit && setIsReadOnly(false)}
+        multiline
       />
     </form>
   );
