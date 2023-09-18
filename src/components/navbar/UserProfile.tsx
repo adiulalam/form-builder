@@ -9,6 +9,7 @@ import {
   MenuItem,
   Button,
   Skeleton,
+  Divider,
 } from "@mui/material";
 import { type MouseEvent, useState } from "react";
 import { useRouter } from "next/router";
@@ -68,6 +69,7 @@ export const UserProfile = () => {
               <Typography>{page.name}</Typography>
             </MenuItem>
           ))}
+          <Divider />
           <MenuItem
             onClick={() => {
               handleCloseUserMenu();

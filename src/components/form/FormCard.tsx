@@ -4,6 +4,7 @@ import {
   EditNote as EditNoteIcon,
   MoreVert as MoreVertIcon,
   FormatAlignJustify as FormatAlignJustifyIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import {
   Divider,
@@ -16,6 +17,8 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import { FormFavourite, FormDelete, FormStatus, FormTitle, FormShare } from ".";
 import dayjs from "dayjs";
@@ -54,7 +57,12 @@ export const FormCard = () => {
               onClose={handleClose}
             >
               {status === "DRAFT" && (
-                <MenuItem onClick={handleEditTitle}>Edit Name</MenuItem>
+                <MenuItem onClick={handleEditTitle}>
+                  <ListItemIcon>
+                    <EditIcon />
+                  </ListItemIcon>
+                  <ListItemText>Edit Name</ListItemText>
+                </MenuItem>
               )}
 
               <FormDelete handleClose={() => handleClose()} />

@@ -1,4 +1,8 @@
-import { MenuItem } from "@mui/material";
+import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
+import {
+  EditNote as EditNoteIcon,
+  CheckCircle as CheckCircleIcon,
+} from "@mui/icons-material";
 import { api } from "@/utils/api";
 import { useContext } from "react";
 import { FormContext } from "@/store/FormProvider";
@@ -20,8 +24,18 @@ export const FormStatus = ({ handleClose }: { handleClose: () => void }) => {
   };
 
   return status === "DRAFT" ? (
-    <MenuItem onClick={onClickHandler}>Mark as Completed</MenuItem>
+    <MenuItem onClick={onClickHandler}>
+      <ListItemIcon>
+        <CheckCircleIcon />
+      </ListItemIcon>
+      <ListItemText>Mark as Completed</ListItemText>
+    </MenuItem>
   ) : (
-    <MenuItem onClick={onClickHandler}>Mark as Draft</MenuItem>
+    <MenuItem onClick={onClickHandler}>
+      <ListItemIcon>
+        <EditNoteIcon />
+      </ListItemIcon>
+      <ListItemText>Mark as Draft</ListItemText>
+    </MenuItem>
   );
 };
