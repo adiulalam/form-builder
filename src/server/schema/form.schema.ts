@@ -2,9 +2,11 @@ import { Status } from "@prisma/client";
 import { z, type TypeOf } from "zod";
 
 export const createFormSchema = z.object({
-  title: z.string({
-    required_error: "Title is required",
-  }),
+  title: z
+    .string({
+      required_error: "Title is required",
+    })
+    .min(1),
 });
 
 export const readAllSchema = z.object({
