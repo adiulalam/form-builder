@@ -7,7 +7,7 @@ import { z } from "zod";
 import { FormProvider } from "@/store/FormProvider";
 import { FormNavbar } from "@/components/form";
 import { Box, Paper } from "@mui/material";
-import { QuestionCard } from "@/components/question";
+import { QuestionAdd, QuestionCard } from "@/components/question";
 
 const isValidID = (uuid: string): boolean => {
   try {
@@ -53,6 +53,8 @@ export default function Forms() {
             <QuestionCard />
             <QuestionCard />
           </Box>
+
+          <QuestionAdd />
         </FormProvider>
       </main>
     </>

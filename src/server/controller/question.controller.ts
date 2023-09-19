@@ -14,6 +14,13 @@ export const createQuestionHandler = async ({
   try {
     const userId = session.user.id;
 
+    await prisma.form.findFirstOrThrow({
+      where: {
+        id: input.formId,
+        userId,
+      },
+    });
+
     const data = {
       ...input,
     };

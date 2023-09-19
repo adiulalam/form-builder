@@ -1,22 +1,19 @@
 import { Add as AddIcon } from "@mui/icons-material";
 import { Fab, Tooltip, Backdrop, CircularProgress } from "@mui/material";
 import { api } from "@/utils/api";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { FormContext } from "@/store/FormProvider";
 
 export const QuestionAdd = () => {
-  const { id } = useContext(FormContext);
+  const { id: formId } = useContext(FormContext);
   const { form } = api.useContext();
 
-  const [open, setOpen] = useState<boolean>(false);
-
-  const { mutate } = api.form.createForm.useMutation({
-    onSuccess: ({ data }) => form.getPrivateForm.invalidate({ id }),
+  const { mutate, isLoading } = api.question.createQuestion.useMutation({
+    onSuccess: () => form.getPrivateForm.invalidate({ id: formId }),
   });
 
   const onClickHandler = () => {
-    setOpen(true);
-    mutate({ title: "Untitled" });
+    mutate({ question: "Untitled", formId });
   };
 
   return (
@@ -32,7 +29,7 @@ export const QuestionAdd = () => {
       </Tooltip>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
+        open={isLoading}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
