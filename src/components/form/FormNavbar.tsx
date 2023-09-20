@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { FormTitle } from "./FormTitle";
 import { FormFavourite } from "./FormFavourite";
 import { FormShare } from "./FormShare";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 import { api } from "@/utils/api";
 
 export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {

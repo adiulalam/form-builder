@@ -2,7 +2,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import { api } from "@/utils/api";
 import { useContext } from "react";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 
 export const FormDelete = ({ handleClose }: { handleClose: () => void }) => {
   const { id } = useContext(FormContext);

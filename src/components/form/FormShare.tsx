@@ -13,7 +13,7 @@ import {
 import { api } from "@/utils/api";
 import { useContext } from "react";
 import { Share as ShareIcon } from "@mui/icons-material";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 import { useState, type ChangeEvent } from "react";
 import { FormShareClipboard } from "./FormShareClipboard";
 

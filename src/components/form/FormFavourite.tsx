@@ -5,7 +5,7 @@ import {
   FavoriteBorder as FavoriteBorderIcon,
   Favorite as FavoriteIcon,
 } from "@mui/icons-material";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 
 export const FormFavourite = () => {
   const { isFavourite, id, questions } = useContext(FormContext);

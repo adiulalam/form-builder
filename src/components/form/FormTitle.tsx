@@ -2,7 +2,7 @@ import type { Dispatch, FocusEvent, FormEvent, SetStateAction } from "react";
 import { Input } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useEffect, useRef, useState } from "react";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 
 export const FormTitle = ({
   isReadOnly,

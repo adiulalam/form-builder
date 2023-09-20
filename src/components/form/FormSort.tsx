@@ -14,7 +14,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useFormSort } from "@/store/useFormSort";
+import { useFormSort } from "@/store";
 import { useRouter } from "next/router";
 
 const StyledMenu = styled((props: MenuProps) => (

@@ -4,7 +4,7 @@ import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { z } from "zod";
-import { FormProvider } from "@/store/FormProvider";
+import { FormProvider } from "@/store";
 import { FormNavbar } from "@/components/form";
 import { Box, Paper } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";

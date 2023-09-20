@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Status, type Form } from "@prisma/client";
-import { FormProvider } from "@/store/FormProvider";
+import { FormProvider } from "@/store";
 import { api } from "@/utils/api";
 import { z } from "zod";
 

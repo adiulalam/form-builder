@@ -1,9 +1,5 @@
-import type { Question, Form, Option } from "@prisma/client";
+import type { FormProviderType } from "@/types/Provider.types";
 import { createContext, type ReactNode } from "react";
-
-type Options = { options?: Option[] };
-type Questions = { questions?: (Question & Options)[] };
-type FormProviderType = Form & Questions;
 
 export const FormContext = createContext<FormProviderType>(
   {} as FormProviderType,

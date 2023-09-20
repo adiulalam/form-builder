@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material";
 import { api } from "@/utils/api";
 import { useContext } from "react";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 
 export const FormStatus = ({ handleClose }: { handleClose: () => void }) => {
   const { id, status } = useContext(FormContext);

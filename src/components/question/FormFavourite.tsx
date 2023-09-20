@@ -5,7 +5,7 @@ import {
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
 } from "@mui/icons-material";
-import { FormContext } from "@/store/FormProvider";
+import { FormContext } from "@/store";
 
 export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
   // const { isFavourite, id, questions } = useContext(FormContext);
