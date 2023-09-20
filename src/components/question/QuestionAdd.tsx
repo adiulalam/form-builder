@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { FormContext } from "@/store";
 
 export const QuestionAdd = () => {
-  const { id: formId } = useContext(FormContext);
+  const { id: formId, status } = useContext(FormContext);
   const { form } = api.useContext();
 
   const { mutate, isLoading } = api.question.createQuestion.useMutation({
@@ -18,11 +18,12 @@ export const QuestionAdd = () => {
 
   return (
     <>
-      <Tooltip title="Add Form">
+      <Tooltip title="Add Question">
         <Fab
-          className="fixed bottom-8 right-8 bg-primary"
+          className="fixed bottom-8 right-8 bg-sdark"
           size="large"
           onClick={onClickHandler}
+          disabled={status === "COMPLETED"}
         >
           <AddIcon />
         </Fab>

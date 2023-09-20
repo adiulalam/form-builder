@@ -85,6 +85,14 @@ export const getPrivateFormHandler = async ({
           include: {
             options: true,
           },
+          orderBy: [
+            {
+              order: "asc",
+            },
+            {
+              updatedAt: "asc",
+            },
+          ],
         },
       },
     });

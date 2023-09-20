@@ -65,7 +65,7 @@ enum Status {
 model Question {
     id        String   @id @default(uuid())
     question  String
-    order     Int      @unique @default(autoincrement())
+    order     Int      @default(autoincrement())
     type      Type?
     formId    String
     createdAt DateTime @default(now())
@@ -74,13 +74,14 @@ model Question {
     options   Option[]
 
     @@index([formId])
+    @@index([order])
 }
 
 model Option {
     id                String             @id @default(uuid())
     value             String
     questionId        String
-    order             Int                @unique @default(autoincrement())
+    order             Int                @default(autoincrement())
     showInput         Boolean            @default(false)
     inputText         String?
     createdAt         DateTime           @default(now())
@@ -89,6 +90,7 @@ model Option {
     submissionOptions SubmissionOption[]
 
     @@index([questionId])
+    @@index([order])
 }
 
 enum Type {

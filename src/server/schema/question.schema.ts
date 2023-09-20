@@ -16,8 +16,16 @@ export const updateQuestionTitleSchema = z.object({
   }),
 });
 
+export const updateQuestionOrderSchema = z.array(
+  z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+  }),
+);
+
 export type CreateQuestionInput = TypeOf<typeof createQuestionSchema>;
 export type ParamsInput = TypeOf<typeof params>;
+export type UpdateQuestionOrderInput = TypeOf<typeof updateQuestionOrderSchema>;
 export type UpdateQuestionTitleInput = TypeOf<
   typeof updateQuestionTitleSchema
 >["body"];

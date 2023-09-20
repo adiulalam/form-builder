@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import type {
   CreateQuestionInput,
   ParamsInput,
+  UpdateQuestionOrderInput,
   UpdateQuestionTitleInput,
 } from "../schema/question.schema";
 import { prisma } from "../db";
@@ -97,6 +98,56 @@ export const updateQuestionTitleHandler = async ({
       status: "success",
       data: {
         question,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const updateQuestionOrderHandler = async ({
+  input,
+  session,
+}: {
+  input: UpdateQuestionOrderInput;
+  session: Session;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const result = await prisma.$transaction(
+      input.map(({ id, order }) =>
+        prisma.question.update({
+          where: {
+            id,
+            form: {
+              userId,
+            },
+          },
+          data: {
+            order,
+          },
+        }),
+      ),
+    );
+
+    if (!result) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Question with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        result,
       },
     };
   } catch (err) {
