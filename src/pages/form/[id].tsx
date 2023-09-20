@@ -4,16 +4,17 @@ import { api } from "@/utils/api";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { z } from "zod";
-import { FormProvider } from "@/store";
+import { FormProvider, QuestionProvider } from "@/store";
 import { FormNavbar } from "@/components/form";
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Grow } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
+import { TransitionGroup } from "react-transition-group";
 
 const isValidID = (uuid: string): boolean => {
   try {
     const data = z.object({ uuid: z.string().uuid() }).parse({ uuid });
     return !!data.uuid;
-  } catch (e) {
+  } catch {
     return false;
   }
 };
@@ -45,14 +46,17 @@ export default function Forms() {
             <FormNavbar isFetching={isFetching} />
           </Paper>
 
-          <Box
-            className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4"
-            maxWidth={"xl"}
-          >
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-          </Box>
+          <TransitionGroup className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4">
+            {formData.data.form.questions.map((question, index) => (
+              <Grow key={question.id}>
+                <Box maxWidth={"xl"} className="flex w-full">
+                  <QuestionProvider store={{ ...question, index }}>
+                    <QuestionCard />
+                  </QuestionProvider>
+                </Box>
+              </Grow>
+            ))}
+          </TransitionGroup>
 
           <QuestionAdd />
         </FormProvider>

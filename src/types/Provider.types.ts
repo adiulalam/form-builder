@@ -1,7 +1,10 @@
 import type { Question, Form, Option } from "@prisma/client";
 
-export type OptionProviderType = { options?: Option[] };
-export type QuestionProviderType = {
-  questions?: (Question & OptionProviderType)[];
+export type OptionProviderType = Option;
+export type QuestionProviderType = Question & {
+  options?: OptionProviderType[];
+  index?: number;
 };
-export type FormProviderType = Form & QuestionProviderType;
+export type FormProviderType = Form & {
+  questions?: QuestionProviderType[];
+};

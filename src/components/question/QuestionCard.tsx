@@ -1,12 +1,7 @@
 import { useContext, useState } from "react";
 import { FormContext } from "@/store";
+import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import {
-  EditNote as EditNoteIcon,
-  MoreVert as MoreVertIcon,
-  FormatAlignJustify as FormatAlignJustifyIcon,
-} from "@mui/icons-material";
-import {
-  Divider,
   Box,
   Typography,
   IconButton,
@@ -17,32 +12,19 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import {
-  FormFavourite,
-  FormDelete,
-  FormStatus,
-  FormTitle,
-  FormShare,
-} from "../form";
-import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import Link from "next/link";
-import { QuestionOrder } from "./FormFavourite";
+import { QuestionOrder } from "./QuestionOrder";
+import { QuestionTitle } from "./QuestionTitle";
+import dayjs from "dayjs";
 dayjs.extend(localizedFormat);
 
 export const QuestionCard = () => {
-  const { id, status, updatedAt } = useContext(FormContext);
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+  const { status } = useContext(FormContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => setAnchorEl(null);
-
-  const handleEditTitle = () => {
-    setIsReadOnly(false);
-    handleClose();
-  };
 
   return (
     <Card className="flex w-full flex-col">
@@ -66,28 +48,18 @@ export const QuestionCard = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleEditTitle}>Edit Name</MenuItem>
+                <MenuItem onClick={handleClose}>Delete</MenuItem>
               </Menu>
             </Box>
           )
         }
-        title={
-          <FormTitle isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
-        }
+        title={<QuestionTitle />}
         subheader={
           <Box className="flex flex-row flex-wrap items-center gap-2">
             {true && <Typography variant="subtitle2">TYPE HERE</Typography>}
           </Box>
         }
       />
-
-      <Box className="w-1/1 flex self-center">
-        {status === "DRAFT" ? (
-          <EditNoteIcon className="text-[12rem]" />
-        ) : (
-          <FormatAlignJustifyIcon className="text-[12rem]" />
-        )}
-      </Box>
     </Card>
   );
 };

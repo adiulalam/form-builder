@@ -1,6 +1,10 @@
 import { type Session } from "next-auth";
 import { TRPCError } from "@trpc/server";
-import type { CreateQuestionInput } from "../schema/question.schema";
+import type {
+  CreateQuestionInput,
+  ParamsInput,
+  UpdateQuestionTitleInput,
+} from "../schema/question.schema";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
 
@@ -51,6 +55,52 @@ export const createQuestionHandler = async ({
         });
       }
 
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const updateQuestionTitleHandler = async ({
+  input,
+  session,
+  paramsInput,
+}: {
+  input: UpdateQuestionTitleInput;
+  session: Session;
+  paramsInput: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const question = await prisma.question.update({
+      where: {
+        id: paramsInput.id,
+        form: {
+          userId,
+        },
+      },
+      data: input,
+    });
+
+    if (!question) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Question with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        question,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: err.message,
