@@ -6,30 +6,45 @@ import { useRouter } from "next/router";
 import { z } from "zod";
 import { FormProvider, QuestionProvider } from "@/store";
 import { FormNavbar } from "@/components/form";
-import { Box, Paper, Grow } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Grow,
+  Autocomplete,
+  TextField,
+  Tooltip,
+  Fab,
+  Fade,
+} from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
-
-const isValidID = (uuid: string): boolean => {
-  try {
-    const data = z.object({ uuid: z.string().uuid() }).parse({ uuid });
-    return !!data.uuid;
-  } catch {
-    return false;
-  }
-};
+import { useState } from "react";
 
 export default function Forms() {
+  const [value, setValue] = useState("");
+  const [option, setOption] = useState([{ value: "name" }, { value: "yes" }]);
+
   const router = useRouter();
   const { id } = router.query as { id: string };
-  const isValidUUID = isValidID(id);
 
-  const { data: formData, isFetching } = api.form.getPrivateForm.useQuery(
+  const {
+    data: formData,
+    isError,
+    isLoading,
+    isFetching,
+  } = api.form.getPrivateForm.useQuery(
     { id },
-    { enabled: isValidUUID },
+    { enabled: z.string().uuid().safeParse(id).success },
   );
 
-  if (!formData?.data.form) {
+  console.log("🚀 ~ file: [id].tsx:46 ~ Forms ~ isError:", isError);
+
+  if (isLoading) {
+    return <div>loading</div>;
+  }
+
+  if (isError || !formData) {
     return <div>error</div>;
   }
 
@@ -44,6 +59,66 @@ export default function Forms() {
         <FormProvider store={formData.data.form}>
           <Paper className="w-full max-w-screen-xl p-2">
             <FormNavbar isFetching={isFetching} />
+          </Paper>
+
+          <Paper className="w-full max-w-screen-xl p-2">
+            <Autocomplete
+              open={false}
+              multiple
+              options={option}
+              getOptionLabel={(option) => option.value}
+              onKeyDown={
+                (e) =>
+                  e.key === "Enter" &&
+                  value &&
+                  setOption((prev) => [...prev, { value }])
+                // console.log(e.target?.value && e.target.value)
+              }
+              onInputChange={(_, inputValue) => setValue(inputValue)}
+              onChange={(_, newValue) => {
+                setOption([...newValue]);
+              }}
+              inputValue={value}
+              value={option}
+              forcePopupIcon={false}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Add values"
+                  placeholder="Type here"
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {params.InputProps.endAdornment}
+                        {value && (
+                          <Tooltip title="Add Value">
+                            <Fade
+                              in={true}
+                              timeout={500}
+                              className="bg-primary"
+                            >
+                              <Fab
+                                className="absolute right-4 bg-primary"
+                                size="small"
+                                onClick={() =>
+                                  value &&
+                                  setOption((prev) => [...prev, { value }])
+                                }
+                                style={{ transform: "scale(0.6)" }}
+                              >
+                                <AddIcon />
+                              </Fab>
+                            </Fade>
+                          </Tooltip>
+                        )}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+            />
           </Paper>
 
           <TransitionGroup className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4">

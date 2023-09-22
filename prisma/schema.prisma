@@ -81,7 +81,6 @@ model Option {
     id                String             @id @default(uuid())
     value             String
     questionId        String
-    order             Int                @default(autoincrement())
     showInput         Boolean            @default(false)
     inputText         String?
     createdAt         DateTime           @default(now())
@@ -90,7 +89,6 @@ model Option {
     submissionOptions SubmissionOption[]
 
     @@index([questionId])
-    @@index([order])
 }
 
 enum Type {
