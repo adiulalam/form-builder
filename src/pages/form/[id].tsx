@@ -88,7 +88,7 @@ export default function Forms() {
                     {...getTagProps({ index })}
                     key={index}
                     label={option.value}
-                    onDelete={() => console.log("delete")}
+                    onDelete={() => console.log("delete", option)}
                   />
                 ))
               }
