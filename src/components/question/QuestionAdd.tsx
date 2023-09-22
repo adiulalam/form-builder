@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { FormContext } from "@/store";
 
 export const QuestionAdd = () => {
-  const { id: formId, status } = useContext(FormContext);
+  const { id: formId, status, questions } = useContext(FormContext);
   const { form } = api.useContext();
 
   const { mutate, isLoading } = api.question.createQuestion.useMutation({
@@ -13,7 +13,11 @@ export const QuestionAdd = () => {
   });
 
   const onClickHandler = () => {
-    mutate({ question: "Untitled", formId });
+    mutate({
+      question: "Untitled",
+      formId,
+      order: questions ? questions.length + 1 : 1,
+    });
   };
 
   return (

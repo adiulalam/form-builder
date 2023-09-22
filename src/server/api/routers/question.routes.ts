@@ -1,13 +1,17 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   createQuestionHandler,
+  deleteQuestionHandler,
   updateQuestionOrderHandler,
   updateQuestionTitleHandler,
+  updateQuestionTypeHandler,
 } from "@/server/controller/question.controller";
 import {
   createQuestionSchema,
+  params,
   updateQuestionOrderSchema,
   updateQuestionTitleSchema,
+  updateQuestionTypeSchema,
 } from "@/server/schema/question.schema";
 
 export const questionRouter = createTRPCRouter({
@@ -32,5 +36,19 @@ export const questionRouter = createTRPCRouter({
         session,
         input,
       }),
+    ),
+  updateQuestionType: protectedProcedure
+    .input(updateQuestionTypeSchema)
+    .mutation(({ input, ctx: { session } }) =>
+      updateQuestionTypeHandler({
+        session,
+        paramsInput: input.params,
+        input: input.body,
+      }),
+    ),
+  deleteQuestion: protectedProcedure
+    .input(params)
+    .mutation(({ input, ctx: { session } }) =>
+      deleteQuestionHandler({ session, input }),
     ),
 });

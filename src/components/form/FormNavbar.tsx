@@ -31,7 +31,7 @@ export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {
         <FormTitle
           isReadOnly={isReadOnly}
           setIsReadOnly={setIsReadOnly}
-          isClickEdit={true}
+          isClickEdit={status === "DRAFT"}
         />
       </Box>
       <Box className="flex flex-row items-center justify-between">

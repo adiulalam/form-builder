@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FormContext } from "@/store";
+import { FormContext, QuestionContext } from "@/store";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import {
   Box,
@@ -9,17 +9,18 @@ import {
   CardHeader,
   Card,
   Menu,
-  MenuItem,
   Tooltip,
+  Divider,
 } from "@mui/material";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { QuestionOrder } from "./QuestionOrder";
-import { QuestionTitle } from "./QuestionTitle";
+import { QuestionOrder, QuestionTitle, QuestionDelete, QuestionType } from ".";
 import dayjs from "dayjs";
+
 dayjs.extend(localizedFormat);
 
 export const QuestionCard = () => {
   const { status } = useContext(FormContext);
+  const { type } = useContext(QuestionContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -48,7 +49,9 @@ export const QuestionCard = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <QuestionType handleClose={handleClose} />
+                <Divider />
+                <QuestionDelete handleClose={handleClose} />
               </Menu>
             </Box>
           )
@@ -56,7 +59,12 @@ export const QuestionCard = () => {
         title={<QuestionTitle />}
         subheader={
           <Box className="flex flex-row flex-wrap items-center gap-2">
-            {true && <Typography variant="subtitle2">TYPE HERE</Typography>}
+            <Typography
+              variant="subtitle2"
+              color={type ? "inherit" : "lightsalmon"}
+            >
+              {type ? type : "NO TYPE PROVIDED"}
+            </Typography>
           </Box>
         }
       />

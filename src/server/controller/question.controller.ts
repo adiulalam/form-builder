@@ -5,6 +5,7 @@ import type {
   ParamsInput,
   UpdateQuestionOrderInput,
   UpdateQuestionTitleInput,
+  UpdateQuestionTypeInput,
 } from "../schema/question.schema";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
@@ -111,6 +112,52 @@ export const updateQuestionTitleHandler = async ({
   }
 };
 
+export const updateQuestionTypeHandler = async ({
+  input,
+  session,
+  paramsInput,
+}: {
+  input: UpdateQuestionTypeInput;
+  session: Session;
+  paramsInput: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const question = await prisma.question.update({
+      where: {
+        id: paramsInput.id,
+        form: {
+          userId,
+        },
+      },
+      data: input,
+    });
+
+    if (!question) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Question with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        question,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
 export const updateQuestionOrderHandler = async ({
   input,
   session,
@@ -149,6 +196,45 @@ export const updateQuestionOrderHandler = async ({
       data: {
         result,
       },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const deleteQuestionHandler = async ({
+  session,
+  input,
+}: {
+  session: Session;
+  input: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const question = await prisma.question.delete({
+      where: {
+        id: input.id,
+        form: { userId },
+      },
+    });
+
+    if (!question) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Question with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: null,
     };
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {

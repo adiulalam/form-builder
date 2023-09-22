@@ -1,6 +1,8 @@
+import { Type } from "@prisma/client";
 import { z, type TypeOf } from "zod";
 
 export const createQuestionSchema = z.object({
+  order: z.number(),
   question: z.string().min(1),
   formId: z.string().uuid(),
 });
@@ -23,9 +25,19 @@ export const updateQuestionOrderSchema = z.array(
   }),
 );
 
+export const updateQuestionTypeSchema = z.object({
+  params,
+  body: z.object({
+    type: z.nativeEnum(Type),
+  }),
+});
+
 export type CreateQuestionInput = TypeOf<typeof createQuestionSchema>;
 export type ParamsInput = TypeOf<typeof params>;
 export type UpdateQuestionOrderInput = TypeOf<typeof updateQuestionOrderSchema>;
 export type UpdateQuestionTitleInput = TypeOf<
   typeof updateQuestionTitleSchema
+>["body"];
+export type UpdateQuestionTypeInput = TypeOf<
+  typeof updateQuestionTypeSchema
 >["body"];
