@@ -15,6 +15,7 @@ import {
   Tooltip,
   Fab,
   Fade,
+  Chip,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
@@ -81,6 +82,16 @@ export default function Forms() {
               inputValue={value}
               value={option}
               forcePopupIcon={false}
+              renderTags={(tagValue, getTagProps) =>
+                tagValue.map((option, index) => (
+                  <Chip
+                    {...getTagProps({ index })}
+                    key={index}
+                    label={option.value}
+                    onDelete={() => console.log("delete")}
+                  />
+                ))
+              }
               renderInput={(params) => (
                 <TextField
                   {...params}
