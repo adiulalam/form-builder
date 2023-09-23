@@ -70,9 +70,11 @@ export const QuestionCard = () => {
           </Box>
         }
       />
-      <CardContent>
-        <OptionBar />
-      </CardContent>
+      {type && (
+        <CardContent>
+          <OptionBar />
+        </CardContent>
+      )}
     </Card>
   );
 };

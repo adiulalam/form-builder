@@ -32,6 +32,13 @@ export const updateQuestionTypeSchema = z.object({
   }),
 });
 
+export const updateQuestionShowInputSchema = z.object({
+  params,
+  body: z.object({
+    showInput: z.boolean(),
+  }),
+});
+
 export type CreateQuestionInput = TypeOf<typeof createQuestionSchema>;
 export type ParamsInput = TypeOf<typeof params>;
 export type UpdateQuestionOrderInput = TypeOf<typeof updateQuestionOrderSchema>;
@@ -40,4 +47,7 @@ export type UpdateQuestionTitleInput = TypeOf<
 >["body"];
 export type UpdateQuestionTypeInput = TypeOf<
   typeof updateQuestionTypeSchema
+>["body"];
+export type UpdateQuestionShowInput = TypeOf<
+  typeof updateQuestionShowInputSchema
 >["body"];

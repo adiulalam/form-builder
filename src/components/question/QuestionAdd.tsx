@@ -15,7 +15,7 @@ export const QuestionAdd = () => {
   const onClickHandler = () => {
     mutate({
       question: `Untitled Question ${
-        questions?.length ? questions.length + 1 : ""
+        questions?.length ? questions.length + 1 : 1
       }`,
       formId,
       order: questions ? questions.length + 1 : 1,

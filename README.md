@@ -41,5 +41,5 @@ npx prisma db push
 ```
 
 ```bash
-npx prisma migrate deploy 
+npx prisma migrate deploy
 ```
