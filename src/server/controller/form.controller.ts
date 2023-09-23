@@ -82,9 +82,6 @@ export const getPrivateFormHandler = async ({
       },
       include: {
         questions: {
-          include: {
-            options: true,
-          },
           orderBy: [
             {
               order: "asc",
@@ -93,6 +90,15 @@ export const getPrivateFormHandler = async ({
               updatedAt: "asc",
             },
           ],
+          include: {
+            options: {
+              orderBy: [
+                {
+                  updatedAt: "asc",
+                },
+              ],
+            },
+          },
         },
       },
     });
@@ -134,8 +140,22 @@ export const getPublicFormHandler = async ({
       },
       include: {
         questions: {
+          orderBy: [
+            {
+              order: "asc",
+            },
+            {
+              updatedAt: "asc",
+            },
+          ],
           include: {
-            options: true,
+            options: {
+              orderBy: [
+                {
+                  updatedAt: "asc",
+                },
+              ],
+            },
           },
         },
       },

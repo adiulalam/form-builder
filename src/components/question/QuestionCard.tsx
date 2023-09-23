@@ -11,10 +11,12 @@ import {
   Menu,
   Tooltip,
   Divider,
+  CardContent,
 } from "@mui/material";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { QuestionOrder, QuestionTitle, QuestionDelete, QuestionType } from ".";
 import dayjs from "dayjs";
+import { OptionBar } from "../option";
 
 dayjs.extend(localizedFormat);
 
@@ -58,7 +60,7 @@ export const QuestionCard = () => {
         }
         title={<QuestionTitle />}
         subheader={
-          <Box className="mt-2 flex flex-row flex-wrap items-center gap-2">
+          <Box className="mt-4 flex flex-col flex-wrap gap-2">
             <Typography
               variant="subtitle2"
               color={type ? "inherit" : "lightsalmon"}
@@ -68,6 +70,9 @@ export const QuestionCard = () => {
           </Box>
         }
       />
+      <CardContent>
+        <OptionBar />
+      </CardContent>
     </Card>
   );
 };

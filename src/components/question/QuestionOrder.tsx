@@ -61,21 +61,25 @@ export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
 
   return (
     <Tooltip title={isUp ? "Move UP the question" : "Move Down the question"}>
-      <IconButton
-        onClick={onClickHandler}
-        disabled={
-          (isUp && currentQuestionIndex === 0) ||
-          (!isUp && questions && currentQuestionIndex === questions.length - 1)
-        }
-      >
-        {isUp ? (
-          <Zoom in={isUp}>
-            <KeyboardArrowUpIcon />
-          </Zoom>
-        ) : (
-          <KeyboardArrowDownIcon />
-        )}
-      </IconButton>
+      <span>
+        <IconButton
+          onClick={onClickHandler}
+          disabled={
+            (isUp && currentQuestionIndex === 0) ||
+            (!isUp &&
+              questions &&
+              currentQuestionIndex === questions.length - 1)
+          }
+        >
+          {isUp ? (
+            <Zoom in={isUp}>
+              <KeyboardArrowUpIcon />
+            </Zoom>
+          ) : (
+            <KeyboardArrowDownIcon />
+          )}
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };
