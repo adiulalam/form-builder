@@ -1,7 +1,7 @@
-import { Box, Paper, Tooltip, IconButton, Menu, Divider } from "@mui/material";
+import { Box, Paper, Tooltip, IconButton, Menu } from "@mui/material";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { useState } from "react";
-import { OptionAutocomplete } from "./OptionAutocomplete";
+import { OptionAutocomplete, OptionDelete } from ".";
 
 export const OptionBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -31,9 +31,9 @@ export const OptionBar = () => {
         >
           {/* 
             // Add other input option
-            // delete option
              */}
-          <Divider />
+          {/* <Divider /> */}
+          <OptionDelete handleClose={handleClose} />
         </Menu>
       </Box>
     </Box>

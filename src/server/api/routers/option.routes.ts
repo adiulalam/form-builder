@@ -1,6 +1,7 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   createOptionHandler,
+  deleteAllOptionsHandler,
   deleteOptionHandler,
 } from "@/server/controller/option.controller";
 import { createOptionSchema, params } from "@/server/schema/option.schema";
@@ -15,5 +16,10 @@ export const optionRouter = createTRPCRouter({
     .input(params)
     .mutation(({ input, ctx: { session } }) =>
       deleteOptionHandler({ session, input }),
+    ),
+  deleteAllOptions: protectedProcedure
+    .input(params)
+    .mutation(({ input, ctx: { session } }) =>
+      deleteAllOptionsHandler({ session, input }),
     ),
 });

@@ -104,3 +104,46 @@ export const deleteOptionHandler = async ({
     throw err;
   }
 };
+
+export const deleteAllOptionsHandler = async ({
+  session,
+  input,
+}: {
+  session: Session;
+  input: ParamsInput;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const option = await prisma.option.deleteMany({
+      where: {
+        questionId: input.id,
+        question: {
+          form: {
+            userId,
+          },
+        },
+      },
+    });
+
+    if (!option) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Option with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: null,
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
