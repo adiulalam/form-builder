@@ -41,7 +41,7 @@ export const QuestionTitle = () => {
         readOnly={isReadOnly || status === "COMPLETED"}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        disableUnderline={isReadOnly || status === "COMPLETED"}
+        disableUnderline={isReadOnly && status === "COMPLETED"}
         inputRef={inputRef}
         onBlur={onSubmitHandler}
         className="text-2xl"

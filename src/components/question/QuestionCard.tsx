@@ -58,7 +58,7 @@ export const QuestionCard = () => {
         }
         title={<QuestionTitle />}
         subheader={
-          <Box className="flex flex-row flex-wrap items-center gap-2">
+          <Box className="mt-2 flex flex-row flex-wrap items-center gap-2">
             <Typography
               variant="subtitle2"
               color={type ? "inherit" : "lightsalmon"}
