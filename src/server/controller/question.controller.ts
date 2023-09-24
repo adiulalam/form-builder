@@ -20,22 +20,21 @@ export const createQuestionHandler = async ({
   try {
     const userId = session.user.id;
 
-    await prisma.form.findFirstOrThrow({
+    const formUser = prisma.form.findFirstOrThrow({
       where: {
         id: input.formId,
         userId,
       },
+      select: { id: true },
     });
 
-    const data = {
-      ...input,
-    };
-
-    const question = await prisma.question.create({
-      data,
+    const createQuestion = prisma.question.create({
+      data: input,
     });
 
-    if (!question) {
+    const result = await prisma.$transaction([formUser, createQuestion]);
+
+    if (!result) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Question with that ID not found",
@@ -45,7 +44,7 @@ export const createQuestionHandler = async ({
     return {
       status: "success",
       data: {
-        question,
+        result,
       },
     };
   } catch (err) {
@@ -124,7 +123,7 @@ export const updateQuestionTypeHandler = async ({
   try {
     const userId = session.user.id;
 
-    const question = await prisma.question.update({
+    const updateQuestion = prisma.question.update({
       where: {
         id: paramsInput.id,
         form: {
@@ -134,57 +133,77 @@ export const updateQuestionTypeHandler = async ({
       data: input,
     });
 
-    if (!question) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Question with that ID not found",
-      });
-    }
-
-    if (input.type === "INPUT") {
-      await prisma.$transaction([
-        prisma.option.deleteMany({
-          where: {
-            value: "Other:",
-            showInput: true,
-            questionId: paramsInput.id,
-            question: {
-              form: {
-                userId,
-              },
-            },
-          },
-        }),
-
-        prisma.option.create({
-          data: {
-            value: "Input",
-            questionId: paramsInput.id,
-            showInput: true,
-          },
-        }),
-      ]);
-    } else {
-      await prisma.option.deleteMany({
-        where: {
-          value: "Input",
-          showInput: true,
-          questionId: paramsInput.id,
-          question: {
-            form: {
-              userId,
-            },
+    const deleteOthers = prisma.option.deleteMany({
+      where: {
+        value: "Other:",
+        showInput: true,
+        questionId: paramsInput.id,
+        question: {
+          form: {
+            userId,
           },
         },
-      });
-    }
-
-    return {
-      status: "success",
-      data: {
-        question,
       },
-    };
+    });
+
+    const createInput = prisma.option.create({
+      data: {
+        value: "Input",
+        questionId: paramsInput.id,
+        showInput: true,
+      },
+    });
+
+    const deleteInputs = prisma.option.deleteMany({
+      where: {
+        value: "Input",
+        showInput: true,
+        questionId: paramsInput.id,
+        question: {
+          form: {
+            userId,
+          },
+        },
+      },
+    });
+
+    if (input.type === "INPUT") {
+      const result = await prisma.$transaction([
+        updateQuestion,
+        deleteOthers,
+        createInput,
+      ]);
+
+      if (!result) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Question with that ID not found",
+        });
+      }
+
+      return {
+        status: "success",
+        data: {
+          result,
+        },
+      };
+    } else {
+      const result = await prisma.$transaction([updateQuestion, deleteInputs]);
+
+      if (!result) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Question with that ID not found",
+        });
+      }
+
+      return {
+        status: "success",
+        data: {
+          result,
+        },
+      };
+    }
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       throw new TRPCError({

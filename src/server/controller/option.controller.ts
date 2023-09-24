@@ -18,24 +18,23 @@ export const createOptionHandler = async ({
   try {
     const userId = session.user.id;
 
-    await prisma.question.findFirstOrThrow({
+    const questionUser = prisma.question.findFirstOrThrow({
       where: {
         id: input.questionId,
         form: {
           userId,
         },
       },
+      select: { id: true },
     });
 
-    const data = {
-      ...input,
-    };
-
-    const option = await prisma.option.create({
-      data,
+    const createOption = prisma.option.create({
+      data: input,
     });
 
-    if (!option) {
+    const result = await prisma.$transaction([questionUser, createOption]);
+
+    if (!result) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "Option with that ID not found",
@@ -45,7 +44,7 @@ export const createOptionHandler = async ({
     return {
       status: "success",
       data: {
-        option,
+        result,
       },
     };
   } catch (err) {
@@ -76,7 +75,7 @@ export const createOrDeleteOptionHandler = async ({
   try {
     const userId = session.user.id;
 
-    await prisma.question.findFirstOrThrow({
+    const questionUser = prisma.question.findFirstOrThrow({
       where: {
         id: input.questionId,
         form: {
@@ -85,21 +84,31 @@ export const createOrDeleteOptionHandler = async ({
       },
     });
 
-    if (input.isOtherOption) {
-      const option = await prisma.option.deleteMany({
-        where: {
-          value: "Other:",
-          showInput: true,
-          questionId: input.questionId,
-          question: {
-            form: {
-              userId,
-            },
+    const deleteOptions = prisma.option.deleteMany({
+      where: {
+        value: "Other:",
+        showInput: true,
+        questionId: input.questionId,
+        question: {
+          form: {
+            userId,
           },
         },
-      });
+      },
+    });
 
-      if (!option) {
+    const createOption = prisma.option.create({
+      data: {
+        value: "Other:",
+        questionId: input.questionId,
+        showInput: true,
+      },
+    });
+
+    if (input.isOtherOption) {
+      const result = await prisma.$transaction([questionUser, deleteOptions]);
+
+      if (!result) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Option with that ID not found",
@@ -109,19 +118,13 @@ export const createOrDeleteOptionHandler = async ({
       return {
         status: "success",
         data: {
-          option,
+          result,
         },
       };
     } else {
-      const option = await prisma.option.create({
-        data: {
-          value: "Other:",
-          questionId: input.questionId,
-          showInput: true,
-        },
-      });
+      const result = await prisma.$transaction([questionUser, createOption]);
 
-      if (!option) {
+      if (!result) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Option with that ID not found",
@@ -131,7 +134,7 @@ export const createOrDeleteOptionHandler = async ({
       return {
         status: "success",
         data: {
-          option,
+          result,
         },
       };
     }
