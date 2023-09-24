@@ -70,11 +70,7 @@ export const QuestionCard = () => {
           </Box>
         }
       />
-      {type && (
-        <CardContent>
-          <OptionBar />
-        </CardContent>
-      )}
+      {type && <CardContent>{status === "DRAFT" && <OptionBar />}</CardContent>}
     </Card>
   );
 };
