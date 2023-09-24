@@ -76,7 +76,9 @@ export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
               <KeyboardArrowUpIcon />
             </Zoom>
           ) : (
-            <KeyboardArrowDownIcon />
+            <Zoom in={!isUp}>
+              <KeyboardArrowDownIcon />
+            </Zoom>
           )}
         </IconButton>
       </span>
