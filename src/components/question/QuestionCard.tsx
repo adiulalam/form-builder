@@ -17,13 +17,13 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import { QuestionOrder, QuestionTitle, QuestionDelete, QuestionType } from ".";
 import dayjs from "dayjs";
 import { OptionBar } from "../option";
-
 dayjs.extend(localizedFormat);
 
 export const QuestionCard = () => {
   const { status } = useContext(FormContext);
   const { type } = useContext(QuestionContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -65,7 +65,7 @@ export const QuestionCard = () => {
               variant="subtitle2"
               color={type ? "inherit" : "lightsalmon"}
             >
-              {type ? type : "NO TYPE PROVIDED"}
+              {type ?? "NO TYPE PROVIDED"}
             </Typography>
           </Box>
         }
