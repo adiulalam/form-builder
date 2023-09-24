@@ -4,21 +4,23 @@ import { api } from "@/utils/api";
 import { useContext } from "react";
 import { FormContext, QuestionContext } from "@/store";
 
-export const QuestionShowInput = ({
+export const OptionAddInput = ({
   handleClose,
 }: {
   handleClose: () => void;
 }) => {
-  const { id: formId } = useContext(FormContext);
-  const { id: questionId, showInput } = useContext(QuestionContext);
   const { form } = api.useContext();
+  const { id: formId } = useContext(FormContext);
+  const { id: questionId, options } = useContext(QuestionContext);
 
-  const { mutate } = api.question.updateQuestionShowInput.useMutation({
+  const { mutate } = api.option.createOrDeleteOption.useMutation({
     onSuccess: () => form.getPrivateForm.invalidate({ id: formId }),
   });
 
+  const isOtherOption = !!options?.find((option) => option.showInput);
+
   const onClickHandler = () => {
-    mutate({ params: { id: questionId }, body: { showInput: !showInput } });
+    mutate({ questionId, isOtherOption });
     handleClose();
   };
 
@@ -28,7 +30,7 @@ export const QuestionShowInput = ({
         <KeyboardIcon />
       </ListItemIcon>
       <ListItemText>
-        {showInput ? "Remove" : "Add"} &apos;Other&apos; input field
+        {isOtherOption ? "Remove" : "Add"} &apos;Other&apos; input field
       </ListItemText>
     </MenuItem>
   );

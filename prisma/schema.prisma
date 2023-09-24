@@ -30,6 +30,7 @@ model Submission {
 
 model SubmissionOption {
     id           String     @id @default(uuid())
+    inputText    String?
     submissionId String
     optionId     String
     createdAt    DateTime   @default(now())
@@ -66,7 +67,6 @@ model Question {
     id        String   @id @default(uuid())
     question  String
     order     Int      @default(autoincrement())
-    showInput Boolean  @default(false)
     type      Type?
     formId    String
     createdAt DateTime @default(now())
@@ -82,7 +82,7 @@ model Option {
     id                String             @id @default(uuid())
     value             String
     questionId        String
-    selectedInput     Boolean            @default(false)
+    showInput         Boolean            @default(false)
     createdAt         DateTime           @default(now())
     updatedAt         DateTime           @updatedAt
     question          Question           @relation(fields: [questionId], references: [id], onDelete: Cascade)

@@ -1,16 +1,26 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   createOptionHandler,
+  createOrDeleteOptionHandler,
   deleteAllOptionsHandler,
   deleteOptionHandler,
 } from "@/server/controller/option.controller";
-import { createOptionSchema, params } from "@/server/schema/option.schema";
+import {
+  createOptionSchema,
+  createOrDeleteSchema,
+  params,
+} from "@/server/schema/option.schema";
 
 export const optionRouter = createTRPCRouter({
   createOption: protectedProcedure
     .input(createOptionSchema)
     .mutation(({ input, ctx: { session } }) =>
       createOptionHandler({ session, input }),
+    ),
+  createOrDeleteOption: protectedProcedure
+    .input(createOrDeleteSchema)
+    .mutation(({ input, ctx: { session } }) =>
+      createOrDeleteOptionHandler({ session, input }),
     ),
   deleteOption: protectedProcedure
     .input(params)

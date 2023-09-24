@@ -2,7 +2,9 @@ import { OptionAdd } from "./OptionAdd";
 import { OptionAutocomplete } from "./OptionAutocomplete";
 import { OptionBar } from "./OptionBar";
 import { OptionDelete } from "./OptionDelete";
-import { OptionField } from "./OptionField";
+import { OptionOtherInput } from "./OptionOtherInput";
+import { OptionInput } from "./OptionInput";
+import { OptionAddInput } from "./OptionAddInput";
 import { OptionValue } from "./OptionValue";
 
 export {
@@ -11,5 +13,7 @@ export {
   OptionAdd,
   OptionValue,
   OptionDelete,
-  OptionField,
+  OptionOtherInput,
+  OptionAddInput,
+  OptionInput,
 };

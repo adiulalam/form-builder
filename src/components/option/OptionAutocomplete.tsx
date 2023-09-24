@@ -6,8 +6,8 @@ import { OptionValue } from "./OptionValue";
 
 export const OptionAutocomplete = () => {
   const autocompleteRef = useRef(null);
-  const { options } = useContext(QuestionContext);
   const [value, setValue] = useState<string>("");
+  const { options } = useContext(QuestionContext);
 
   return (
     <Autocomplete
@@ -21,14 +21,16 @@ export const OptionAutocomplete = () => {
       value={options}
       forcePopupIcon={false}
       renderTags={(tagValue, getTagProps) =>
-        tagValue.map((option, index) => (
-          <OptionValue
-            key={index}
-            getTagProps={getTagProps}
-            option={option}
-            index={index}
-          />
-        ))
+        tagValue
+          .filter((option) => !option.showInput)
+          .map((option, index) => (
+            <OptionValue
+              key={index}
+              getTagProps={getTagProps}
+              option={option}
+              index={index}
+            />
+          ))
       }
       renderInput={(params) => (
         <TextField

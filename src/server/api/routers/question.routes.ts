@@ -3,7 +3,6 @@ import {
   createQuestionHandler,
   deleteQuestionHandler,
   updateQuestionOrderHandler,
-  updateQuestionShowInputHandler,
   updateQuestionTitleHandler,
   updateQuestionTypeHandler,
 } from "@/server/controller/question.controller";
@@ -11,7 +10,6 @@ import {
   createQuestionSchema,
   params,
   updateQuestionOrderSchema,
-  updateQuestionShowInputSchema,
   updateQuestionTitleSchema,
   updateQuestionTypeSchema,
 } from "@/server/schema/question.schema";
@@ -43,15 +41,6 @@ export const questionRouter = createTRPCRouter({
     .input(updateQuestionTypeSchema)
     .mutation(({ input, ctx: { session } }) =>
       updateQuestionTypeHandler({
-        session,
-        paramsInput: input.params,
-        input: input.body,
-      }),
-    ),
-  updateQuestionShowInput: protectedProcedure
-    .input(updateQuestionShowInputSchema)
-    .mutation(({ input, ctx: { session } }) =>
-      updateQuestionShowInputHandler({
         session,
         paramsInput: input.params,
         input: input.body,

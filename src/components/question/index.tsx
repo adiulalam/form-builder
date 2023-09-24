@@ -4,7 +4,6 @@ import { QuestionCard } from "./QuestionCard";
 import { QuestionTitle } from "./QuestionTitle";
 import { QuestionDelete } from "./QuestionDelete";
 import { QuestionType } from "./QuestionType";
-import { QuestionShowInput } from "./QuestionShowInput";
 
 export {
   QuestionCard,
@@ -13,5 +12,4 @@ export {
   QuestionTitle,
   QuestionDelete,
   QuestionType,
-  QuestionShowInput,
 };

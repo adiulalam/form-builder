@@ -4,7 +4,6 @@ import type {
   CreateQuestionInput,
   ParamsInput,
   UpdateQuestionOrderInput,
-  UpdateQuestionShowInput,
   UpdateQuestionTitleInput,
   UpdateQuestionTypeInput,
 } from "../schema/question.schema";
@@ -142,6 +141,44 @@ export const updateQuestionTypeHandler = async ({
       });
     }
 
+    if (input.type === "INPUT") {
+      await prisma.$transaction([
+        prisma.option.deleteMany({
+          where: {
+            value: "Other:",
+            showInput: true,
+            questionId: paramsInput.id,
+            question: {
+              form: {
+                userId,
+              },
+            },
+          },
+        }),
+
+        prisma.option.create({
+          data: {
+            value: "Input",
+            questionId: paramsInput.id,
+            showInput: true,
+          },
+        }),
+      ]);
+    } else {
+      await prisma.option.deleteMany({
+        where: {
+          value: "Input",
+          showInput: true,
+          questionId: paramsInput.id,
+          question: {
+            form: {
+              userId,
+            },
+          },
+        },
+      });
+    }
+
     return {
       status: "success",
       data: {
@@ -196,52 +233,6 @@ export const updateQuestionOrderHandler = async ({
       status: "success",
       data: {
         result,
-      },
-    };
-  } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: err.message,
-      });
-    }
-    throw err;
-  }
-};
-
-export const updateQuestionShowInputHandler = async ({
-  input,
-  session,
-  paramsInput,
-}: {
-  input: UpdateQuestionShowInput;
-  session: Session;
-  paramsInput: ParamsInput;
-}) => {
-  try {
-    const userId = session.user.id;
-
-    const question = await prisma.question.update({
-      where: {
-        id: paramsInput.id,
-        form: {
-          userId,
-        },
-      },
-      data: input,
-    });
-
-    if (!question) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "Question with that ID not found",
-      });
-    }
-
-    return {
-      status: "success",
-      data: {
-        question,
       },
     };
   } catch (err) {
