@@ -25,14 +25,16 @@ export const QuestionAdd = () => {
   return (
     <>
       <Tooltip title="Add Question">
-        <Fab
-          className="fixed bottom-8 right-8 bg-sdark"
-          size="large"
-          onClick={onClickHandler}
-          disabled={status === "COMPLETED"}
-        >
-          <AddIcon />
-        </Fab>
+        <span>
+          <Fab
+            className="fixed bottom-8 right-8 bg-sdark"
+            size="large"
+            onClick={onClickHandler}
+            disabled={status === "COMPLETED"}
+          >
+            <AddIcon />
+          </Fab>
+        </span>
       </Tooltip>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

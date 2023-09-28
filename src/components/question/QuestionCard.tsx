@@ -17,6 +17,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import { QuestionOrder, QuestionTitle, QuestionDelete, QuestionType } from ".";
 import dayjs from "dayjs";
 import { OptionBar } from "../option";
+import { FieldContainer } from "../field";
 dayjs.extend(localizedFormat);
 
 export const QuestionCard = () => {
@@ -70,7 +71,11 @@ export const QuestionCard = () => {
           </Box>
         }
       />
-      {type && <CardContent>{status === "DRAFT" && <OptionBar />}</CardContent>}
+      {type && (
+        <CardContent>
+          {status === "DRAFT" ? <OptionBar /> : <FieldContainer />}
+        </CardContent>
+      )}
     </Card>
   );
 };
