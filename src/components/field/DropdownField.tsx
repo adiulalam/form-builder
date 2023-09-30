@@ -6,11 +6,21 @@ export const DropdownField = ({
   name,
   options,
   setShowOtherField,
+  setOtherValue,
 }: {
   name: string;
-  setShowOtherField: Dispatch<SetStateAction<boolean>>;
   options: Option[];
+  setShowOtherField: Dispatch<SetStateAction<boolean>>;
+  setOtherValue: Dispatch<SetStateAction<string>>;
 }) => {
+  const onChangeHandler = (id: string) => {
+    console.log("🚀 ~ file: DropdownField.tsx:17 ~ onChangeHandler ~ id:", id);
+    const isOtherField = options.find((option) => option.id === id);
+
+    setOtherValue("");
+    setShowOtherField(!!isOtherField?.showInput);
+  };
+
   return (
     <SelectElement
       name={name}
@@ -18,9 +28,7 @@ export const DropdownField = ({
       labelKey="value"
       fullWidth
       required
-      onChange={({ showInput }: { showInput: boolean }) =>
-        setShowOtherField(showInput)
-      }
+      onChange={onChangeHandler}
     />
   );
 };

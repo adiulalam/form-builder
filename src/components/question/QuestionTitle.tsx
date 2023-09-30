@@ -1,5 +1,5 @@
 import type { FocusEvent, FormEvent } from "react";
-import { Input } from "@mui/material";
+import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useEffect, useRef, useState } from "react";
 import { FormContext, QuestionContext } from "@/store";
@@ -35,7 +35,7 @@ export const QuestionTitle = () => {
   }, [isReadOnly]);
 
   return (
-    <form onSubmit={onSubmitHandler} className="w-auto">
+    <Box className="w-auto">
       <Input
         fullWidth
         readOnly={isReadOnly || status === "COMPLETED"}
@@ -48,6 +48,6 @@ export const QuestionTitle = () => {
         onClick={() => setIsReadOnly(false)}
         multiline
       />
-    </form>
+    </Box>
   );
 };

@@ -11,6 +11,12 @@ export const CheckboxField = ({
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
   options: Option[];
 }) => {
+  const onChangeHandler = (options: Option[]) => {
+    const isOtherField = options.find((option) => option.showInput);
+
+    setShowOtherField(!!isOtherField?.showInput);
+  };
+
   return (
     <CheckboxButtonGroup
       name={name}
@@ -18,9 +24,8 @@ export const CheckboxField = ({
       labelKey="value"
       row={true}
       required
-      onChange={({ showInput }: { showInput: boolean }) =>
-        setShowOtherField(showInput)
-      }
+      onChange={onChangeHandler}
+      returnObject={true}
     />
   );
 };

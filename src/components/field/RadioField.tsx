@@ -11,6 +11,12 @@ export const RadioField = ({
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
   options: Option[];
 }) => {
+  const onChangeHandler = (id: string) => {
+    const isOtherField = options.find((option) => option.id === id);
+
+    setShowOtherField(!!isOtherField?.showInput);
+  };
+
   return (
     <RadioButtonGroup
       name={name}
@@ -18,10 +24,7 @@ export const RadioField = ({
       labelKey="value"
       required
       row={true}
-      onChange={({ showInput }: { showInput: boolean }) =>
-        setShowOtherField(showInput)
-      }
-      returnObject={true}
+      onChange={onChangeHandler}
     />
   );
 };

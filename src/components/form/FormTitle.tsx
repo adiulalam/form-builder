@@ -1,5 +1,5 @@
 import type { Dispatch, FocusEvent, FormEvent, SetStateAction } from "react";
-import { Input } from "@mui/material";
+import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useEffect, useRef, useState } from "react";
 import { FormContext } from "@/store";
@@ -44,7 +44,7 @@ export const FormTitle = ({
   }, [isReadOnly]);
 
   return (
-    <form onSubmit={onSubmitHandler} className="w-auto">
+    <Box className="w-auto">
       <Input
         fullWidth
         readOnly={isReadOnly}
@@ -57,6 +57,6 @@ export const FormTitle = ({
         onClick={() => isClickEdit && setIsReadOnly(false)}
         multiline
       />
-    </form>
+    </Box>
   );
 };
