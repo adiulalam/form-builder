@@ -2,14 +2,6 @@ import { CheckboxField } from "./CheckboxField";
 import { DropdownField } from "./DropdownField";
 import { FieldContainer } from "./FieldContainer";
 import { RadioField } from "./RadioField";
-import { TextArea } from "./TextArea";
-import { TextField } from "./TextField";
+import { TextInput } from "./TextInput";
 
-export {
-  TextField,
-  FieldContainer,
-  CheckboxField,
-  RadioField,
-  DropdownField,
-  TextArea,
-};
+export { FieldContainer, CheckboxField, RadioField, DropdownField, TextInput };

@@ -1,6 +1,14 @@
 import type { Option } from "@prisma/client";
-import { CheckboxButtonGroup } from "react-hook-form-mui";
 import type { Dispatch, SetStateAction } from "react";
+import { Controller } from "react-hook-form";
+import {
+  FormControl,
+  FormHelperText,
+  FormGroup,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import { useReactForm } from "@/store";
 
 export const CheckboxField = ({
   name,
@@ -8,24 +16,58 @@ export const CheckboxField = ({
   setShowOtherField,
 }: {
   name: string;
-  setShowOtherField: Dispatch<SetStateAction<boolean>>;
   options: Option[];
+  setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const onChangeHandler = (options: Option[]) => {
-    const isOtherField = options.find((option) => option.showInput);
-
-    setShowOtherField(!!isOtherField?.showInput);
-  };
+  const control = useReactForm((state) => state.control);
 
   return (
-    <CheckboxButtonGroup
+    <Controller
       name={name}
-      options={options}
-      labelKey="value"
-      row={true}
-      required
-      onChange={onChangeHandler}
-      returnObject={true}
+      control={control}
+      rules={{
+        required: { value: true, message: "Required Field" },
+      }}
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
+        <FormControl fullWidth error={!!error}>
+          <FormGroup
+            onChange={(e) => {
+              const newValue = (value as unknown as Option[]) ?? [];
+              const checked = (e.target as HTMLInputElement).checked;
+              const id = (e.target as HTMLInputElement).value;
+              const selectedValue = options.find((option) => option.id === id);
+
+              let result = [];
+
+              if (checked) {
+                result = [...newValue, selectedValue];
+                onChange(result);
+              } else {
+                result = newValue.filter(
+                  (value) => value.id !== selectedValue?.id,
+                );
+                onChange(result);
+              }
+
+              const isOtherField = result?.find((option) => option?.showInput);
+
+              setShowOtherField(!!isOtherField?.showInput);
+            }}
+            defaultValue=""
+            row={true}
+          >
+            {options.map((option, index) => (
+              <FormControlLabel
+                key={index}
+                control={<Checkbox />}
+                label={option.value}
+                value={option.id}
+              />
+            ))}
+          </FormGroup>
+          <FormHelperText>{error ? error.message : null}</FormHelperText>
+        </FormControl>
+      )}
     />
   );
 };

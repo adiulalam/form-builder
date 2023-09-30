@@ -43,7 +43,7 @@ export const QuestionTitle = () => {
         onChange={(e) => setInput(e.target.value)}
         disableUnderline={isReadOnly && status === "COMPLETED"}
         inputRef={inputRef}
-        onBlur={onSubmitHandler}
+        onBlur={(e) => !isReadOnly && status === "DRAFT" && onSubmitHandler(e)}
         className="text-2xl"
         onClick={() => setIsReadOnly(false)}
         multiline

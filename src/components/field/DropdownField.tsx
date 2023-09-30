@@ -1,34 +1,60 @@
 import type { Option } from "@prisma/client";
-import { SelectElement } from "react-hook-form-mui";
 import type { Dispatch, SetStateAction } from "react";
+import { Controller } from "react-hook-form";
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import { useReactForm } from "@/store";
 
 export const DropdownField = ({
   name,
   options,
   setShowOtherField,
-  setOtherValue,
 }: {
   name: string;
   options: Option[];
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
-  setOtherValue: Dispatch<SetStateAction<string>>;
 }) => {
-  const onChangeHandler = (id: string) => {
-    console.log("🚀 ~ file: DropdownField.tsx:17 ~ onChangeHandler ~ id:", id);
-    const isOtherField = options.find((option) => option.id === id);
+  const control = useReactForm((state) => state.control);
 
-    setOtherValue("");
-    setShowOtherField(!!isOtherField?.showInput);
-  };
-
+  const label = "Select";
   return (
-    <SelectElement
+    <Controller
       name={name}
-      options={options}
-      labelKey="value"
-      fullWidth
-      required
-      onChange={onChangeHandler}
+      control={control}
+      rules={{
+        required: { value: true, message: "Required Field" },
+      }}
+      render={({ field: { onChange }, fieldState: { error } }) => (
+        <FormControl fullWidth error={!!error}>
+          <InputLabel>{label}</InputLabel>
+          <Select
+            onChange={(e) => {
+              const value = e.target.value as unknown as Option;
+
+              const isOtherField = options.find(
+                (option) => option.id === value.id,
+              );
+              setShowOtherField(!!isOtherField?.showInput);
+
+              onChange(value);
+            }}
+            label={label}
+            defaultValue=""
+          >
+            {options.map((option, index) => (
+              <MenuItem key={index} value={option as never}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText>{error ? error.message : null}</FormHelperText>
+        </FormControl>
+      )}
     />
   );
 };

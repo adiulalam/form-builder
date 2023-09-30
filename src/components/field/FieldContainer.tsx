@@ -1,53 +1,52 @@
 import { Box } from "@mui/material";
-import {
-  TextField,
-  CheckboxField,
-  DropdownField,
-  RadioField,
-  TextArea,
-} from ".";
+import { CheckboxField, DropdownField, RadioField, TextInput } from ".";
 import { useContext, useState } from "react";
 import { QuestionContext } from "@/store";
 
 export const FieldContainer = () => {
   const { id: questionId, type, options } = useContext(QuestionContext);
   const [showOtherField, setShowOtherField] = useState<boolean>(false);
-  const [otherValue, setOtherValue] = useState<string>("");
 
-  const isOtherField = options?.find(
+  const addOptions = options?.map((option) => ({ ...option, type }));
+
+  const isOtherField = addOptions?.find(
     (option) => type !== "INPUT" && option.showInput,
   );
 
   return (
     <Box className="flex flex-col gap-4">
       {type === "INPUT" ? (
-        <TextArea name={questionId} label={"Input"} rows={2} />
+        <TextInput
+          name={questionId}
+          label={"Input"}
+          rows={2}
+          multiline
+          option={addOptions?.find((option) => option.showInput) ?? null}
+        />
       ) : type === "CHECKBOX" ? (
         <CheckboxField
           name={questionId}
-          options={options ?? []}
+          options={addOptions ?? []}
           setShowOtherField={setShowOtherField}
         />
       ) : type === "DROPDOWN" ? (
         <DropdownField
           name={questionId}
-          options={options ?? []}
+          options={addOptions ?? []}
           setShowOtherField={setShowOtherField}
-          setOtherValue={setOtherValue}
         />
       ) : type === "RADIO" ? (
         <RadioField
           name={questionId}
-          options={options ?? []}
+          options={addOptions ?? []}
           setShowOtherField={setShowOtherField}
         />
       ) : null}
       {isOtherField && showOtherField && (
-        <TextField
+        <TextInput
           name={isOtherField.id}
           label={"Other:"}
-          otherValue={otherValue}
-          setOtherValue={setOtherValue}
+          option={isOtherField}
         />
       )}
     </Box>

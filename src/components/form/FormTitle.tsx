@@ -52,7 +52,7 @@ export const FormTitle = ({
         onChange={(e) => setInput(e.target.value)}
         disableUnderline={isReadOnly && !isClickEdit}
         inputRef={inputRef}
-        onBlur={onSubmitHandler}
+        onBlur={(e) => !isReadOnly && isClickEdit && onSubmitHandler(e)}
         className="text-2xl"
         onClick={() => isClickEdit && setIsReadOnly(false)}
         multiline
