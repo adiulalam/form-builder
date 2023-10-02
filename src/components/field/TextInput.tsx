@@ -5,13 +5,11 @@ import { useReactForm } from "@/store";
 
 export const TextInput = ({
   name,
-  label,
   multiline = false,
   rows = 1,
   option,
 }: {
   name: string;
-  label: string;
   option: Option | null;
   rows?: number;
   multiline?: boolean;
@@ -34,7 +32,7 @@ export const TextInput = ({
 
             onChange({ ...option, value });
           }}
-          label={label}
+          label={option?.value ?? "Unknown"}
           multiline={multiline}
           rows={rows}
           fullWidth

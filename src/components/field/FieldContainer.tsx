@@ -7,47 +7,38 @@ export const FieldContainer = () => {
   const { id: questionId, type, options } = useContext(QuestionContext);
   const [showOtherField, setShowOtherField] = useState<boolean>(false);
 
-  const addOptions = options?.map((option) => ({ ...option, type }));
-
-  const isOtherField = addOptions?.find(
-    (option) => type !== "INPUT" && option.showInput,
-  );
+  const isOtherField = options?.find((option) => option.isOtherOption);
 
   return (
     <Box className="flex flex-col gap-4">
       {type === "INPUT" ? (
         <TextInput
           name={questionId}
-          label={"Input"}
           rows={2}
           multiline
-          option={addOptions?.find((option) => option.showInput) ?? null}
+          option={options?.find((option) => option.showInput) ?? null}
         />
       ) : type === "CHECKBOX" ? (
         <CheckboxField
           name={questionId}
-          options={addOptions ?? []}
+          options={options ?? []}
           setShowOtherField={setShowOtherField}
         />
       ) : type === "DROPDOWN" ? (
         <DropdownField
           name={questionId}
-          options={addOptions ?? []}
+          options={options ?? []}
           setShowOtherField={setShowOtherField}
         />
       ) : type === "RADIO" ? (
         <RadioField
           name={questionId}
-          options={addOptions ?? []}
+          options={options ?? []}
           setShowOtherField={setShowOtherField}
         />
       ) : null}
       {isOtherField && showOtherField && (
-        <TextInput
-          name={isOtherField.id}
-          label={"Other:"}
-          option={isOtherField}
-        />
+        <TextInput name={isOtherField.id} option={isOtherField} />
       )}
     </Box>
   );

@@ -17,7 +17,7 @@ export const OptionAddInput = ({
     onSuccess: () => form.getPrivateForm.invalidate({ id: formId }),
   });
 
-  const isOtherOption = !!options?.find((option) => option.showInput);
+  const isOtherOption = !!options?.find((option) => option.isOtherOption);
 
   const onClickHandler = () => {
     mutate({ questionId, isOtherOption });

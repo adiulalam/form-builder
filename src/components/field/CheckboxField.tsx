@@ -49,7 +49,9 @@ export const CheckboxField = ({
                 onChange(result);
               }
 
-              const isOtherField = result?.find((option) => option?.showInput);
+              const isOtherField = result?.find(
+                (option) => option?.isOtherOption,
+              );
 
               setShowOtherField(!!isOtherField?.showInput);
             }}

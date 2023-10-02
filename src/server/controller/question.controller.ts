@@ -133,10 +133,9 @@ export const updateQuestionTypeHandler = async ({
       data: input,
     });
 
-    const deleteOthers = prisma.option.deleteMany({
+    const deleteIsOtherOption = prisma.option.deleteMany({
       where: {
-        value: "Other:",
-        showInput: true,
+        isOtherOption: true,
         questionId: paramsInput.id,
         question: {
           form: {
@@ -148,7 +147,7 @@ export const updateQuestionTypeHandler = async ({
 
     const createInput = prisma.option.create({
       data: {
-        value: "Input",
+        value: input.type,
         questionId: paramsInput.id,
         showInput: true,
       },
@@ -156,8 +155,8 @@ export const updateQuestionTypeHandler = async ({
 
     const deleteInputs = prisma.option.deleteMany({
       where: {
-        value: "Input",
         showInput: true,
+        isOtherOption: false,
         questionId: paramsInput.id,
         question: {
           form: {
@@ -170,7 +169,7 @@ export const updateQuestionTypeHandler = async ({
     if (input.type === "INPUT") {
       const result = await prisma.$transaction([
         updateQuestion,
-        deleteOthers,
+        deleteIsOtherOption,
         createInput,
       ]);
 

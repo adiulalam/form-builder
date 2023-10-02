@@ -13,9 +13,7 @@ import { QuestionContext } from "@/store";
 export const OptionBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { type, options } = useContext(QuestionContext);
-  const isOtherOption = options?.find(
-    (option) => type !== "INPUT" && option.showInput,
-  );
+  const isOtherOption = options?.find((option) => option.isOtherOption);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

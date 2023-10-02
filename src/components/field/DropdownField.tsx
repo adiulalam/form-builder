@@ -35,6 +35,7 @@ export const DropdownField = ({
           <Select
             onChange={(e) => {
               const value = e.target.value as unknown as Option;
+              console.log("🚀 ~ file: DropdownField.tsx:38 ~ value:", value);
 
               const isOtherField = options.find(
                 (option) => option.id === value.id,

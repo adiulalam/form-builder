@@ -65,7 +65,7 @@ export const createOptionHandler = async ({
   }
 };
 
-export const createOrDeleteOptionHandler = async ({
+export const createOrDeleteIsOtherOptionHandler = async ({
   input,
   session,
 }: {
@@ -86,8 +86,7 @@ export const createOrDeleteOptionHandler = async ({
 
     const deleteOptions = prisma.option.deleteMany({
       where: {
-        value: "Other:",
-        showInput: true,
+        isOtherOption: true,
         questionId: input.questionId,
         question: {
           form: {
@@ -99,8 +98,9 @@ export const createOrDeleteOptionHandler = async ({
 
     const createOption = prisma.option.create({
       data: {
-        value: "Other:",
+        value: "OTHER",
         questionId: input.questionId,
+        isOtherOption: true,
         showInput: true,
       },
     });
