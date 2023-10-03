@@ -1,32 +1,21 @@
 import { useRouter } from "next/router";
-import { FormContext, QuestionProvider, useReactForm } from "@/store";
+import { FormContext, QuestionProvider, useReactHookForm } from "@/store";
 import { FormNavbar, FormSubmit } from "@/components/form";
 import { Box, Paper, Grow } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
 
 export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
-  const setControl = useReactForm((state) => state.setControl);
-
   const formData = useContext(FormContext);
 
-  const defaultValues = formData?.questions?.reduce(
-    (acc, { id }) => ({ ...acc, [id]: "" }),
-    {} as Record<string, string>,
-  );
-
-  const { handleSubmit, control } = useForm<Record<string, string>>({
-    defaultValues,
-    shouldUnregister: true,
-  });
-  setControl(control);
+  const { handleSubmit } = useReactHookForm();
 
   const onSubmit: SubmitHandler<Record<string, string>> = (data) => {
-    if (!isEditor) return;
+    if (isEditor) return;
     console.log(data);
   };
 
