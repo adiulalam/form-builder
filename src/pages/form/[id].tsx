@@ -10,6 +10,7 @@ import { Box, Paper, Grow } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { QuestionsCardsSkeletons } from "@/components/skeleton";
 
 export default function Forms() {
   const router = useRouter();
@@ -45,11 +46,7 @@ export default function Forms() {
     console.log(data);
   };
 
-  if (isLoading) {
-    return <div>loading</div>;
-  }
-
-  if (isError || !formData) {
+  if (isError) {
     return <div>error</div>;
   }
 
@@ -61,31 +58,34 @@ export default function Forms() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-gradient-to-b from-[#2e026d] to-[#15162c] p-1">
-        <FormProvider store={formData.data.form}>
-          <Paper className="w-full max-w-screen-xl p-2">
-            <FormNavbar isFetching={isFetching} />
-          </Paper>
+        {isLoading ? (
+          <QuestionsCardsSkeletons number={3} />
+        ) : (
+          <FormProvider store={formData.data.form}>
+            <Paper className="w-full max-w-screen-xl p-2">
+              <FormNavbar isFetching={isFetching} />
+            </Paper>
 
-          <form
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onSubmit={handleSubmit(onSubmit)}
-            className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4"
-          >
-            <TransitionGroup className="flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4">
-              {formData.data.form.questions.map((question, index) => (
-                <Grow key={question.id}>
-                  <Box maxWidth={"xl"} className="flex w-full">
-                    <QuestionProvider store={{ ...question, index }}>
-                      <QuestionCard />
-                    </QuestionProvider>
-                  </Box>
-                </Grow>
-              ))}
-            </TransitionGroup>
+            <form
+              onSubmit={handleSubmit(onSubmit) as () => void}
+              className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4"
+            >
+              <TransitionGroup className="flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4">
+                {formData.data.form.questions.map((question, index) => (
+                  <Grow key={question.id}>
+                    <Box maxWidth={"xl"} className="flex w-full">
+                      <QuestionProvider store={{ ...question, index }}>
+                        <QuestionCard />
+                      </QuestionProvider>
+                    </Box>
+                  </Grow>
+                ))}
+              </TransitionGroup>
 
-            {isEditor ? <QuestionAdd /> : <FormSubmit />}
-          </form>
-        </FormProvider>
+              {isEditor ? <QuestionAdd /> : <FormSubmit />}
+            </form>
+          </FormProvider>
+        )}
       </main>
     </>
   );

@@ -166,7 +166,9 @@ export const updateQuestionTypeHandler = async ({
       },
     });
 
-    if (input.type === "INPUT") {
+    const isInput = input.type === "INPUT"
+
+    if (isInput) {
       const result = await prisma.$transaction([
         updateQuestion,
         deleteIsOtherOption,

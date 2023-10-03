@@ -21,7 +21,6 @@ export default function Forms() {
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       },
     );
-  console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", data);
 
   return (
     <>
