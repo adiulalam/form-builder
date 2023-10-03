@@ -8,7 +8,6 @@ export const FormSubmit = () => {
         <Fab
           className="fixed bottom-8 right-8 bg-secondary"
           variant="extended"
-          // onClick={}
           type="submit"
         >
           Submit

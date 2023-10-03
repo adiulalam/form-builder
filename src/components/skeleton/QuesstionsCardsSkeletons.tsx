@@ -10,7 +10,7 @@ export const QuestionsCardsSkeletons = ({
 }) => {
   return (
     <Box
-      className={`flex min-h-screen w-full flex-col items-center justify-center gap-4 overflow-hidden ${additionalClass}`}
+      className={`flex min-h-screen flex-col items-center justify-center overflow-hidden ${additionalClass}`}
     >
       <Card className="flex w-full max-w-screen-xl flex-col">
         <CardHeader title={<Skeleton variant="text" animation="wave" />} />

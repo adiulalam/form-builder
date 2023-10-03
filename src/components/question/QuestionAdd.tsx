@@ -22,19 +22,26 @@ export const QuestionAdd = () => {
     });
   };
 
+  const props = {
+    className: "fixed bottom-8 right-8 bg-sdark",
+    onClick: onClickHandler,
+    disabled: status === "COMPLETED",
+  };
+
   return (
     <>
       <Tooltip title="Add Question">
-        <span>
-          <Fab
-            className="fixed bottom-8 right-8 bg-sdark"
-            size="large"
-            onClick={onClickHandler}
-            disabled={status === "COMPLETED"}
-          >
+        {status === "COMPLETED" ? (
+          <span>
+            <Fab {...props} size={"large"}>
+              <AddIcon />
+            </Fab>
+          </span>
+        ) : (
+          <Fab {...props} size={"large"}>
             <AddIcon />
           </Fab>
-        </span>
+        )}
       </Tooltip>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
