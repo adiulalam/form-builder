@@ -36,7 +36,7 @@ export const FormCard = () => {
   const handleClose = () => setAnchorEl(null);
 
   const handleEditTitle = () => {
-    setIsReadOnly(false);
+    setIsReadOnly((prev) => !prev);
     handleClose();
   };
 
@@ -61,7 +61,9 @@ export const FormCard = () => {
                   <ListItemIcon>
                     <EditIcon />
                   </ListItemIcon>
-                  <ListItemText>Edit Name</ListItemText>
+                  <ListItemText>
+                    {isReadOnly ? "Edit Name" : "Done"}
+                  </ListItemText>
                 </MenuItem>
               )}
 

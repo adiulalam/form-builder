@@ -1,13 +1,17 @@
 import { Box, Button, CircularProgress } from "@mui/material";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { FormTitle } from "./FormTitle";
 import { FormFavourite } from "./FormFavourite";
 import { FormShare } from "./FormShare";
 import { FormContext } from "@/store";
 import { api } from "@/utils/api";
+import { useRouter } from "next/router";
 
 export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {
+  const router = useRouter();
+  const isEditor = router.pathname === "/form/[id]";
   const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+
   const { id, status } = useContext(FormContext);
   const { form } = api.useContext();
 
@@ -29,24 +33,25 @@ export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {
     >
       <Box className="w-full">
         <FormTitle
-          isReadOnly={isReadOnly}
+          isReadOnly={status !== "DRAFT" || !isEditor || isReadOnly}
           setIsReadOnly={setIsReadOnly}
-          isClickEdit={status === "DRAFT"}
         />
       </Box>
-      <Box className="flex flex-row items-center justify-between">
-        <FormFavourite />
-        <FormShare />
-        <Button
-          variant="text"
-          color={status === "DRAFT" ? "error" : "primary"}
-          onClick={onClickHandler}
-        >
-          {status}
-        </Button>
+      {isEditor && (
+        <Box className="flex flex-row items-center justify-between">
+          <FormFavourite />
+          <FormShare />
+          <Button
+            variant="text"
+            color={status === "DRAFT" ? "error" : "primary"}
+            onClick={onClickHandler}
+          >
+            {status}
+          </Button>
 
-        {isFetching && <CircularProgress color="inherit" size={20} />}
-      </Box>
+          {isFetching && <CircularProgress color="inherit" size={20} />}
+        </Box>
+      )}
     </Box>
   );
 };

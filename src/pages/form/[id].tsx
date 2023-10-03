@@ -83,7 +83,7 @@ export default function Forms() {
               ))}
             </TransitionGroup>
 
-            {!isEditor ? <QuestionAdd /> : <FormSubmit />}
+            {isEditor ? <QuestionAdd /> : <FormSubmit />}
           </form>
         </FormProvider>
       </main>

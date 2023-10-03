@@ -18,9 +18,13 @@ import { QuestionOrder, QuestionTitle, QuestionDelete, QuestionType } from ".";
 import dayjs from "dayjs";
 import { OptionBar } from "../option";
 import { FieldContainer } from "../field";
+import { useRouter } from "next/router";
 dayjs.extend(localizedFormat);
 
 export const QuestionCard = () => {
+  const router = useRouter();
+  const isEditor = router.pathname === "/form/[id]";
+
   const { status } = useContext(FormContext);
   const { type } = useContext(QuestionContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -34,7 +38,8 @@ export const QuestionCard = () => {
     <Card className="flex w-full flex-col">
       <CardHeader
         action={
-          status === "DRAFT" && (
+          status === "DRAFT" &&
+          isEditor && (
             <Box>
               <CardActions disableSpacing className="flex flex-row justify-end">
                 <QuestionOrder isUp={true} />
@@ -73,7 +78,7 @@ export const QuestionCard = () => {
       />
       {type && (
         <CardContent>
-          {status === "DRAFT" ? <OptionBar /> : <FieldContainer />}
+          {status === "DRAFT" && isEditor ? <OptionBar /> : <FieldContainer />}
         </CardContent>
       )}
     </Card>
