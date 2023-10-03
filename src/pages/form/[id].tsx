@@ -5,12 +5,11 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { FormProvider, QuestionProvider, useReactForm } from "@/store";
-import { FormNavbar } from "@/components/form";
-import { Box, Paper, Grow, Button } from "@mui/material";
+import { FormNavbar, FormSubmit } from "@/components/form";
+import { Box, Paper, Grow } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
-import { useForm } from "react-hook-form";
-import type { SubmitHandler } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 export default function Forms() {
   const router = useRouter();
@@ -68,7 +67,8 @@ export default function Forms() {
           </Paper>
 
           <form
-            onSubmit={handleSubmit(onSubmit) as () => void}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSubmit={handleSubmit(onSubmit)}
             className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4"
           >
             <TransitionGroup className="flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4">
@@ -83,18 +83,7 @@ export default function Forms() {
               ))}
             </TransitionGroup>
 
-            {isEditor ? (
-              <QuestionAdd />
-            ) : (
-              <Button
-                color="secondary"
-                type="submit"
-                variant="outlined"
-                fullWidth
-              >
-                Submit
-              </Button>
-            )}
+            {!isEditor ? <QuestionAdd /> : <FormSubmit />}
           </form>
         </FormProvider>
       </main>
