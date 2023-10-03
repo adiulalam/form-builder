@@ -17,6 +17,7 @@ export default function Forms() {
     isError,
     isLoading,
     isFetching,
+    error,
   } = api.form.getPublicForm.useQuery(
     { id },
     {
@@ -26,7 +27,7 @@ export default function Forms() {
   );
 
   if (isError) {
-    return <div>error</div>;
+    return <div>{error?.message}</div>;
   }
 
   return (
