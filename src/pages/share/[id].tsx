@@ -7,6 +7,7 @@ import { z } from "zod";
 import { FormProvider } from "@/store";
 import { QuestionContainer } from "@/components/question";
 import { QuestionsCardsSkeletons } from "@/components/skeleton";
+import { ErrorWrapper } from "@/components/ui";
 
 export default function Forms() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function Forms() {
   );
 
   if (isError) {
-    return <div>{error?.message}</div>;
+    return <ErrorWrapper message={error.message} />;
   }
 
   return (
