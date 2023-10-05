@@ -8,20 +8,31 @@ import { useFormSort, FormProvider } from "@/store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TransitionGroup } from "react-transition-group";
 import { FormsCardsSkeletons } from "@/components/skeleton";
+import { ErrorWrapper } from "@/components/ui";
 
 export default function Forms() {
   const { order, sort } = useFormSort();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    api.form.getForms.useInfiniteQuery(
-      {
-        order,
-        sort,
-      },
-      {
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      },
-    );
-  console.log("🚀 ~ file: form.tsx:14 ~ Form ~ data:", data);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    error,
+  } = api.form.getForms.useInfiniteQuery(
+    {
+      order,
+      sort,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+
+  if (isError) {
+    return <ErrorWrapper message={error.message} />;
+  }
 
   return (
     <>

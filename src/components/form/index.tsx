@@ -8,6 +8,7 @@ import { FormShare } from "./FormShare";
 import { FormShareClipboard } from "./FormShareClipboard";
 import { FormSort } from "./FormSort";
 import { FormStatus } from "./FormStatus";
+import { FormSubmit } from "./FormSubmit";
 import { FormTitle } from "./FormTitle";
 
 export {
@@ -22,4 +23,5 @@ export {
   FormShare,
   FormShareClipboard,
   FormNavbar,
+  FormSubmit,
 };

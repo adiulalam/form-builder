@@ -83,6 +83,7 @@ model Option {
     value             String
     questionId        String
     showInput         Boolean            @default(false)
+    isOtherOption     Boolean            @default(false)
     createdAt         DateTime           @default(now())
     updatedAt         DateTime           @updatedAt
     question          Question           @relation(fields: [questionId], references: [id], onDelete: Cascade)

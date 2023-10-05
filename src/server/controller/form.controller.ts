@@ -331,6 +331,20 @@ export const updateFormShareHandler = async ({
   try {
     const userId = session.user.id;
 
+    const question = await prisma.question.count({
+      where: {
+        form: { userId, id: paramsInput.id },
+        options: { none: {} },
+      },
+    });
+
+    if (question > 0) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Form has questions with unspecifed option",
+      });
+    }
+
     const form = await prisma.form.update({
       where: {
         id: paramsInput.id,
@@ -380,7 +394,7 @@ export const updateFormStatusHandler = async ({
         id: paramsInput.id,
         userId,
       },
-      data: input,
+      data: { ...input, isShareable: false },
     });
 
     if (!form) {

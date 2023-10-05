@@ -1,15 +1,14 @@
-import type { Dispatch, FocusEvent, FormEvent, SetStateAction } from "react";
+import type { FocusEvent } from "react";
 import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { FormContext } from "@/store";
 
 export const FormTitle = ({
   isReadOnly,
   setIsReadOnly,
-  isClickEdit = false,
 }: {
-  isClickEdit?: boolean;
   isReadOnly: boolean;
   setIsReadOnly: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -26,9 +25,7 @@ export const FormTitle = ({
   });
 
   const onSubmitHandler = (
-    e:
-      | FormEvent<HTMLFormElement>
-      | FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>,
+    e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>,
   ) => {
     e.preventDefault();
 
@@ -50,11 +47,10 @@ export const FormTitle = ({
         readOnly={isReadOnly}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        disableUnderline={isReadOnly && !isClickEdit}
         inputRef={inputRef}
-        onBlur={(e) => !isReadOnly && isClickEdit && onSubmitHandler(e)}
+        onBlur={(e) => !isReadOnly && onSubmitHandler(e)}
+        onClick={() => setIsReadOnly(false)}
         className="text-2xl"
-        onClick={() => isClickEdit && setIsReadOnly(false)}
         multiline
       />
     </Box>

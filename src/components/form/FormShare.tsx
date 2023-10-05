@@ -13,14 +13,15 @@ import {
 import { api } from "@/utils/api";
 import { useContext } from "react";
 import { Share as ShareIcon } from "@mui/icons-material";
-import { FormContext } from "@/store";
+import { FormContext, useSnackbarToast } from "@/store";
 import { useState, type ChangeEvent } from "react";
 import { FormShareClipboard } from "./FormShareClipboard";
 
 export const FormShare = () => {
+  const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
   const [open, setOpen] = useState<boolean>(false);
 
-  const { isShareable, id, questions } = useContext(FormContext);
+  const { isShareable, id, questions, status } = useContext(FormContext);
   const { form } = api.useContext();
 
   const { mutate, isLoading } = api.form.updateFormShare.useMutation({
@@ -28,6 +29,12 @@ export const FormShare = () => {
       questions
         ? form.getPrivateForm.invalidate({ id })
         : form.getForms.invalidate(),
+    onError: (error) =>
+      setSnackConfig({
+        isOpen: true,
+        severity: "error",
+        message: error.message,
+      }),
   });
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,9 +45,14 @@ export const FormShare = () => {
   return (
     <>
       <Tooltip title="Share link">
-        <IconButton onClick={() => setOpen(true)}>
-          <ShareIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            onClick={() => setOpen(true)}
+            disabled={status === "DRAFT"}
+          >
+            <ShareIcon />
+          </IconButton>
+        </span>
       </Tooltip>
 
       <Dialog
