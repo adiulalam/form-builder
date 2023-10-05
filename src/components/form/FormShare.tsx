@@ -13,11 +13,12 @@ import {
 import { api } from "@/utils/api";
 import { useContext } from "react";
 import { Share as ShareIcon } from "@mui/icons-material";
-import { FormContext } from "@/store";
+import { FormContext, useSnackbarToast } from "@/store";
 import { useState, type ChangeEvent } from "react";
 import { FormShareClipboard } from "./FormShareClipboard";
 
 export const FormShare = () => {
+  const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
   const [open, setOpen] = useState<boolean>(false);
 
   const { isShareable, id, questions, status } = useContext(FormContext);
@@ -28,6 +29,12 @@ export const FormShare = () => {
       questions
         ? form.getPrivateForm.invalidate({ id })
         : form.getForms.invalidate(),
+    onError: (error) =>
+      setSnackConfig({
+        isOpen: true,
+        severity: "error",
+        message: error.message,
+      }),
   });
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
