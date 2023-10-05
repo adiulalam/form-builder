@@ -6,7 +6,6 @@ import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
 import type { SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
-import { SnackbarToast } from "../ui";
 
 export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
@@ -43,7 +42,6 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
         </TransitionGroup>
         {isEditor ? <QuestionAdd /> : <FormSubmit />}
       </form>
-      <SnackbarToast />
     </Box>
   );
 };

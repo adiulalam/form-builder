@@ -10,6 +10,7 @@ import { useThemeMode } from "@/hooks/useThemeMode";
 import { useMemo, useEffect } from "react";
 import { createTheme, responsiveFontSizes } from "@mui/material";
 import { themeColors } from "@/utils/themeColors";
+import { SnackbarToast } from "@/components/ui";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -62,6 +63,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
+        <SnackbarToast />
         <Navbar />
         <Component {...pageProps} />
         <Footer />
