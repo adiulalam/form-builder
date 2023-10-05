@@ -20,7 +20,7 @@ import { FormShareClipboard } from "./FormShareClipboard";
 export const FormShare = () => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const { isShareable, id, questions } = useContext(FormContext);
+  const { isShareable, id, questions, status } = useContext(FormContext);
   const { form } = api.useContext();
 
   const { mutate, isLoading } = api.form.updateFormShare.useMutation({
@@ -38,9 +38,14 @@ export const FormShare = () => {
   return (
     <>
       <Tooltip title="Share link">
-        <IconButton onClick={() => setOpen(true)}>
-          <ShareIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            onClick={() => setOpen(true)}
+            disabled={status === "DRAFT"}
+          >
+            <ShareIcon />
+          </IconButton>
+        </span>
       </Tooltip>
 
       <Dialog
