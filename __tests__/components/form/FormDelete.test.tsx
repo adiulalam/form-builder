@@ -9,6 +9,6 @@ describe("Test the 'FormDelete' component", () => {
     expect(screen.getByText(/Delete/i)).toBeInTheDocument();
 
     expect(screen.getByRole("menuitem")).toBeInTheDocument();
-    expect(screen.getByLabelText("DeleteIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("DeleteIcon")).toBeInTheDocument();
   });
 });

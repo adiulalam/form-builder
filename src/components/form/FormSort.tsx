@@ -16,8 +16,9 @@ import {
 } from "@mui/material";
 import { useFormSort } from "@/store";
 import { useRouter } from "next/router";
+import { sortItems } from "@/utils/form.config";
 
-const StyledMenu = styled((props: MenuProps) => (
+const SortMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -48,7 +49,6 @@ const StyledMenu = styled((props: MenuProps) => (
       "& .MuiSvgIcon-root": {
         fontSize: 18,
         color: theme.palette.text.secondary,
-        // marginRight: theme.spacing(1.5),
       },
       "&:active": {
         backgroundColor: alpha(
@@ -59,13 +59,6 @@ const StyledMenu = styled((props: MenuProps) => (
     },
   },
 }));
-
-const sortItems: { name: string; value: string }[] = [
-  { name: "Name", value: "title" },
-  { name: "Status", value: "status" },
-  { name: "Updated At", value: "updatedAt" },
-  { name: "Favourite", value: "isFavourite" },
-];
 
 export const FormSort = () => {
   const { setOrder, setSort } = useFormSort();
@@ -117,11 +110,12 @@ export const FormSort = () => {
         disableElevation
         onClick={(e) => setAnchorEl(e.currentTarget)}
         size="large"
+        role="SortButton"
       >
         <Typography className="mr-2 hidden sm:block">SORT</Typography>
         <SortIcon />
       </Button>
-      <StyledMenu
+      <SortMenu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
@@ -144,15 +138,15 @@ export const FormSort = () => {
                 }
               >
                 {order === "asc" ? (
-                  <TextRotateUpIcon className="mr-0" />
+                  <TextRotateUpIcon />
                 ) : (
-                  <TextRotationDownIcon className="mr-0" />
+                  <TextRotationDownIcon />
                 )}
               </IconButton>
             )}
           </MenuItem>
         ))}
-      </StyledMenu>
+      </SortMenu>
     </div>
   );
 };

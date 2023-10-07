@@ -8,7 +8,7 @@ describe("Test the 'FormShare' component", () => {
 
     expect(screen.getByLabelText(/Share link/i)).toBeInTheDocument();
 
-    expect(screen.getByLabelText("ShareIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("ShareIcon")).toBeInTheDocument();
 
     const button = screen.getByRole("ShareButton");
     expect(button).toBeDisabled();
@@ -23,7 +23,7 @@ describe("Test the 'FormShare' component", () => {
 });
 
 describe("Test the 'FormShare' modal component", () => {
-  it("Should return disabled state of button", () => {
+  it("Should return modal with buttons", () => {
     render(<FormShare />, { wrapper: FormCompletedTRPC });
 
     const button = screen.getByRole("ShareButton");
@@ -32,6 +32,6 @@ describe("Test the 'FormShare' modal component", () => {
     });
 
     expect(screen.getByText("Allow Sharing?")).toBeInTheDocument();
-    expect(screen.getByLabelText("Share:")).toBeInTheDocument();
+    expect(screen.getByText("Share:")).toBeInTheDocument();
   });
 });

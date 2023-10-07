@@ -5,6 +5,7 @@ type SnackConfigType = {
   isOpen: boolean;
   severity: AlertColor;
   message: string;
+  duration?: number;
 };
 
 type SnackbarToastType = {
@@ -17,6 +18,7 @@ export const useSnackbarToast = create<SnackbarToastType>((set) => ({
     isOpen: false,
     severity: "success",
     message: "",
+    duration: 5000,
   },
   setSnackConfig: (obj: SnackConfigType) => set({ snackConfig: obj }),
 }));

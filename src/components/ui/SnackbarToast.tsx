@@ -4,7 +4,7 @@ import { Snackbar, Alert } from "@mui/material";
 export const SnackbarToast = () => {
   const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
 
-  const { isOpen, severity, message } = useSnackbarToast(
+  const { isOpen, severity, message, duration } = useSnackbarToast(
     (state) => state.snackConfig,
   );
 
@@ -18,7 +18,7 @@ export const SnackbarToast = () => {
   return (
     <Snackbar
       open={isOpen}
-      autoHideDuration={5000}
+      autoHideDuration={duration ?? 5000}
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >

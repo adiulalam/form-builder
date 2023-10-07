@@ -51,7 +51,7 @@ export const FormShare = () => {
             disabled={status === "DRAFT"}
             role="ShareButton"
           >
-            <ShareIcon aria-label="ShareIcon" />
+            <ShareIcon />
           </IconButton>
         </span>
       </Tooltip>

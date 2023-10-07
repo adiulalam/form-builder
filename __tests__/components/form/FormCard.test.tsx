@@ -5,6 +5,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import { AllWithTRPC, formData } from ".";
 dayjs.extend(localizedFormat);
 
+//todo: add icon test and completed status test
 describe("Test the 'FormCard' component", () => {
   it("Should return all card data", () => {
     render(<FormCard />, { wrapper: AllWithTRPC });

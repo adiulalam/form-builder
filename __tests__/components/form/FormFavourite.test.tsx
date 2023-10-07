@@ -8,7 +8,7 @@ describe("Test the 'FormFavourite' component", () => {
 
     expect(screen.getByLabelText(/Mark as favourite/i)).toBeInTheDocument();
 
-    expect(screen.getByLabelText("FavoriteBorderIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("FavoriteBorderIcon")).toBeInTheDocument();
   });
 
   it("Should return valid text and icon of favourite", () => {
@@ -16,6 +16,6 @@ describe("Test the 'FormFavourite' component", () => {
 
     expect(screen.getByLabelText(/Mark as favourite/i)).toBeInTheDocument();
 
-    expect(screen.getByLabelText("FavoriteIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("FavoriteIcon")).toBeInTheDocument();
   });
 });

@@ -1,15 +1,18 @@
 import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
-import { ContentPaste, ContentCopy } from "@mui/icons-material";
-import { useState } from "react";
-import { SnackbarAlert } from "../ui";
-import type { SnackConfigType } from "@/types/SnackbarAlert.types";
+import {
+  ContentPaste as ContentPasteIcon,
+  ContentCopy as ContentCopyIcon,
+} from "@mui/icons-material";
+import { useSnackbarToast } from "@/store";
+import { useShallow } from "zustand/react/shallow";
 
 export const FormShareClipboard = ({ text }: { text: string }) => {
-  const [snackConfig, setSnackConfig] = useState<SnackConfigType>({
-    isOpen: false,
-    severity: "success",
-    message: "",
-  });
+  const { setSnackConfig, isOpen } = useSnackbarToast(
+    useShallow((state) => ({
+      setSnackConfig: state.setSnackConfig,
+      isOpen: state.snackConfig.isOpen,
+    })),
+  );
 
   const onClickHandler = () => {
     void navigator.clipboard.writeText(text.toString());
@@ -18,6 +21,7 @@ export const FormShareClipboard = ({ text }: { text: string }) => {
       isOpen: true,
       severity: "info",
       message: "Copied Successfully",
+      duration: 2000,
     });
   };
 
@@ -25,14 +29,9 @@ export const FormShareClipboard = ({ text }: { text: string }) => {
     <OutlinedInput
       endAdornment={
         <InputAdornment position="end">
-          <IconButton edge="end">
-            {snackConfig.isOpen ? <ContentPaste /> : <ContentCopy />}
+          <IconButton edge="end" role="CopyButton">
+            {isOpen ? <ContentPasteIcon /> : <ContentCopyIcon />}
           </IconButton>
-          <SnackbarAlert
-            {...snackConfig}
-            setSnackConfig={setSnackConfig}
-            duration={2000}
-          />
         </InputAdornment>
       }
       sx={{
