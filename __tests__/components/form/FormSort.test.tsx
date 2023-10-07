@@ -19,7 +19,7 @@ describe("Test the 'FormSort' component", () => {
     render(<FormSort />, { wrapper: AllWithTRPC });
 
     expect(screen.getByText(/SORT/i)).toBeInTheDocument();
-    expect(screen.getByTestId("SortIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("SortIco")).toBeInTheDocument();
 
     const button = screen.getByRole("SortButton");
 
