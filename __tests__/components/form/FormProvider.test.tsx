@@ -67,7 +67,7 @@ const FormIsShare = (props: Props) => (
 export const FormIsShareTRPC = api.withTRPC(FormIsShare);
 
 const FormCompleted = (props: Props) => (
-  <AllTheProviders store={formDataShare} {...props} />
+  <AllTheProviders store={formDataCompleted} {...props} />
 );
 export const FormCompletedTRPC = api.withTRPC(FormCompleted);
 
