@@ -49,8 +49,9 @@ export const FormShare = () => {
           <IconButton
             onClick={() => setOpen(true)}
             disabled={status === "DRAFT"}
+            role="ShareButton"
           >
-            <ShareIcon />
+            <ShareIcon aria-label="ShareIcon" />
           </IconButton>
         </span>
       </Tooltip>

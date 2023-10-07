@@ -23,6 +23,16 @@ export const formDataFavourite: Form = {
   isFavourite: true,
 };
 
+export const formDataShare: Form = {
+  ...formData,
+  isShareable: true,
+};
+
+export const formDataCompleted: Form = {
+  ...formDataShare,
+  status: "COMPLETED",
+};
+
 const formDataSchema = z
   .object({
     id: z.string().min(1),
@@ -50,6 +60,16 @@ const FormIsFavourite = (props: Props) => (
   <AllTheProviders store={formDataFavourite} {...props} />
 );
 export const FormIsFavouriteTRPC = api.withTRPC(FormIsFavourite);
+
+const FormIsShare = (props: Props) => (
+  <AllTheProviders store={formDataShare} {...props} />
+);
+export const FormIsShareTRPC = api.withTRPC(FormIsShare);
+
+const FormCompleted = (props: Props) => (
+  <AllTheProviders store={formDataShare} {...props} />
+);
+export const FormCompletedTRPC = api.withTRPC(FormCompleted);
 
 describe("Test the 'formData'", () => {
   it("Should test all string data", () => {
