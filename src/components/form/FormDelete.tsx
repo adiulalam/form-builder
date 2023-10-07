@@ -20,7 +20,7 @@ export const FormDelete = ({ handleClose }: { handleClose: () => void }) => {
   return (
     <MenuItem onClick={onClickHandler}>
       <ListItemIcon>
-        <DeleteIcon />
+        <DeleteIcon aria-label="DeleteIcon" />
       </ListItemIcon>
       <ListItemText>Delete</ListItemText>
     </MenuItem>

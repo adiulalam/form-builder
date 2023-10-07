@@ -2,7 +2,7 @@ import { FormCard } from "@/components/form";
 import { render, screen, waitFor } from "@testing-library/react";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { AllWithTRPC, formData } from "./FormProvider.test";
+import { AllWithTRPC, formData } from ".";
 dayjs.extend(localizedFormat);
 
 describe("Test the 'FormCard' component", () => {

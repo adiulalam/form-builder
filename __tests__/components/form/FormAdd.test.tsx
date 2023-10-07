@@ -1,6 +1,6 @@
 import { FormAdd } from "@/components/form";
 import { render, screen } from "@testing-library/react";
-import { AllWithTRPC } from "./FormProvider.test";
+import { AllWithTRPC } from ".";
 
 describe("Test the 'FormAdd' component", () => {
   it("Should return valid button", () => {
