@@ -1,5 +1,5 @@
 import { FormCard } from "@/components/form";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { AllWithTRPC, formData } from ".";
@@ -15,8 +15,6 @@ describe("Test the 'FormCard' component", () => {
       screen.getByText(dayjs(formData.updatedAt).format("LL")),
     ).toBeInTheDocument();
 
-    void waitFor(() =>
-      expect(screen.getByText(formData.title)).toBeInTheDocument(),
-    );
+    expect(screen.getByText(formData.title)).toBeInTheDocument();
   });
 });
