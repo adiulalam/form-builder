@@ -27,10 +27,10 @@ export const FormFavourite = () => {
       <IconButton onClick={onClickHandler}>
         {isFavourite ? (
           <Zoom in={isFavourite}>
-            <FavoriteIcon aria-label="FavoriteIcon" />
+            <FavoriteIcon />
           </Zoom>
         ) : (
-          <FavoriteBorderIcon aria-label="FavoriteBorderIcon" />
+          <FavoriteBorderIcon />
         )}
       </IconButton>
     </Tooltip>

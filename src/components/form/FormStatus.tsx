@@ -23,19 +23,14 @@ export const FormStatus = ({ handleClose }: { handleClose: () => void }) => {
     handleClose();
   };
 
-  return status === "DRAFT" ? (
+  return (
     <MenuItem onClick={onClickHandler}>
       <ListItemIcon>
-        <CheckCircleIcon />
+        {status === "DRAFT" ? <CheckCircleIcon /> : <EditNoteIcon />}
       </ListItemIcon>
-      <ListItemText>Mark as Completed</ListItemText>
-    </MenuItem>
-  ) : (
-    <MenuItem onClick={onClickHandler}>
-      <ListItemIcon>
-        <EditNoteIcon />
-      </ListItemIcon>
-      <ListItemText>Mark as Draft</ListItemText>
+      <ListItemText>
+        {status === "DRAFT" ? "Mark as Completed" : "Mark as Draft"}
+      </ListItemText>
     </MenuItem>
   );
 };

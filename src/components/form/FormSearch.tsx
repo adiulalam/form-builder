@@ -30,10 +30,14 @@ export const FormSearch = () => {
       onInputChange={(_, value) => void handleOnChange(value)}
       sx={{
         "& .MuiFormLabel-root": {
-          color: "white",
+          color: "primary.main",
         },
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-          border: "1px solid #eee",
+          border: "1px solid",
+          borderColor: "primary.main",
+        },
+        "& .MuiButtonBase-root": {
+          color: "primary.main",
         },
       }}
       renderOption={(props, option) => (

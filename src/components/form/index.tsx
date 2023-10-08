@@ -1,5 +1,6 @@
 import { FormAdd } from "./FormAdd";
 import { FormCard } from "./FormCard";
+import { FormCardMenu } from "./FormCardMenu";
 import { FormDelete } from "./FormDelete";
 import { FormFavourite } from "./FormFavourite";
 import { FormNavbar } from "./FormNavbar";
@@ -24,4 +25,5 @@ export {
   FormShareClipboard,
   FormNavbar,
   FormSubmit,
+  FormCardMenu,
 };

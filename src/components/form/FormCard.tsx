@@ -2,25 +2,16 @@ import { useContext, useState } from "react";
 import { FormContext } from "@/store";
 import {
   EditNote as EditNoteIcon,
-  MoreVert as MoreVertIcon,
   FormatAlignJustify as FormatAlignJustifyIcon,
-  Edit as EditIcon,
 } from "@mui/icons-material";
 import {
   Divider,
-  Box,
   Typography,
-  IconButton,
   CardActions,
   CardHeader,
   Card,
-  Menu,
-  MenuItem,
-  Tooltip,
-  ListItemIcon,
-  ListItemText,
 } from "@mui/material";
-import { FormFavourite, FormDelete, FormStatus, FormTitle, FormShare } from ".";
+import { FormFavourite, FormTitle, FormShare, FormCardMenu } from ".";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import Link from "next/link";
@@ -29,50 +20,11 @@ dayjs.extend(localizedFormat);
 export const FormCard = () => {
   const { id, status, updatedAt } = useContext(FormContext);
   const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => setAnchorEl(null);
-
-  const handleEditTitle = () => {
-    setIsReadOnly((prev) => !prev);
-    handleClose();
-  };
 
   return (
     <Card className="flex w-full flex-col sm:max-w-sm">
       <CardHeader
-        action={
-          <Box>
-            <Tooltip title="Open menu">
-              <IconButton onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-            </Tooltip>
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              {status === "DRAFT" && (
-                <MenuItem onClick={handleEditTitle}>
-                  <ListItemIcon>
-                    <EditIcon />
-                  </ListItemIcon>
-                  <ListItemText>
-                    {isReadOnly ? "Edit Name" : "Done"}
-                  </ListItemText>
-                </MenuItem>
-              )}
-
-              <FormDelete handleClose={() => handleClose()} />
-
-              <FormStatus handleClose={() => handleClose()} />
-            </Menu>
-          </Box>
-        }
+        action={<FormCardMenu />}
         title={
           <FormTitle isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
         }
