@@ -13,7 +13,8 @@ export const FormTitle = ({
   setIsReadOnly: Dispatch<SetStateAction<boolean>>;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { id, title, questions } = useContext(FormContext);
+  const { id, title, status, questions } = useContext(FormContext);
+  const isCompleted = status === "COMPLETED";
   const [input, setInput] = useState<string>(title);
 
   const { form } = api.useContext();
@@ -44,12 +45,12 @@ export const FormTitle = ({
     <Box className="w-auto">
       <Input
         fullWidth
-        readOnly={isReadOnly}
+        readOnly={isReadOnly || isCompleted}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         inputRef={inputRef}
         onBlur={(e) => !isReadOnly && onSubmitHandler(e)}
-        onClick={() => setIsReadOnly(false)}
+        onClick={() => !isCompleted && setIsReadOnly(false)}
         className="text-2xl"
         multiline
       />

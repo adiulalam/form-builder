@@ -2,14 +2,13 @@ import { FormAdd } from "@/components/form";
 import { render, screen } from "@testing-library/react";
 import { AllWithTRPC } from ".";
 
-//todo: add icon test and completed status test
 describe("Test the 'FormAdd' component", () => {
-  it("Should return valid button", () => {
+  it("Should return enabled valid button", () => {
     render(<FormAdd />, { wrapper: AllWithTRPC });
+    expect(screen.getByLabelText("Add Form")).toBeInTheDocument();
+    expect(screen.getByTestId("AddIcon")).toBeInTheDocument();
 
     const button = screen.getByRole("button");
-
-    expect(button.innerText).toBeFalsy();
-    expect(button).toHaveClass("MuiButtonBase-root");
+    expect(button).not.toBeDisabled();
   });
 });
