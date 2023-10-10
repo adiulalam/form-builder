@@ -14,10 +14,11 @@ import {
   ListItemText,
 } from "@mui/material";
 import { FormDelete, FormStatus } from ".";
+import { useFormTitle } from "@/store/useFormTitle";
 
 export const FormCardMenu = () => {
   const { status } = useContext(FormContext);
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+  const { isReadOnly, setIsReadOnly } = useFormTitle();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -25,7 +26,7 @@ export const FormCardMenu = () => {
   const handleClose = () => setAnchorEl(null);
 
   const handleEditTitle = () => {
-    setIsReadOnly((prev) => !prev);
+    setIsReadOnly(!isReadOnly);
     handleClose();
   };
 

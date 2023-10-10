@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { FormTitle } from "./FormTitle";
 import { FormFavourite } from "./FormFavourite";
 import { FormShare } from "./FormShare";
@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
 
   const { id, status } = useContext(FormContext);
   const { form } = api.useContext();
@@ -32,10 +31,7 @@ export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {
       maxWidth={"xl"}
     >
       <Box className="w-full">
-        <FormTitle
-          isReadOnly={status !== "DRAFT" || !isEditor || isReadOnly}
-          setIsReadOnly={setIsReadOnly}
-        />
+        <FormTitle />
       </Box>
       {isEditor && (
         <Box className="flex flex-row items-center justify-between">

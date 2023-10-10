@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { FormContext } from "@/store";
 import {
   EditNote as EditNoteIcon,
@@ -19,15 +19,12 @@ dayjs.extend(localizedFormat);
 
 export const FormCard = () => {
   const { id, status, updatedAt } = useContext(FormContext);
-  const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
 
   return (
     <Card className="flex w-full flex-col sm:max-w-sm">
       <CardHeader
         action={<FormCardMenu />}
-        title={
-          <FormTitle isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
-        }
+        title={<FormTitle />}
         subheader={
           <Link
             className="flex flex-row flex-wrap items-center gap-2"

@@ -2,16 +2,11 @@ import type { FocusEvent } from "react";
 import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useRef, useState, useEffect } from "react";
-import type { Dispatch, SetStateAction } from "react";
 import { FormContext } from "@/store";
+import { useFormTitle } from "@/store/useFormTitle";
 
-export const FormTitle = ({
-  isReadOnly,
-  setIsReadOnly,
-}: {
-  isReadOnly: boolean;
-  setIsReadOnly: Dispatch<SetStateAction<boolean>>;
-}) => {
+export const FormTitle = () => {
+  const { isReadOnly, setIsReadOnly } = useFormTitle();
   const inputRef = useRef<HTMLInputElement>(null);
   const { id, title, status, questions } = useContext(FormContext);
   const isCompleted = status === "COMPLETED";

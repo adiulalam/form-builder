@@ -1,30 +1,28 @@
 import { FormTitle } from "@/components/form";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { AllWithTRPC, FormCompletedTRPC, formData } from ".";
 
 describe("Test the 'FormTitle' component", () => {
-  const setIsReadOnly = () => null;
-
   it("Should return card title when it's on draft status", () => {
-    const isReadOnly = true;
-    render(
-      <FormTitle setIsReadOnly={setIsReadOnly} isReadOnly={isReadOnly} />,
-      { wrapper: AllWithTRPC },
-    );
+    render(<FormTitle />, { wrapper: AllWithTRPC });
     const textarea = screen.getByText(formData.title);
-    expect(textarea).toHaveAttribute("readonly");
+    act(() => {
+      textarea.click();
+    });
+
+    expect(textarea).not.toHaveAttribute("readonly");
   });
 
   it("Should return card title when it's on completed status", () => {
-    const isReadOnly = false;
-    render(
-      <FormTitle setIsReadOnly={setIsReadOnly} isReadOnly={isReadOnly} />,
-      {
-        wrapper: FormCompletedTRPC,
-      },
-    );
+    render(<FormTitle />, {
+      wrapper: FormCompletedTRPC,
+    });
 
     const textarea = screen.getByText(formData.title);
+    act(() => {
+      textarea.click();
+    });
+
     expect(textarea).toHaveAttribute("readonly");
   });
 });
