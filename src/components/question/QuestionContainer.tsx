@@ -45,17 +45,15 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
       (id) => Array.isArray(data[id]) || id !== data[id]?.id,
     );
 
-    const filtertedData = filteredKeys.reduce(
-      (acc, id) =>
-        Array.isArray(data[id])
-          ? (acc = [...acc, ...(data[id] as unknown as Option[])])
-          : (acc = [...acc, data[id]] as Option[]),
-      [] as Option[],
-    );
+    const filtertedData = filteredKeys.map((id) => data[id]).flat() as Option[];
 
     const submissionOptions = filtertedData.map((option) => ({
       optionId: option.id,
-      inputText: option.isOtherOption ? data[option.id]?.value ?? "" : "",
+      inputText: option.isOtherOption
+        ? data[option.id]?.value ?? ""
+        : option.showInput
+        ? option.value
+        : "",
     }));
 
     const submitData = {
