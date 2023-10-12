@@ -1,5 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
+  SubmitFormHandler,
   createFormHandler,
   deleteFormHandler,
   getFormsHandler,
@@ -16,6 +17,7 @@ import {
   params,
   readAllSchema,
   searchAllSchema,
+  submitFormSchema,
   updateFormFavouriteSchema,
   updateFormShareSchema,
   updateFormStatusSchema,
@@ -23,6 +25,11 @@ import {
 } from "@/server/schema/form.schema";
 
 export const formRouter = createTRPCRouter({
+  submitForm: protectedProcedure
+    .input(submitFormSchema)
+    .mutation(({ input, ctx: { session } }) =>
+      SubmitFormHandler({ session, input }),
+    ),
   createForm: protectedProcedure
     .input(createFormSchema)
     .mutation(({ input, ctx: { session } }) =>

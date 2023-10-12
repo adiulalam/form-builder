@@ -3,8 +3,9 @@ import { create } from "zustand";
 import { useContext } from "react";
 import { FormContext } from "./FormProvider";
 import { useForm } from "react-hook-form";
+import type { Option } from "@prisma/client";
 
-type ControlType = Control<Record<string, string>>;
+type ControlType = Control<Record<string, Option>>;
 
 type ReactFormType = {
   control: ControlType;
@@ -22,14 +23,14 @@ export const useReactHookForm = () => {
 
   const defaultValues = questions?.reduce(
     (acc, { id }) => ({ ...acc, [id]: "" }),
-    {} as Record<string, string>,
+    {},
   );
 
-  const { handleSubmit, control } = useForm<Record<string, string>>({
+  const { handleSubmit, control, reset } = useForm<Record<string, Option>>({
     defaultValues,
     shouldUnregister: true,
   });
-  setControl(control);
+  setControl(control as ControlType);
 
-  return { handleSubmit, control };
+  return { handleSubmit, control, reset, defaultValues };
 };

@@ -6,17 +6,66 @@ import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
 import type { SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
+import type { Option } from "@prisma/client";
+import { api } from "@/utils/api";
 
 export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
   const formData = useContext(FormContext);
+  const { handleSubmit, reset, defaultValues } = useReactHookForm();
 
-  const { handleSubmit } = useReactHookForm();
+  const { mutate, isLoading } = api.form.submitForm.useMutation({
+    onSuccess: (data) => {
+      reset();
+      console.log(
+        "🚀 ~ file: QuestionContainer.tsx:20 ~ QuestionContainer ~ data:",
+        data,
+      );
+    },
+  });
 
-  const onSubmit: SubmitHandler<Record<string, string>> = (data) => {
+  const onSubmit: SubmitHandler<Record<string, Option>> = (data) => {
     if (isEditor) return;
     console.log(data);
+
+    const filteredKeys = Object.keys(data).filter(
+      (id) => Array.isArray(data[id]) || id !== data[id]?.id,
+    );
+
+    const filtertedData = filteredKeys.reduce((acc, id) => {
+      if (Array.isArray(data[id])) {
+        const arr = data[id] as unknown as Option[];
+        acc.push(...arr);
+      } else {
+        const obj = data[id] as unknown as Option;
+        acc.push(obj);
+      }
+      return acc;
+    }, [] as Option[]);
+
+    console.log(
+      "🚀 ~ file: QuestionContainer.tsx:37 ~ filtertedData ~ filtertedData:",
+      filtertedData,
+    );
+
+    const submissionOptions = filtertedData.map((option) => ({
+      optionId: option.id,
+      inputText: option.isOtherOption ? data[option.id]?.value ?? "" : "",
+    }));
+
+    const submitData = {
+      formId: formData.id,
+      submissionOptions,
+    };
+
+    console.log(
+      "🚀 ~ file: QuestionContainer.tsx:47 ~ QuestionContainer ~ submissionOptions:",
+      submissionOptions,
+    );
+
+    // mutate(submitData);
+    reset();
   };
 
   return (

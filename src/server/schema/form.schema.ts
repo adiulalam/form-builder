@@ -9,6 +9,16 @@ export const createFormSchema = z.object({
     .min(1),
 });
 
+export const submitFormSchema = z.object({
+  formId: z.string().min(1),
+  submissionOptions: z
+    .object({
+      optionId: z.string().min(1),
+      inputText: z.string(),
+    })
+    .array(),
+});
+
 export const readAllSchema = z.object({
   sort: z.string({
     required_error: "Sort key is required",
@@ -66,6 +76,7 @@ export const updateFormTitleSchema = z.object({
 });
 
 export type CreateFormInput = TypeOf<typeof createFormSchema>;
+export type SubmitFormInput = TypeOf<typeof submitFormSchema>;
 export type ParamsInput = TypeOf<typeof params>;
 export type ReadAllInput = TypeOf<typeof readAllSchema>;
 export type SearchAllInput = TypeOf<typeof searchAllSchema>;

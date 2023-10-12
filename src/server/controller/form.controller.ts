@@ -5,6 +5,7 @@ import type {
   ParamsInput,
   ReadAllInput,
   SearchAllInput,
+  SubmitFormInput,
   UpdateFormFavouriteInput,
   UpdateFormShareInput,
   UpdateFormStatusInput,
@@ -263,6 +264,62 @@ export const createFormHandler = async ({
         throw new TRPCError({
           code: "CONFLICT",
           message: "Form with that id already exists",
+        });
+      }
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const SubmitFormHandler = async ({
+  input,
+  session,
+}: {
+  input: SubmitFormInput;
+  session: Session;
+}) => {
+  //todo: check if user already submitted form or if user who id matches
+  try {
+    const userId = session.user.id;
+
+    const { formId, submissionOptions } = input;
+
+    const submission = await prisma.submission.create({
+      data: {
+        formId,
+        userId,
+        submissionOptions: {
+          createMany: {
+            data: submissionOptions,
+          },
+        },
+      },
+    });
+
+    if (!submission) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Submission with that ID not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        submission,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      if (err.code === "P2002") {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Submission with that id already exists",
         });
       }
 
