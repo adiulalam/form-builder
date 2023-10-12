@@ -1,5 +1,10 @@
 import { useRouter } from "next/router";
-import { FormContext, QuestionProvider, useReactHookForm } from "@/store";
+import {
+  FormContext,
+  QuestionProvider,
+  useReactHookForm,
+  useSnackbarToast,
+} from "@/store";
 import { FormNavbar, FormSubmit } from "@/components/form";
 import { Box, Paper, Grow, Backdrop, CircularProgress } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
@@ -13,40 +18,39 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
   const formData = useContext(FormContext);
+  const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
   const { handleSubmit, reset } = useReactHookForm();
 
   const { mutate, isLoading } = api.form.submitForm.useMutation({
-    onSuccess: (data) => {
+    onSuccess: () => {
+      setSnackConfig({
+        isOpen: true,
+        severity: "success",
+        message: "Form has been submitted",
+      });
       reset();
-      console.log(
-        "🚀 ~ file: QuestionContainer.tsx:20 ~ QuestionContainer ~ data:",
-        data,
-      );
     },
+    onError: (error) =>
+      setSnackConfig({
+        isOpen: true,
+        severity: "error",
+        message: error.message,
+      }),
   });
 
   const onSubmit: SubmitHandler<Record<string, Option>> = (data) => {
     if (isEditor) return;
-    console.log(data);
 
     const filteredKeys = Object.keys(data).filter(
       (id) => Array.isArray(data[id]) || id !== data[id]?.id,
     );
 
-    const filtertedData = filteredKeys.reduce((acc, id) => {
-      if (Array.isArray(data[id])) {
-        const arr = data[id] as unknown as Option[];
-        acc.push(...arr);
-      } else {
-        const obj = data[id] as unknown as Option;
-        acc.push(obj);
-      }
-      return acc;
-    }, [] as Option[]);
-
-    console.log(
-      "🚀 ~ file: QuestionContainer.tsx:37 ~ filtertedData ~ filtertedData:",
-      filtertedData,
+    const filtertedData = filteredKeys.reduce(
+      (acc, id) =>
+        Array.isArray(data[id])
+          ? (acc = [...acc, ...(data[id] as unknown as Option[])])
+          : (acc = [...acc, data[id]] as Option[]),
+      [] as Option[],
     );
 
     const submissionOptions = filtertedData.map((option) => ({

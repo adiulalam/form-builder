@@ -283,11 +283,24 @@ export const SubmitFormHandler = async ({
   input: SubmitFormInput;
   session: Session;
 }) => {
-  //todo: check if user already submitted form or if user who id matches
   try {
     const userId = session.user.id;
 
     const { formId, submissionOptions } = input;
+
+    const submissionCount = await prisma.submission.count({
+      where: {
+        formId,
+        userId,
+      },
+    });
+
+    if (submissionCount > 0) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Form has already been submitted",
+      });
+    }
 
     const submission = await prisma.submission.create({
       data: {
