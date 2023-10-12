@@ -1,6 +1,6 @@
 import type { Option } from "@prisma/client";
-import type { Dispatch, SetStateAction } from "react";
-import { Controller } from "react-hook-form";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
+import { Controller, useWatch } from "react-hook-form";
 import {
   FormControl,
   FormControlLabel,
@@ -21,6 +21,14 @@ export const RadioField = ({
 }) => {
   const control = useReactForm((state) => state.control);
 
+  const watch = useWatch({ control, name });
+
+  useEffect(() => {
+    if (!watch) {
+      setShowOtherField(false);
+    }
+  }, [watch, setShowOtherField]);
+
   return (
     <Controller
       name={name}
@@ -28,12 +36,13 @@ export const RadioField = ({
       rules={{
         required: { value: true, message: "Required Field" },
       }}
-      render={({ field: { onChange }, fieldState: { error } }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl fullWidth error={!!error}>
           <RadioGroup
             onChange={(e) => {
               const id = e.target.value;
               const value = options.find((option) => option.id === id);
+              console.log("🚀 ~ file: RadioField.tsx:37 ~ value:", value);
 
               const isOtherField = options.find(
                 (option) => option.id === value?.id,
@@ -49,7 +58,7 @@ export const RadioField = ({
               <FormControlLabel
                 key={index}
                 value={option.id}
-                control={<Radio />}
+                control={<Radio checked={option.id === value.id} />}
                 label={option.value}
               />
             ))}

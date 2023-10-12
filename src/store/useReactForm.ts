@@ -32,5 +32,5 @@ export const useReactHookForm = () => {
   });
   setControl(control as ControlType);
 
-  return { handleSubmit, control, reset, defaultValues };
+  return { handleSubmit, control, reset };
 };

@@ -23,18 +23,17 @@ export const TextInput = ({
       rules={{
         required: { value: true, message: "Required Field" },
       }}
-      render={({ field: { onChange }, fieldState: { error } }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
           helperText={error ? error.message : null}
           error={!!error}
           onChange={(e) => {
-            const value = e.target.value;
-
-            onChange({ ...option, value });
+            onChange({ ...option, value: e.target.value });
           }}
           label={option?.value ?? "Unknown"}
           multiline={multiline}
           rows={rows}
+          value={value?.value ?? ""}
           fullWidth
         />
       )}

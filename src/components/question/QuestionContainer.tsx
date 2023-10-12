@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { FormContext, QuestionProvider, useReactHookForm } from "@/store";
 import { FormNavbar, FormSubmit } from "@/components/form";
-import { Box, Paper, Grow } from "@mui/material";
+import { Box, Paper, Grow, Backdrop, CircularProgress } from "@mui/material";
 import { QuestionAdd, QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
 import type { SubmitHandler } from "react-hook-form";
@@ -13,7 +13,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
   const formData = useContext(FormContext);
-  const { handleSubmit, reset, defaultValues } = useReactHookForm();
+  const { handleSubmit, reset } = useReactHookForm();
 
   const { mutate, isLoading } = api.form.submitForm.useMutation({
     onSuccess: (data) => {
@@ -59,13 +59,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
       submissionOptions,
     };
 
-    console.log(
-      "🚀 ~ file: QuestionContainer.tsx:47 ~ QuestionContainer ~ submissionOptions:",
-      submissionOptions,
-    );
-
-    // mutate(submitData);
-    reset();
+    mutate(submitData);
   };
 
   return (
@@ -91,6 +85,13 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
         </TransitionGroup>
         {isEditor ? <QuestionAdd /> : <FormSubmit />}
       </form>
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   );
 };

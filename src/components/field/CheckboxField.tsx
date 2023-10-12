@@ -1,5 +1,5 @@
 import type { Option } from "@prisma/client";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { Controller } from "react-hook-form";
 import {
   FormControl,
@@ -9,6 +9,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { useReactForm } from "@/store";
+import { useWatch } from "react-hook-form";
 
 export const CheckboxField = ({
   name,
@@ -20,6 +21,14 @@ export const CheckboxField = ({
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
   const control = useReactForm((state) => state.control);
+
+  const watch = useWatch({ control, name });
+
+  useEffect(() => {
+    if (!watch) {
+      setShowOtherField(false);
+    }
+  }, [watch, setShowOtherField]);
 
   return (
     <Controller
@@ -61,7 +70,14 @@ export const CheckboxField = ({
             {options.map((option, index) => (
               <FormControlLabel
                 key={index}
-                control={<Checkbox />}
+                control={
+                  <Checkbox
+                    checked={
+                      Array.isArray(value) &&
+                      value?.some(({ id }) => option.id === id)
+                    }
+                  />
+                }
                 label={option.value}
                 value={option.id}
               />
