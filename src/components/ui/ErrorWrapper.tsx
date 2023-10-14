@@ -11,6 +11,7 @@ const Title = () => (
 
 export const ErrorWrapper = ({ message }: { message?: string }) => {
   const router = useRouter();
+
   return (
     <Box className="grid min-h-screen content-between justify-center p-4">
       <Title />
@@ -35,6 +36,7 @@ export const ErrorWrapper = ({ message }: { message?: string }) => {
             size="large"
             className="w-fit font-mono text-2xl font-bold uppercase"
             onClick={() => void router.push("/")}
+            role="RedirectButton"
           >
             BACK TO HOMEPAGE
           </Button>
