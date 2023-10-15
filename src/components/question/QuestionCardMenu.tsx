@@ -21,8 +21,10 @@ export const QuestionCardMenu = () => {
   return (
     <Box>
       <CardActions disableSpacing className="flex flex-row justify-end">
-        <QuestionOrder isUp={true} />
-        <QuestionOrder isUp={false} />
+        <Box className="flex flex-col sm:flex-row">
+          <QuestionOrder isUp={true} />
+          <QuestionOrder isUp={false} />
+        </Box>
 
         <Tooltip title="Open menu">
           <IconButton onClick={handleClick}>
