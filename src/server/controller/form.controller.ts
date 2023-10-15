@@ -153,6 +153,9 @@ export const getPublicFormHandler = async ({
             options: {
               orderBy: [
                 {
+                  isOtherOption: "asc",
+                },
+                {
                   updatedAt: "asc",
                 },
               ],
