@@ -5,6 +5,7 @@ import {
   formData,
   formDataFavourite,
   formDataShare,
+  formDataCompleted,
   FormCompletedTRPC,
 } from "./FormProvider.test";
 
@@ -12,6 +13,7 @@ export {
   formData,
   formDataFavourite,
   formDataShare,
+  formDataCompleted,
   AllWithTRPC,
   FormIsFavouriteTRPC,
   FormIsShareTRPC,
