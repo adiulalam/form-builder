@@ -13,6 +13,16 @@ type Props = {
   children: ReactNode;
 };
 
+export const questionNullData: Question = {
+  id: "d81bd283-704f-43b1-aacc-108cedb2f07a",
+  question: "Null question",
+  order: 1,
+  type: null,
+  formId: "95090744-152b-48ee-9eb6-a36245945686",
+  createdAt: new Date("2023-09-24T14:37:13.354Z"),
+  updatedAt: new Date("2023-10-15T01:28:20.950Z"),
+};
+
 export const questionCheckboxData: Question = {
   id: "d81bd283-704f-43b1-aacc-108cedb2f07b",
   question: "Checkbox question",
@@ -56,11 +66,17 @@ export const questionInputData: Question = {
 export const allQuestionsData: FormProviderType = {
   ...formData,
   questions: [
+    questionNullData,
     questionCheckboxData,
     questionDropdownData,
     questionRadioData,
     questionInputData,
   ],
+};
+
+export const draftFormQuestionsNullData: FormProviderType = {
+  ...formData,
+  questions: [questionNullData],
 };
 
 export const draftFormQuestionsCheckboxData: FormProviderType = {
@@ -108,7 +124,7 @@ const questionDataSchema = z
     id: z.string().min(1),
     question: z.string().min(1),
     order: z.number(),
-    type: z.nativeEnum(Type),
+    type: z.nativeEnum(Type).nullable(),
     formId: z.string().min(1),
     createdAt: z.date(),
     updatedAt: z.date(),
@@ -118,7 +134,7 @@ const questionDataSchema = z
 const AllQuestionProviders = ({
   children,
   store = allQuestionsData,
-  questionStore = questionCheckboxData,
+  questionStore = questionNullData,
 }: {
   children?: ReactNode;
   store: FormProviderType;
@@ -230,6 +246,7 @@ export const FormCompletedQuestionsInputTRPC = api.withTRPC(
 describe("Test the 'questionData'", () => {
   it("Should test all string data", () => {
     const { success } = questionDataSchema.safeParse([
+      questionNullData,
       questionCheckboxData,
       questionDropdownData,
       questionRadioData,

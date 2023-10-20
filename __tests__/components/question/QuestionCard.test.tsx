@@ -1,6 +1,7 @@
 import { QuestionCard } from "@/components/question";
 import { render, renderHook, screen } from "@testing-library/react";
 import {
+  AllQuestionTRPC,
   FormDraftQuestionsCheckboxTRPC,
   FormDraftQuestionsDropdownTRPC,
   FormDraftQuestionsInputTRPC,
@@ -9,11 +10,22 @@ import {
   questionDropdownData,
   questionInputData,
   questionRadioData,
+  questionNullData,
 } from ".";
 import { useReactHookForm } from "@/store";
 
 describe("Test the 'FormCard' component", () => {
   renderHook(() => useReactHookForm());
+
+  it("Should test question null", () => {
+    render(<QuestionCard />, {
+      wrapper: AllQuestionTRPC,
+    });
+
+    expect(screen.getByText("NO TYPE PROVIDED")).toBeInTheDocument();
+
+    expect(screen.getByText(questionNullData.question)).toBeInTheDocument();
+  });
 
   it("Should test question checkbox", () => {
     render(<QuestionCard />, {
