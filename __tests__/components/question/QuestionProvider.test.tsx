@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 import { Type, type Question } from "@prisma/client";
-import { FormProvider } from "@/store";
+import { FormProvider, QuestionProvider } from "@/store";
 import { api } from "@/utils/api";
 import { z } from "zod";
-import type { FormProviderType } from "@/types/Provider.types";
+import type {
+  FormProviderType,
+  QuestionProviderType,
+} from "@/types/Provider.types";
 import { formData, formDataCompleted } from "../form";
 
 type Props = {
@@ -40,7 +43,7 @@ export const questionRadioData: Question = {
   updatedAt: new Date("2023-10-15T01:28:20.950Z"),
 };
 
-export const questionInputoData: Question = {
+export const questionInputData: Question = {
   id: "d81bd283-704f-43b1-aacc-108cedb2f07E",
   question: "Input question",
   order: 1,
@@ -56,7 +59,7 @@ export const allQuestionsData: FormProviderType = {
     questionCheckboxData,
     questionDropdownData,
     questionRadioData,
-    questionInputoData,
+    questionInputData,
   ],
 };
 
@@ -92,12 +95,12 @@ export const completedFormQuestionsRadioData: FormProviderType = {
 
 export const draftFormQuestionsInputData: FormProviderType = {
   ...formData,
-  questions: [questionInputoData],
+  questions: [questionInputData],
 };
 
 export const completedFormQuestionsInputData: FormProviderType = {
   ...formDataCompleted,
-  questions: [questionInputoData],
+  questions: [questionInputData],
 };
 
 const questionDataSchema = z
@@ -115,15 +118,25 @@ const questionDataSchema = z
 const AllQuestionProviders = ({
   children,
   store = allQuestionsData,
+  questionStore = questionCheckboxData,
 }: {
   children?: ReactNode;
   store: FormProviderType;
-}) => <FormProvider store={store}>{children}</FormProvider>;
+  questionStore: QuestionProviderType;
+}) => (
+  <FormProvider store={store}>
+    <QuestionProvider store={questionStore}>{children}</QuestionProvider>
+  </FormProvider>
+);
 
 export const AllQuestionTRPC = api.withTRPC(AllQuestionProviders);
 
 const FormDraftQuestionsCheckbox = (props: Props) => (
-  <AllQuestionProviders store={draftFormQuestionsCheckboxData} {...props} />
+  <AllQuestionProviders
+    store={draftFormQuestionsCheckboxData}
+    questionStore={questionCheckboxData}
+    {...props}
+  />
 );
 
 export const FormDraftQuestionsCheckboxTRPC = api.withTRPC(
@@ -131,7 +144,11 @@ export const FormDraftQuestionsCheckboxTRPC = api.withTRPC(
 );
 
 const FormCompletedQuestionsCheckbox = (props: Props) => (
-  <AllQuestionProviders store={completedFormQuestionsCheckboxData} {...props} />
+  <AllQuestionProviders
+    store={completedFormQuestionsCheckboxData}
+    questionStore={questionCheckboxData}
+    {...props}
+  />
 );
 
 export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC(
@@ -139,7 +156,11 @@ export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC(
 );
 
 const FormDraftQuestionsDropdown = (props: Props) => (
-  <AllQuestionProviders store={draftFormQuestionsDropdownData} {...props} />
+  <AllQuestionProviders
+    store={draftFormQuestionsDropdownData}
+    questionStore={questionDropdownData}
+    {...props}
+  />
 );
 
 export const FormDraftQuestionsDropdownTRPC = api.withTRPC(
@@ -147,7 +168,11 @@ export const FormDraftQuestionsDropdownTRPC = api.withTRPC(
 );
 
 const FormCompletedQuestionsDropdown = (props: Props) => (
-  <AllQuestionProviders store={completedFormQuestionsDropdownData} {...props} />
+  <AllQuestionProviders
+    store={completedFormQuestionsDropdownData}
+    questionStore={questionDropdownData}
+    {...props}
+  />
 );
 
 export const FormCompletedQuestionsDropdownTRPC = api.withTRPC(
@@ -155,7 +180,11 @@ export const FormCompletedQuestionsDropdownTRPC = api.withTRPC(
 );
 
 const FormDraftQuestionsRadio = (props: Props) => (
-  <AllQuestionProviders store={draftFormQuestionsRadioData} {...props} />
+  <AllQuestionProviders
+    store={draftFormQuestionsRadioData}
+    questionStore={questionRadioData}
+    {...props}
+  />
 );
 
 export const FormDraftQuestionsRadioTRPC = api.withTRPC(
@@ -163,7 +192,11 @@ export const FormDraftQuestionsRadioTRPC = api.withTRPC(
 );
 
 const FormCompletedQuestionsRadio = (props: Props) => (
-  <AllQuestionProviders store={completedFormQuestionsRadioData} {...props} />
+  <AllQuestionProviders
+    store={completedFormQuestionsRadioData}
+    questionStore={questionRadioData}
+    {...props}
+  />
 );
 
 export const FormCompletedQuestionsRadioTRPC = api.withTRPC(
@@ -171,7 +204,11 @@ export const FormCompletedQuestionsRadioTRPC = api.withTRPC(
 );
 
 const FormDraftQuestionsInput = (props: Props) => (
-  <AllQuestionProviders store={draftFormQuestionsInputData} {...props} />
+  <AllQuestionProviders
+    store={draftFormQuestionsInputData}
+    questionStore={questionInputData}
+    {...props}
+  />
 );
 
 export const FormDraftQuestionsInputTRPC = api.withTRPC(
@@ -179,7 +216,11 @@ export const FormDraftQuestionsInputTRPC = api.withTRPC(
 );
 
 const FormCompletedQuestionsInput = (props: Props) => (
-  <AllQuestionProviders store={completedFormQuestionsInputData} {...props} />
+  <AllQuestionProviders
+    store={completedFormQuestionsInputData}
+    questionStore={questionInputData}
+    {...props}
+  />
 );
 
 export const FormCompletedQuestionsInputTRPC = api.withTRPC(
@@ -192,7 +233,7 @@ describe("Test the 'questionData'", () => {
       questionCheckboxData,
       questionDropdownData,
       questionRadioData,
-      questionInputoData,
+      questionInputData,
     ]);
     expect(success).toEqual(true);
   });

@@ -1,7 +1,7 @@
 import { questionCheckboxData } from "./QuestionProvider.test";
 import { questionDropdownData } from "./QuestionProvider.test";
 import { questionRadioData } from "./QuestionProvider.test";
-import { questionInputoData } from "./QuestionProvider.test";
+import { questionInputData } from "./QuestionProvider.test";
 import { allQuestionsData } from "./QuestionProvider.test";
 import { draftFormQuestionsCheckboxData } from "./QuestionProvider.test";
 import { completedFormQuestionsCheckboxData } from "./QuestionProvider.test";
@@ -25,7 +25,7 @@ export {
   questionCheckboxData,
   questionDropdownData,
   questionRadioData,
-  questionInputoData,
+  questionInputData,
   allQuestionsData,
   draftFormQuestionsCheckboxData,
   completedFormQuestionsCheckboxData,
