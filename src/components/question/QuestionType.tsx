@@ -58,6 +58,7 @@ export const QuestionType = ({ handleClose }: { handleClose: () => void }) => {
       onClick={() => onClickHandler({ type })}
       key={index}
       disabled={type === currentType}
+      data-testid={type}
     >
       <ListItemIcon>
         <Icon />
