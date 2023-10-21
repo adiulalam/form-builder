@@ -6,6 +6,7 @@ import { OptionOtherInput } from "./OptionOtherInput";
 import { OptionInput } from "./OptionInput";
 import { OptionAddInput } from "./OptionAddInput";
 import { OptionValue } from "./OptionValue";
+import { OptionBarMenu } from "./OptionBarMenu";
 
 export {
   OptionBar,
@@ -16,4 +17,5 @@ export {
   OptionOtherInput,
   OptionAddInput,
   OptionInput,
+  OptionBarMenu,
 };

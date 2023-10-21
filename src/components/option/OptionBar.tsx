@@ -1,24 +1,16 @@
-import { Box, Paper, Tooltip, IconButton, Menu } from "@mui/material";
-import { MoreVert as MoreVertIcon } from "@mui/icons-material";
-import { useContext, useState } from "react";
+import { Box, Paper } from "@mui/material";
+import { useContext } from "react";
 import {
   OptionAutocomplete,
-  OptionDelete,
   OptionOtherInput,
-  OptionAddInput,
   OptionInput,
+  OptionBarMenu,
 } from ".";
 import { QuestionContext } from "@/store";
 
 export const OptionBar = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { type, options } = useContext(QuestionContext);
   const isOtherOption = options?.find((option) => option.isOtherOption);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => setAnchorEl(null);
 
   return (
     <Box className="flex w-full flex-col items-center gap-4" maxWidth={"xl"}>
@@ -27,24 +19,7 @@ export const OptionBar = () => {
           {type !== "INPUT" ? <OptionAutocomplete /> : <OptionInput />}
         </Paper>
 
-        {type !== "INPUT" && (
-          <Box>
-            <Tooltip title="Open menu">
-              <IconButton onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-            </Tooltip>
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <OptionDelete handleClose={handleClose} />
-              <OptionAddInput handleClose={handleClose} />
-            </Menu>
-          </Box>
-        )}
+        {type !== "INPUT" && <OptionBarMenu />}
       </Box>
       {isOtherOption && <OptionOtherInput label={isOtherOption.value} />}
     </Box>
