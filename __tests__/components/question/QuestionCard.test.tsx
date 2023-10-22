@@ -14,63 +14,51 @@ import {
 } from ".";
 import { useReactHookForm } from "@/store";
 
+const cardMapper = [
+  {
+    name: "null",
+    wrapper: AllQuestionTRPC,
+    type: "NO TYPE PROVIDED",
+    question: questionNullData.question,
+  },
+  {
+    name: "checkbox",
+    wrapper: FormDraftQuestionsCheckboxTRPC,
+    type: questionCheckboxData.type as string,
+    question: questionCheckboxData.question,
+  },
+  {
+    name: "dropdown",
+    wrapper: FormDraftQuestionsDropdownTRPC,
+    type: questionDropdownData.type as string,
+    question: questionDropdownData.question,
+  },
+  {
+    name: "radio",
+    wrapper: FormDraftQuestionsRadioTRPC,
+    type: questionRadioData.type as string,
+    question: questionRadioData.question,
+  },
+  {
+    name: "input",
+    wrapper: FormDraftQuestionsInputTRPC,
+    type: questionInputData.type as string,
+    question: questionInputData.question,
+  },
+];
+
 describe("Test the 'FormCard' component", () => {
   renderHook(() => useReactHookForm());
 
-  it("Should test question null", () => {
-    render(<QuestionCard />, {
-      wrapper: AllQuestionTRPC,
+  cardMapper.forEach(({ wrapper, type, question, name }) => {
+    it(`Should test question ${name}`, () => {
+      render(<QuestionCard />, {
+        wrapper,
+      });
+
+      expect(screen.getByText(type)).toBeInTheDocument();
+
+      expect(screen.getByText(question)).toBeInTheDocument();
     });
-
-    expect(screen.getByText("NO TYPE PROVIDED")).toBeInTheDocument();
-
-    expect(screen.getByText(questionNullData.question)).toBeInTheDocument();
-  });
-
-  it("Should test question checkbox", () => {
-    render(<QuestionCard />, {
-      wrapper: FormDraftQuestionsCheckboxTRPC,
-    });
-
-    expect(
-      screen.getByText(questionCheckboxData.type as string),
-    ).toBeInTheDocument();
-
-    expect(screen.getByText(questionCheckboxData.question)).toBeInTheDocument();
-  });
-
-  it("Should test question dropdown", () => {
-    render(<QuestionCard />, {
-      wrapper: FormDraftQuestionsDropdownTRPC,
-    });
-
-    expect(
-      screen.getByText(questionDropdownData.type as string),
-    ).toBeInTheDocument();
-
-    expect(screen.getByText(questionDropdownData.question)).toBeInTheDocument();
-  });
-
-  it("Should test question radio", () => {
-    render(<QuestionCard />, {
-      wrapper: FormDraftQuestionsRadioTRPC,
-    });
-
-    expect(
-      screen.getByText(questionRadioData.type as string),
-    ).toBeInTheDocument();
-
-    expect(screen.getByText(questionRadioData.question)).toBeInTheDocument();
-  });
-  it("Should test question input", () => {
-    render(<QuestionCard />, {
-      wrapper: FormDraftQuestionsInputTRPC,
-    });
-
-    expect(
-      screen.getByText(questionInputData.type as string),
-    ).toBeInTheDocument();
-
-    expect(screen.getByText(questionInputData.question)).toBeInTheDocument();
   });
 });

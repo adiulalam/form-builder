@@ -19,10 +19,6 @@ describe("Test the 'FormTitle' component", () => {
     });
 
     const textarea = screen.getByText(formData.title);
-    act(() => {
-      textarea.click();
-    });
-
     expect(textarea).toHaveAttribute("readonly");
   });
 });

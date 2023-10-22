@@ -22,6 +22,7 @@ import {
   FormCompletedQuestionsDropdownTRPC,
   FormDraftQuestionsInputTRPC,
   FormCompletedQuestionsInputTRPC,
+  menuMapper,
 } from "./QuestionProvider.test";
 
 export {
@@ -39,6 +40,7 @@ export {
   completedFormQuestionsDropdownData,
   draftFormQuestionsInputData,
   completedFormQuestionsInputData,
+  menuMapper,
   AllQuestionTRPC,
   FormDraftQuestionsCheckboxTRPC,
   FormCompletedQuestionsCheckboxTRPC,

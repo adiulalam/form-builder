@@ -243,6 +243,22 @@ export const FormCompletedQuestionsInputTRPC = api.withTRPC(
   FormCompletedQuestionsInput,
 );
 
+export const menuMapper = [
+  { wrapper: AllQuestionTRPC, type: null, text: "Add" },
+  {
+    wrapper: FormDraftQuestionsCheckboxTRPC,
+    type: "CHECKBOX",
+    text: "Change to",
+  },
+  {
+    wrapper: FormDraftQuestionsDropdownTRPC,
+    type: "DROPDOWN",
+    text: "Change to",
+  },
+  { wrapper: FormDraftQuestionsInputTRPC, type: "INPUT", text: "Change to" },
+  { wrapper: FormDraftQuestionsRadioTRPC, type: "RADIO", text: "Change to" },
+];
+
 describe("Test the 'questionData'", () => {
   it("Should test all string data", () => {
     const { success } = questionDataSchema.safeParse([
