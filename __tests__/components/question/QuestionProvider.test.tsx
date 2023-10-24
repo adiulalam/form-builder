@@ -147,7 +147,7 @@ const AllQuestionProviders = ({
 
 export const AllQuestionTRPC = api.withTRPC(AllQuestionProviders);
 
-const FormDraftQuestionsCheckbox = (props: Props) => (
+export const FormDraftQuestionsCheckbox = (props: Props) => (
   <AllQuestionProviders
     store={draftFormQuestionsCheckboxData}
     questionStore={{ ...questionCheckboxData, index: 0 }}
