@@ -59,7 +59,7 @@ const CheckboxOptionProviders = ({
   store: OptionProviderType;
 }) => (
   <FormDraftQuestionsCheckbox>
-    <OptionProvider store={store}> {children}</OptionProvider>
+    <OptionProvider store={store}>{children}</OptionProvider>
   </FormDraftQuestionsCheckbox>
 );
 
