@@ -8,60 +8,33 @@ import type {
   QuestionProviderType,
 } from "@/types/Provider.types";
 import { formData, formDataCompleted } from "../form";
+import crypto from "crypto";
 
 type Props = {
   children: ReactNode;
 };
 
-export const questionNullData: Question = {
-  id: "d81bd283-704f-43b1-aacc-108cedb2f07a",
-  question: "Null question",
+const questionData = (question: string, type: Type | null): Question => ({
+  id: crypto.randomUUID(),
+  question,
+  type,
   order: 1,
-  type: null,
-  formId: "95090744-152b-48ee-9eb6-a36245945686",
+  formId: "80bbdd42-4d13-410e-abb7-79b0c81e3d32",
   createdAt: new Date("2023-09-24T14:37:13.354Z"),
   updatedAt: new Date("2023-10-15T01:28:20.950Z"),
-};
+});
 
-export const questionCheckboxData: Question = {
-  id: "d81bd283-704f-43b1-aacc-108cedb2f07b",
-  question: "Checkbox question",
-  order: 1,
-  type: "CHECKBOX",
-  formId: "95090744-152b-48ee-9eb6-a36245945686",
-  createdAt: new Date("2023-09-24T14:37:13.354Z"),
-  updatedAt: new Date("2023-10-15T01:28:20.950Z"),
-};
-
-export const questionDropdownData: Question = {
-  id: "d81bd283-704f-43b1-aacc-108cedb2f07c",
-  question: "Dropdown question",
-  order: 1,
-  type: "DROPDOWN",
-  formId: "95090744-152b-48ee-9eb6-a36245945686",
-  createdAt: new Date("2023-09-24T14:37:13.354Z"),
-  updatedAt: new Date("2023-10-15T01:28:20.950Z"),
-};
-
-export const questionRadioData: Question = {
-  id: "d81bd283-704f-43b1-aacc-108cedb2f07d",
-  question: "Radio question",
-  order: 1,
-  type: "RADIO",
-  formId: "95090744-152b-48ee-9eb6-a36245945686",
-  createdAt: new Date("2023-09-24T14:37:13.354Z"),
-  updatedAt: new Date("2023-10-15T01:28:20.950Z"),
-};
-
-export const questionInputData: Question = {
-  id: "d81bd283-704f-43b1-aacc-108cedb2f07E",
-  question: "Input question",
-  order: 1,
-  type: "INPUT",
-  formId: "95090744-152b-48ee-9eb6-a36245945686",
-  createdAt: new Date("2023-09-24T14:37:13.354Z"),
-  updatedAt: new Date("2023-10-15T01:28:20.950Z"),
-};
+export const questionNullData = questionData("Null question", null);
+export const questionCheckboxData = questionData(
+  "Checkbox question",
+  "CHECKBOX",
+);
+export const questionDropdownData = questionData(
+  "Dropdown question",
+  "DROPDOWN",
+);
+export const questionRadioData = questionData("Radio question", "RADIO");
+export const questionInputData = questionData("Input question", "INPUT");
 
 export const allQuestionsData: FormProviderType = {
   ...formData,
