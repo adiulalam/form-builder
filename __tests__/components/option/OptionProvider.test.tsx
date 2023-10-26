@@ -10,7 +10,6 @@ import type {
 } from "@/types/Provider.types";
 import crypto from "crypto";
 import { formData, formDataCompleted } from "../form";
-import { FormDraftQuestionsCheckbox } from "../question";
 
 type Props = {
   children: ReactNode;
@@ -51,19 +50,19 @@ const radioOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
 );
 
-const CheckboxOptionProviders = ({
-  children,
-  store = checkboxOptionData,
-}: {
-  children?: ReactNode;
-  store: OptionProviderType;
-}) => (
-  <FormDraftQuestionsCheckbox>
-    <OptionProvider store={store}>{children}</OptionProvider>
-  </FormDraftQuestionsCheckbox>
-);
+// const CheckboxOptionProviders = ({
+//   children,
+//   store = checkboxOptionData,
+// }: {
+//   children?: ReactNode;
+//   store: OptionProviderType;
+// }) => (
+//   <FormDraftQuestionsCheckbox>
+//     <OptionProvider store={store}>{children}</OptionProvider>
+//   </FormDraftQuestionsCheckbox>
+// );
 
-export const AllQuestionTRPC = api.withTRPC(CheckboxOptionProviders);
+// export const AllQuestionTRPC = api.withTRPC(CheckboxOptionProviders);
 const OptionDataSchema = z
   .object({
     id: z.string().uuid(),

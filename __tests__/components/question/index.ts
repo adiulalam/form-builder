@@ -23,7 +23,6 @@ import {
   FormDraftQuestionsInputTRPC,
   FormCompletedQuestionsInputTRPC,
   menuMapper,
-  FormDraftQuestionsCheckbox,
 } from "./QuestionProvider.test";
 
 export {
@@ -42,7 +41,6 @@ export {
   draftFormQuestionsInputData,
   completedFormQuestionsInputData,
   menuMapper,
-  FormDraftQuestionsCheckbox,
   AllQuestionTRPC,
   FormDraftQuestionsCheckboxTRPC,
   FormCompletedQuestionsCheckboxTRPC,

@@ -47,50 +47,35 @@ export const allQuestionsData: FormProviderType = {
   ],
 };
 
-export const draftFormQuestionsNullData: FormProviderType = {
-  ...formData,
-  questions: [questionNullData],
-};
+const questionsData = (
+  questionData: QuestionProviderType,
+): { draft: FormProviderType; completed: FormProviderType } => ({
+  draft: { ...formData, questions: [questionData] },
+  completed: { ...formDataCompleted, questions: [questionData] },
+});
 
-export const draftFormQuestionsCheckboxData: FormProviderType = {
-  ...formData,
-  questions: [questionCheckboxData],
-};
+export const { draft: draftFormQuestionsNullData } =
+  questionsData(questionNullData);
 
-export const completedFormQuestionsCheckboxData: FormProviderType = {
-  ...formDataCompleted,
-  questions: [questionCheckboxData],
-};
+export const {
+  draft: draftFormQuestionsCheckboxData,
+  completed: completedFormQuestionsCheckboxData,
+} = questionsData(questionCheckboxData);
 
-export const draftFormQuestionsDropdownData: FormProviderType = {
-  ...formData,
-  questions: [questionDropdownData],
-};
+export const {
+  draft: draftFormQuestionsDropdownData,
+  completed: completedFormQuestionsDropdownData,
+} = questionsData(questionDropdownData);
 
-export const completedFormQuestionsDropdownData: FormProviderType = {
-  ...formDataCompleted,
-  questions: [questionDropdownData],
-};
+export const {
+  draft: draftFormQuestionsRadioData,
+  completed: completedFormQuestionsRadioData,
+} = questionsData(questionRadioData);
 
-export const draftFormQuestionsRadioData: FormProviderType = {
-  ...formData,
-  questions: [questionRadioData],
-};
-
-export const completedFormQuestionsRadioData: FormProviderType = {
-  ...formDataCompleted,
-  questions: [questionRadioData],
-};
-
-export const draftFormQuestionsInputData: FormProviderType = {
-  ...formData,
-  questions: [questionInputData],
-};
-
-export const completedFormQuestionsInputData: FormProviderType = {
-  ...formDataCompleted,
-  questions: [questionInputData],
-};
+export const {
+  draft: draftFormQuestionsInputData,
+  completed: completedFormQuestionsInputData,
+} = questionsData(questionInputData);
 
 const questionDataSchema = z
   .object({
@@ -120,100 +105,68 @@ const AllQuestionProviders = ({
 
 export const AllQuestionTRPC = api.withTRPC(AllQuestionProviders);
 
-export const FormDraftQuestionsCheckbox = (props: Props) => (
-  <AllQuestionProviders
-    store={draftFormQuestionsCheckboxData}
-    questionStore={{ ...questionCheckboxData, index: 0 }}
-    {...props}
-  />
+export const FormDraftQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: draftFormQuestionsCheckboxData,
+    questionStore: { ...questionCheckboxData, index: 0 },
+    ...props,
+  }),
 );
 
-export const FormDraftQuestionsCheckboxTRPC = api.withTRPC(
-  FormDraftQuestionsCheckbox,
+export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: completedFormQuestionsCheckboxData,
+    questionStore: questionCheckboxData,
+    ...props,
+  }),
 );
 
-const FormCompletedQuestionsCheckbox = (props: Props) => (
-  <AllQuestionProviders
-    store={completedFormQuestionsCheckboxData}
-    questionStore={questionCheckboxData}
-    {...props}
-  />
+export const FormDraftQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: draftFormQuestionsDropdownData,
+    questionStore: questionDropdownData,
+    ...props,
+  }),
 );
 
-export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC(
-  FormCompletedQuestionsCheckbox,
+export const FormCompletedQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: completedFormQuestionsDropdownData,
+    questionStore: questionDropdownData,
+    ...props,
+  }),
 );
 
-const FormDraftQuestionsDropdown = (props: Props) => (
-  <AllQuestionProviders
-    store={draftFormQuestionsDropdownData}
-    questionStore={questionDropdownData}
-    {...props}
-  />
+export const FormDraftQuestionsRadioTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: draftFormQuestionsRadioData,
+    questionStore: questionRadioData,
+    ...props,
+  }),
 );
 
-export const FormDraftQuestionsDropdownTRPC = api.withTRPC(
-  FormDraftQuestionsDropdown,
+export const FormCompletedQuestionsRadioTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: completedFormQuestionsRadioData,
+    questionStore: questionRadioData,
+    ...props,
+  }),
 );
 
-const FormCompletedQuestionsDropdown = (props: Props) => (
-  <AllQuestionProviders
-    store={completedFormQuestionsDropdownData}
-    questionStore={questionDropdownData}
-    {...props}
-  />
+export const FormDraftQuestionsInputTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: draftFormQuestionsInputData,
+    questionStore: questionInputData,
+    ...props,
+  }),
 );
 
-export const FormCompletedQuestionsDropdownTRPC = api.withTRPC(
-  FormCompletedQuestionsDropdown,
-);
-
-const FormDraftQuestionsRadio = (props: Props) => (
-  <AllQuestionProviders
-    store={draftFormQuestionsRadioData}
-    questionStore={questionRadioData}
-    {...props}
-  />
-);
-
-export const FormDraftQuestionsRadioTRPC = api.withTRPC(
-  FormDraftQuestionsRadio,
-);
-
-const FormCompletedQuestionsRadio = (props: Props) => (
-  <AllQuestionProviders
-    store={completedFormQuestionsRadioData}
-    questionStore={questionRadioData}
-    {...props}
-  />
-);
-
-export const FormCompletedQuestionsRadioTRPC = api.withTRPC(
-  FormCompletedQuestionsRadio,
-);
-
-const FormDraftQuestionsInput = (props: Props) => (
-  <AllQuestionProviders
-    store={draftFormQuestionsInputData}
-    questionStore={questionInputData}
-    {...props}
-  />
-);
-
-export const FormDraftQuestionsInputTRPC = api.withTRPC(
-  FormDraftQuestionsInput,
-);
-
-const FormCompletedQuestionsInput = (props: Props) => (
-  <AllQuestionProviders
-    store={completedFormQuestionsInputData}
-    questionStore={questionInputData}
-    {...props}
-  />
-);
-
-export const FormCompletedQuestionsInputTRPC = api.withTRPC(
-  FormCompletedQuestionsInput,
+export const FormCompletedQuestionsInputTRPC = api.withTRPC((props: Props) =>
+  AllQuestionProviders({
+    store: completedFormQuestionsInputData,
+    questionStore: questionInputData,
+    ...props,
+  }),
 );
 
 export const menuMapper = [

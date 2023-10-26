@@ -55,21 +55,15 @@ const AllTheProviders = ({
 }) => <FormProvider store={store}>{children}</FormProvider>;
 
 export const AllWithTRPC = api.withTRPC(AllTheProviders);
-
-const FormIsFavourite = (props: Props) => (
-  <AllTheProviders store={formDataFavourite} {...props} />
+export const FormIsFavouriteTRPC = api.withTRPC((props: Props) =>
+  AllTheProviders({ store: formDataFavourite, ...props }),
 );
-export const FormIsFavouriteTRPC = api.withTRPC(FormIsFavourite);
-
-const FormIsShare = (props: Props) => (
-  <AllTheProviders store={formDataShare} {...props} />
+export const FormIsShareTRPC = api.withTRPC((props: Props) =>
+  AllTheProviders({ store: formDataShare, ...props }),
 );
-export const FormIsShareTRPC = api.withTRPC(FormIsShare);
-
-const FormCompleted = (props: Props) => (
-  <AllTheProviders store={formDataCompleted} {...props} />
+export const FormCompletedTRPC = api.withTRPC((props: Props) =>
+  AllTheProviders({ store: formDataCompleted, ...props }),
 );
-export const FormCompletedTRPC = api.withTRPC(FormCompleted);
 
 describe("Test the 'formData'", () => {
   it("Should test all string data", () => {
