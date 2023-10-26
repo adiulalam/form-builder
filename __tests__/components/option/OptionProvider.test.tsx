@@ -29,25 +29,39 @@ const optionData = (questionId: string, value: string): Option => ({
   id: crypto.randomUUID(),
   value,
   questionId,
-  showInput: false,
+  showInput: value === "input",
   isOtherOption: false,
   createdAt: new Date("2023-10-24T00:39:13.336Z"),
   updatedAt: new Date("2023-10-24T00:39:13.336Z"),
 });
 
-const checkboxOptionData = optionData(
+export const checkboxOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07b",
   "checkbox",
 );
-const checkboxOtherOptionData = otherOptionData(
+export const checkboxOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07b",
 );
 
+const dropdownOptionData = optionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07c",
+  "dropdown",
+);
 const dropdownOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07c",
 );
+
+const radioOptionData = optionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07d",
+  "radio",
+);
 const radioOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
+);
+
+const inputOptionData = optionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07e",
+  "input",
 );
 
 // const CheckboxOptionProviders = ({
@@ -60,6 +74,20 @@ const radioOtherOptionData = otherOptionData(
 //   <FormDraftQuestionsCheckbox>
 //     <OptionProvider store={store}>{children}</OptionProvider>
 //   </FormDraftQuestionsCheckbox>
+// );
+
+// const CheckboxOptionProviders = ({
+//   children,
+//   store = allQuestionsData,
+//   questionStore = questionNullData,
+// }: {
+//   children?: ReactNode;
+//   store: FormProviderType;
+//   questionStore: QuestionProviderType;
+// }) => (
+//   <FormProvider store={store}>
+//     <QuestionProvider store={questionStore}>{children}</QuestionProvider>
+//   </FormProvider>
 // );
 
 // export const AllQuestionTRPC = api.withTRPC(CheckboxOptionProviders);

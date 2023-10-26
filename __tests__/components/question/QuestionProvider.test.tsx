@@ -1,40 +1,67 @@
 import type { ReactNode } from "react";
-import { Type, type Question } from "@prisma/client";
-import { FormProvider, QuestionProvider } from "@/store";
+import { Type, type Option } from "@prisma/client";
+import { FormProvider, OptionProvider, QuestionProvider } from "@/store";
 import { api } from "@/utils/api";
 import { z } from "zod";
 import type {
   FormProviderType,
+  OptionProviderType,
   QuestionProviderType,
 } from "@/types/Provider.types";
 import { formData, formDataCompleted } from "../form";
 import crypto from "crypto";
+import { checkboxOptionData, checkboxOtherOptionData } from "../option";
 
 type Props = {
   children: ReactNode;
 };
 
-const questionData = (question: string, type: Type | null): Question => ({
-  id: crypto.randomUUID(),
+const questionData = (
+  id: string,
+  question: string,
+  type: Type | null,
+  options: Option[],
+): QuestionProviderType => ({
+  id,
   question,
   type,
   order: 1,
   formId: "80bbdd42-4d13-410e-abb7-79b0c81e3d32",
   createdAt: new Date("2023-09-24T14:37:13.354Z"),
   updatedAt: new Date("2023-10-15T01:28:20.950Z"),
+  options,
 });
 
-export const questionNullData = questionData("Null question", null);
+export const questionNullData = questionData(
+  crypto.randomUUID(),
+  "Null question",
+  null,
+  [],
+);
 export const questionCheckboxData = questionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07b",
   "Checkbox question",
   "CHECKBOX",
+  [checkboxOptionData, checkboxOtherOptionData],
 );
 export const questionDropdownData = questionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07c",
   "Dropdown question",
   "DROPDOWN",
+  [],
 );
-export const questionRadioData = questionData("Radio question", "RADIO");
-export const questionInputData = questionData("Input question", "INPUT");
+export const questionRadioData = questionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07d",
+  "Radio question",
+  "RADIO",
+  [],
+);
+export const questionInputData = questionData(
+  "d81bd283-704f-43b1-aacc-108cedb2f07e",
+  "Input question",
+  "INPUT",
+  [],
+);
 
 export const allQuestionsData: FormProviderType = {
   ...formData,
@@ -93,13 +120,17 @@ const AllQuestionProviders = ({
   children,
   store = allQuestionsData,
   questionStore = questionNullData,
+  optionStore = checkboxOptionData,
 }: {
   children?: ReactNode;
   store: FormProviderType;
   questionStore: QuestionProviderType;
+  optionStore?: OptionProviderType;
 }) => (
   <FormProvider store={store}>
-    <QuestionProvider store={questionStore}>{children}</QuestionProvider>
+    <QuestionProvider store={questionStore}>
+      <OptionProvider store={optionStore}>{children}</OptionProvider>
+    </QuestionProvider>
   </FormProvider>
 );
 
@@ -109,6 +140,7 @@ export const FormDraftQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
   AllQuestionProviders({
     store: draftFormQuestionsCheckboxData,
     questionStore: { ...questionCheckboxData, index: 0 },
+    optionStore: checkboxOptionData,
     ...props,
   }),
 );
@@ -117,6 +149,7 @@ export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
   AllQuestionProviders({
     store: completedFormQuestionsCheckboxData,
     questionStore: questionCheckboxData,
+    optionStore: checkboxOptionData,
     ...props,
   }),
 );
