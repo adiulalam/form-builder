@@ -50,6 +50,7 @@ export const OptionAdd = ({
             size="small"
             onClick={() => value && onSubmitHandler()}
             style={{ transform: "scale(0.6)" }}
+            disabled={!value}
           >
             <AddIcon />
           </Fab>
