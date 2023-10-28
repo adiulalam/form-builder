@@ -10,7 +10,14 @@ import type {
 } from "@/types/Provider.types";
 import { formData, formDataCompleted } from "../form";
 import crypto from "crypto";
-import { checkboxOptionData, checkboxOtherOptionData } from "../option";
+import {
+  checkboxOptionData,
+  checkboxOtherOptionData,
+  dropdownOptionData,
+  dropdownOtherOptionData,
+  radioOptionData,
+  radioOtherOptionData,
+} from "../option";
 
 type Props = {
   children: ReactNode;
@@ -48,13 +55,13 @@ export const questionDropdownData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07c",
   "Dropdown question",
   "DROPDOWN",
-  [],
+  [dropdownOptionData, dropdownOtherOptionData],
 );
 export const questionRadioData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
   "Radio question",
   "RADIO",
-  [],
+  [radioOptionData, radioOtherOptionData],
 );
 export const questionInputData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07e",
@@ -158,6 +165,7 @@ export const FormDraftQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
   AllQuestionProviders({
     store: draftFormQuestionsDropdownData,
     questionStore: questionDropdownData,
+    optionStore: dropdownOptionData,
     ...props,
   }),
 );
@@ -166,6 +174,7 @@ export const FormCompletedQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
   AllQuestionProviders({
     store: completedFormQuestionsDropdownData,
     questionStore: questionDropdownData,
+    optionStore: dropdownOptionData,
     ...props,
   }),
 );

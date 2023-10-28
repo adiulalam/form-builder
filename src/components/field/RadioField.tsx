@@ -58,7 +58,7 @@ export const RadioField = ({
               <FormControlLabel
                 key={index}
                 value={option.id}
-                control={<Radio checked={option.id === value.id} />}
+                control={<Radio checked={option.id === value?.id} />}
                 label={option.value}
               />
             ))}

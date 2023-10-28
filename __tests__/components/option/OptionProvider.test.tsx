@@ -43,19 +43,19 @@ export const checkboxOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07b",
 );
 
-const dropdownOptionData = optionData(
+export const dropdownOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07c",
   "dropdown",
 );
-const dropdownOtherOptionData = otherOptionData(
+export const dropdownOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07c",
 );
 
-const radioOptionData = optionData(
+export const radioOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
   "radio",
 );
-const radioOtherOptionData = otherOptionData(
+export const radioOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
 );
 
