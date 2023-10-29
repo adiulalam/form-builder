@@ -1,19 +1,6 @@
-import type { ReactNode } from "react";
-import { Type, type Question, type Option } from "@prisma/client";
-import { FormProvider, QuestionProvider, OptionProvider } from "@/store";
-import { api } from "@/utils/api";
+import type { Option } from "@prisma/client";
 import { z } from "zod";
-import type {
-  FormProviderType,
-  OptionProviderType,
-  QuestionProviderType,
-} from "@/types/Provider.types";
 import crypto from "crypto";
-import { formData, formDataCompleted } from "../form";
-
-type Props = {
-  children: ReactNode;
-};
 
 const otherOptionData = (questionId: string): Option => ({
   id: crypto.randomUUID(),
@@ -64,33 +51,6 @@ export const inputOptionData = optionData(
   "input",
 );
 
-// const CheckboxOptionProviders = ({
-//   children,
-//   store = checkboxOptionData,
-// }: {
-//   children?: ReactNode;
-//   store: OptionProviderType;
-// }) => (
-//   <FormDraftQuestionsCheckbox>
-//     <OptionProvider store={store}>{children}</OptionProvider>
-//   </FormDraftQuestionsCheckbox>
-// );
-
-// const CheckboxOptionProviders = ({
-//   children,
-//   store = allQuestionsData,
-//   questionStore = questionNullData,
-// }: {
-//   children?: ReactNode;
-//   store: FormProviderType;
-//   questionStore: QuestionProviderType;
-// }) => (
-//   <FormProvider store={store}>
-//     <QuestionProvider store={questionStore}>{children}</QuestionProvider>
-//   </FormProvider>
-// );
-
-// export const AllQuestionTRPC = api.withTRPC(CheckboxOptionProviders);
 const OptionDataSchema = z
   .object({
     id: z.string().uuid(),

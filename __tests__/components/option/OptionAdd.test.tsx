@@ -1,6 +1,6 @@
 import { OptionAdd } from "@/components/option";
 import { render, screen } from "@testing-library/react";
-import { DraftCheckboxOptionTRPC } from "../option";
+import { DraftCheckboxOptionTRPC } from ".";
 
 describe("Test the 'OptionAdd' component", () => {
   it("Should return enabled button", () => {
