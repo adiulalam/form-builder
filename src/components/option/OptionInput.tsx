@@ -11,8 +11,8 @@ export const OptionInput = () => {
       fullWidth
       multiline
       rows={2}
-      label={value ?? ""}
-      InputProps={{ readOnly: true }}
+      label={value?.toUpperCase() ?? ""}
+      InputProps={{ readOnly: true, placeholder: "Type here" }}
     />
   );
 };

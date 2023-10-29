@@ -6,7 +6,7 @@ export const OptionOtherInput = ({ label }: { label: string }) => {
       fullWidth
       multiline
       label={label}
-      InputProps={{ readOnly: true }}
+      InputProps={{ readOnly: true, placeholder: "Type here" }}
     />
   );
 };

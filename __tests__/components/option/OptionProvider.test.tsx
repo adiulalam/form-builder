@@ -59,7 +59,7 @@ export const radioOtherOptionData = otherOptionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
 );
 
-const inputOptionData = optionData(
+export const inputOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07e",
   "input",
 );

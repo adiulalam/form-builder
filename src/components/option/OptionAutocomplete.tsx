@@ -37,7 +37,7 @@ export const OptionAutocomplete = () => {
           {...params}
           variant="standard"
           label="Add values"
-          placeholder="Type here"
+          placeholder="Add values here"
           ref={autocompleteRef}
           InputProps={{
             ...params.InputProps,

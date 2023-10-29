@@ -45,16 +45,18 @@ export const OptionAdd = ({
   return (
     <>
       <Tooltip title="Add Value">
-        <Fade in={true} timeout={500} className="bg-primary">
-          <Fab
-            size="small"
-            onClick={() => value && onSubmitHandler()}
-            style={{ transform: "scale(0.6)" }}
-            disabled={!value}
-          >
-            <AddIcon />
-          </Fab>
-        </Fade>
+        <span>
+          <Fade in={true} timeout={500} className="bg-primary">
+            <Fab
+              size="small"
+              onClick={() => value && onSubmitHandler()}
+              style={{ transform: "scale(0.6)" }}
+              disabled={!value}
+            >
+              <AddIcon />
+            </Fab>
+          </Fade>
+        </span>
       </Tooltip>
 
       <Backdrop

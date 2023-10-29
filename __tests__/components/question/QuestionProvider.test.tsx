@@ -15,6 +15,7 @@ import {
   checkboxOtherOptionData,
   dropdownOptionData,
   dropdownOtherOptionData,
+  inputOptionData,
   radioOptionData,
   radioOtherOptionData,
 } from "../option";
@@ -67,7 +68,7 @@ export const questionInputData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07e",
   "Input question",
   "INPUT",
-  [],
+  [inputOptionData],
 );
 
 export const allQuestionsData: FormProviderType = {
@@ -183,6 +184,7 @@ export const FormDraftQuestionsRadioTRPC = api.withTRPC((props: Props) =>
   AllQuestionProviders({
     store: draftFormQuestionsRadioData,
     questionStore: questionRadioData,
+    optionStore: radioOptionData,
     ...props,
   }),
 );
@@ -199,6 +201,7 @@ export const FormDraftQuestionsInputTRPC = api.withTRPC((props: Props) =>
   AllQuestionProviders({
     store: draftFormQuestionsInputData,
     questionStore: questionInputData,
+    optionStore: inputOptionData,
     ...props,
   }),
 );
