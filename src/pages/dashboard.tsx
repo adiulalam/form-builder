@@ -1,6 +1,11 @@
 import Head from "next/head";
 import { Box, Tabs, Tab } from "@mui/material";
 import { type SyntheticEvent, useState } from "react";
+import {
+  DashboardAnswer,
+  DashboardForm,
+  DashboardQuestion,
+} from "@/components/dashboard";
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
@@ -12,17 +17,18 @@ export default function Home() {
   const tabsList = [
     {
       label: "Form",
-      Component: () => <p>Item One</p>,
+      Component: () => <DashboardForm />,
     },
     {
       label: "Question",
-      Component: () => <p>Item Two</p>,
+      Component: () => <DashboardQuestion />,
     },
     {
       label: "Answer",
-      Component: () => <p>Item Three</p>,
+      Component: () => <DashboardAnswer />,
     },
   ];
+
   return (
     <>
       <Head>
