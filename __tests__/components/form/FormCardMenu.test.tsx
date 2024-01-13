@@ -1,10 +1,17 @@
 import { FormCardMenu } from "@/components/form";
 import { render, screen, act } from "@testing-library/react";
 import { AllWithTRPC, FormCompletedTRPC } from ".";
+import { useState } from "react";
 
 describe("Test the 'FormCardMenu' component", () => {
   it("Should return card menu button of draft status", () => {
-    render(<FormCardMenu />, { wrapper: AllWithTRPC });
+    const Component = () => {
+      const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+      return (
+        <FormCardMenu isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
+      );
+    };
+    render(<Component />, { wrapper: AllWithTRPC });
     expect(screen.getByLabelText("Open menu")).toBeInTheDocument();
     expect(screen.getByTestId("MoreVertIcon")).toBeInTheDocument();
 
@@ -26,7 +33,13 @@ describe("Test the 'FormCardMenu' component", () => {
   });
 
   it("Should return card menu button of completed status", () => {
-    render(<FormCardMenu />, { wrapper: FormCompletedTRPC });
+    const Component = () => {
+      const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+      return (
+        <FormCardMenu isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
+      );
+    };
+    render(<Component />, { wrapper: FormCompletedTRPC });
 
     const button = screen.getByRole("button");
     act(() => {

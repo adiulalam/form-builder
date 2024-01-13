@@ -31,7 +31,7 @@ export const FormNavbar = ({ isFetching }: { isFetching: boolean }) => {
       maxWidth={"xl"}
     >
       <Box className="w-full">
-        <FormTitle />
+        <FormTitle isReadOnly={status !== "DRAFT"} />
       </Box>
       {isEditor && (
         <Box className="flex flex-row items-center justify-between">

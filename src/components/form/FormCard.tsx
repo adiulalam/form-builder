@@ -1,59 +1,53 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FormContext } from "@/store";
-import {
-  EditNote as EditNoteIcon,
-  FormatAlignJustify as FormatAlignJustifyIcon,
-} from "@mui/icons-material";
-import {
-  Divider,
-  Typography,
-  CardActions,
-  CardHeader,
-  Card,
-} from "@mui/material";
+import { Divider, Typography, CardActions } from "@mui/material";
 import { FormFavourite, FormTitle, FormShare, FormCardMenu } from ".";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import Link from "next/link";
+import { CustomCard } from "../shared";
 dayjs.extend(localizedFormat);
 
 export const FormCard = () => {
+  const [isReadOnly, setIsReadOnly] = useState(true);
   const { id, status, updatedAt } = useContext(FormContext);
+  const href = `/form/${id}`;
+
+  const footerActions = (
+    <CardActions disableSpacing className="flex flex-row justify-end">
+      <FormFavourite />
+
+      <FormShare />
+    </CardActions>
+  );
+
+  const headerProps = {
+    action: (
+      <FormCardMenu isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />
+    ),
+    title: <FormTitle isReadOnly={isReadOnly} setIsReadOnly={setIsReadOnly} />,
+    subheader: (
+      <Link
+        className="flex flex-row flex-wrap items-center gap-2"
+        href={`/form/${id}`}
+      >
+        <Typography variant="subtitle1">
+          {dayjs(updatedAt).format("LL")}
+        </Typography>
+
+        <Divider orientation="vertical" variant="middle" flexItem />
+
+        <Typography variant="subtitle2">{status}</Typography>
+      </Link>
+    ),
+  };
 
   return (
-    <Card className="flex w-full flex-col sm:max-w-sm">
-      <CardHeader
-        action={<FormCardMenu />}
-        title={<FormTitle />}
-        subheader={
-          <Link
-            className="flex flex-row flex-wrap items-center gap-2"
-            href={`/form/${id}`}
-          >
-            <Typography variant="subtitle1">
-              {dayjs(updatedAt).format("LL")}
-            </Typography>
-
-            <Divider orientation="vertical" variant="middle" flexItem />
-
-            <Typography variant="subtitle2">{status}</Typography>
-          </Link>
-        }
-      />
-
-      <Link className="w-1/1 flex self-center" href={`/form/${id}`}>
-        {status === "DRAFT" ? (
-          <EditNoteIcon className="text-[12rem]" />
-        ) : (
-          <FormatAlignJustifyIcon className="text-[12rem]" />
-        )}
-      </Link>
-
-      <CardActions disableSpacing className="flex flex-row justify-end">
-        <FormFavourite />
-
-        <FormShare />
-      </CardActions>
-    </Card>
+    <CustomCard
+      status={status}
+      href={href}
+      footerActions={footerActions}
+      headerProps={headerProps}
+    />
   );
 };

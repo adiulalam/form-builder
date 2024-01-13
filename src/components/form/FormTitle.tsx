@@ -1,12 +1,19 @@
 import type { FocusEvent } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useRef, useState, useEffect } from "react";
 import { FormContext } from "@/store";
-import { useFormTitle } from "@/store/useFormTitle";
 
-export const FormTitle = () => {
-  const { isReadOnly, setIsReadOnly } = useFormTitle();
+type FormTitleType = {
+  isReadOnly?: boolean;
+  setIsReadOnly?: Dispatch<SetStateAction<boolean>> | null;
+};
+
+export const FormTitle = ({
+  isReadOnly = true,
+  setIsReadOnly = null,
+}: FormTitleType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { id, title, status, questions } = useContext(FormContext);
   const isCompleted = status === "COMPLETED";
@@ -29,7 +36,7 @@ export const FormTitle = () => {
       body: { title: input },
       params: { id },
     });
-    setIsReadOnly(true);
+    setIsReadOnly && setIsReadOnly(true);
   };
 
   useEffect(() => {
@@ -45,7 +52,7 @@ export const FormTitle = () => {
         onChange={(e) => setInput(e.target.value)}
         inputRef={inputRef}
         onBlur={(e) => !isReadOnly && onSubmitHandler(e)}
-        onClick={() => !isCompleted && setIsReadOnly(false)}
+        onClick={() => !isCompleted && setIsReadOnly && setIsReadOnly(false)}
         className="text-2xl"
         multiline
       />

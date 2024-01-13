@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { FormContext } from "@/store";
 import {
   MoreVert as MoreVertIcon,
@@ -14,11 +15,17 @@ import {
   ListItemText,
 } from "@mui/material";
 import { FormDelete, FormStatus } from ".";
-import { useFormTitle } from "@/store/useFormTitle";
 
-export const FormCardMenu = () => {
+type FormCardMenuType = {
+  isReadOnly: boolean;
+  setIsReadOnly: Dispatch<SetStateAction<boolean>>;
+};
+
+export const FormCardMenu = ({
+  isReadOnly,
+  setIsReadOnly,
+}: FormCardMenuType) => {
   const { status } = useContext(FormContext);
-  const { isReadOnly, setIsReadOnly } = useFormTitle();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

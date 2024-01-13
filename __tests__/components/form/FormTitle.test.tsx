@@ -4,7 +4,7 @@ import { AllWithTRPC, FormCompletedTRPC, formData } from ".";
 
 describe("Test the 'FormTitle' component", () => {
   it("Should return card title when it's on draft status", () => {
-    render(<FormTitle />, { wrapper: AllWithTRPC });
+    render(<FormTitle isReadOnly={false} />, { wrapper: AllWithTRPC });
     const textarea = screen.getByText(formData.title);
     act(() => {
       textarea.click();
