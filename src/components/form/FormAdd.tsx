@@ -46,12 +46,12 @@ export const FormAdd = () => {
     },
     {
       icon: <DescriptionIcon />,
-      name: "See Draft forms",
+      name: "See unsubmitted forms",
       click: onClickHandler,
     },
     {
       icon: <CheckIcon />,
-      name: "See Submitted forms",
+      name: "See submitted forms",
       click: onClickHandler,
     },
   ];
