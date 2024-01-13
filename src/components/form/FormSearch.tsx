@@ -1,10 +1,9 @@
-import { useState, Fragment } from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useState } from "react";
 import { api } from "@/utils/api";
-import { debounce } from "lodash";
 import Link from "next/link";
+import type { SearchType } from "@/types/Search.types";
+import { Search } from "../shared";
+import type { Form } from "@prisma/client";
 
 export const FormSearch = () => {
   const [input, setInput] = useState("");
@@ -16,51 +15,32 @@ export const FormSearch = () => {
     { enabled: !!input, keepPreviousData: true, staleTime: 1000 },
   );
 
-  const functionDebounce = debounce((value: string) => setInput(value), 300);
+  const isOptionEqualToValue: SearchType["isOptionEqualToValue"] = (
+    option,
+    value,
+  ) => (option as Form).title === (value as Form).title;
 
-  const handleOnChange = (value: string) => void functionDebounce(value);
+  const getOptionLabel: SearchType["getOptionLabel"] = (option) =>
+    (option as Form).title;
+
+  const renderOption: SearchType["renderOption"] = (props, option) => (
+    <Link
+      href={`/form/${(option as Form).id}`}
+      key={(option as Form).id}
+      color="inherit"
+    >
+      <li {...props}>{(option as Form).title}</li>
+    </Link>
+  );
+
   return (
-    <Autocomplete
-      fullWidth
-      disableClearable
-      isOptionEqualToValue={(option, value) => option.title === value.title}
-      getOptionLabel={(option) => option.title}
-      options={options?.data.forms ?? []}
+    <Search
+      isOptionEqualToValue={isOptionEqualToValue}
+      getOptionLabel={getOptionLabel}
+      renderOption={renderOption}
+      setInput={setInput}
       loading={isFetching}
-      onInputChange={(_, value) => void handleOnChange(value)}
-      sx={{
-        "& .MuiFormLabel-root": {
-          color: "primary.main",
-        },
-        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-          border: "1px solid",
-          borderColor: "primary.main",
-        },
-        "& .MuiButtonBase-root": {
-          color: "primary.main",
-        },
-      }}
-      renderOption={(props, option) => (
-        <Link href={`/form/${option.id}`} key={option.id} color="inherit">
-          <li {...props}>{option.title}</li>
-        </Link>
-      )}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Search"
-          InputProps={{
-            ...params.InputProps,
-            style: { color: "white" },
-            endAdornment: (
-              <Fragment>
-                {isFetching && <CircularProgress color="inherit" size={20} />}
-                {params.InputProps.endAdornment}
-              </Fragment>
-            ),
-          }}
-        />
-      )}
+      options={options?.data.forms ?? []}
     />
   );
 };
