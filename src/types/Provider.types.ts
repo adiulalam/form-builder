@@ -1,4 +1,4 @@
-import type { Question, Form, Option } from "@prisma/client";
+import type { Question, Form, Option, Submission } from "@prisma/client";
 
 export type OptionProviderType = Option;
 export type QuestionProviderType = Question & {
@@ -7,4 +7,7 @@ export type QuestionProviderType = Question & {
 };
 export type FormProviderType = Form & {
   questions?: QuestionProviderType[];
+};
+export type LogProviderType = Submission & {
+  form: Form;
 };

@@ -309,6 +309,7 @@ export const SubmitFormHandler = async ({
       data: {
         formId,
         userId,
+        status: "COMPLETED",
         submissionOptions: {
           createMany: {
             data: submissionOptions,

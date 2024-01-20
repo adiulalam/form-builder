@@ -47,12 +47,12 @@ export const FormAdd = () => {
     {
       icon: <DescriptionIcon />,
       name: "See unsubmitted forms",
-      click: onClickHandler,
+      click: () => push("/logs?sort=status&order=asc"),
     },
     {
       icon: <CheckIcon />,
       name: "See submitted forms",
-      click: onClickHandler,
+      click: () => push("/logs?sort=status&order=desc"),
     },
   ];
 
