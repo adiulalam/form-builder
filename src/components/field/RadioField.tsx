@@ -42,7 +42,6 @@ export const RadioField = ({
             onChange={(e) => {
               const id = e.target.value;
               const value = options.find((option) => option.id === id);
-              console.log("🚀 ~ file: RadioField.tsx:37 ~ value:", value);
 
               const isOtherField = options.find(
                 (option) => option.id === value?.id,

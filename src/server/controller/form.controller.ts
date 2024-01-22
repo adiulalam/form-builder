@@ -164,6 +164,11 @@ export const getPublicFormHandler = async ({
                     updatedAt: "asc",
                   },
                 ],
+                include: {
+                  submissionOptions: {
+                    where: { submission: { userId } },
+                  },
+                },
               },
             },
           },
