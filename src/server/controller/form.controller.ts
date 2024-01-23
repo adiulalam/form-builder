@@ -129,54 +129,41 @@ export const getPrivateFormHandler = async ({
 };
 
 export const getPublicFormHandler = async ({
-  session,
   input,
 }: {
-  session: Session;
   input: ParamsInput;
 }) => {
-  const userId = session.user.id;
-
   try {
-    const getForm = async () =>
-      await prisma.form.findFirstOrThrow({
-        where: {
-          id: input.id,
-          isShareable: true,
-        },
-        include: {
-          questions: {
-            orderBy: [
-              {
-                order: "asc",
-              },
-              {
-                updatedAt: "asc",
-              },
-            ],
-            include: {
-              options: {
-                orderBy: [
-                  {
-                    isOtherOption: "asc",
-                  },
-                  {
-                    updatedAt: "asc",
-                  },
-                ],
-                include: {
-                  submissionOptions: {
-                    where: { submission: { userId } },
-                  },
+    const form = await prisma.form.findFirstOrThrow({
+      where: {
+        id: input.id,
+        isShareable: true,
+      },
+      include: {
+        questions: {
+          orderBy: [
+            {
+              order: "asc",
+            },
+            {
+              updatedAt: "asc",
+            },
+          ],
+          include: {
+            options: {
+              orderBy: [
+                {
+                  isOtherOption: "asc",
                 },
-              },
+                {
+                  updatedAt: "asc",
+                },
+              ],
             },
           },
-          _count: { select: { submissions: true } },
         },
-      });
-
-    const form = await getForm();
+      },
+    });
 
     if (!form) {
       throw new TRPCError({
@@ -185,27 +172,10 @@ export const getPublicFormHandler = async ({
       });
     }
 
-    if (form._count.submissions > 0) {
-      return {
-        status: "success",
-        data: {
-          form,
-        },
-      };
-    }
-
-    const data = {
-      formId: input.id,
-      userId,
-    };
-
-    await prisma.submission.create({ data });
-    const newForm = await getForm();
-
     return {
       status: "success",
       data: {
-        form: newForm,
+        form,
       },
     };
   } catch (err) {
