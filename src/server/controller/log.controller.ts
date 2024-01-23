@@ -19,7 +19,7 @@ export const getLogsHandler = async ({
 
     const sortObj = { [sort]: order };
 
-    const orderBy = sort === "status" ? sortObj : { form: sortObj };
+    const orderBy = sort === "title" ? { form: sortObj } : sortObj;
 
     const logs = await prisma.submission.findMany({
       take: limit + 1,
