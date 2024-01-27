@@ -83,7 +83,9 @@ export const formRouter = createTRPCRouter({
     ),
   getPublicForm: protectedProcedure
     .input(params)
-    .query(({ input }) => getPublicFormHandler({ input })),
+    .query(({ input, ctx: { session } }) =>
+      getPublicFormHandler({ session, input }),
+    ),
   getSearchForms: protectedProcedure
     .input(searchAllSchema)
     .query(({ input, ctx: { session } }) =>

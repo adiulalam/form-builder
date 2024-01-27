@@ -8,6 +8,11 @@ export type QuestionProviderType = Question & {
 export type FormProviderType = Form & {
   questions?: QuestionProviderType[];
 };
+
+export type SubmissionProviderType = Submission & {
+  form: FormProviderType;
+};
+
 export type LogProviderType = Submission & {
   form: Form;
 };

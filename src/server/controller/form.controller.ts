@@ -130,52 +130,81 @@ export const getPrivateFormHandler = async ({
 
 export const getPublicFormHandler = async ({
   input,
+  session,
 }: {
   input: ParamsInput;
+  session: Session;
 }) => {
   try {
-    const form = await prisma.form.findFirstOrThrow({
+    const getSubmissionForm = prisma.submission.findFirst({
       where: {
-        id: input.id,
-        isShareable: true,
+        form: { id: input.id, isShareable: true },
       },
       include: {
-        questions: {
-          orderBy: [
-            {
-              order: "asc",
-            },
-            {
-              updatedAt: "asc",
-            },
-          ],
+        form: {
           include: {
-            options: {
+            questions: {
               orderBy: [
                 {
-                  isOtherOption: "asc",
+                  order: "asc",
                 },
                 {
                   updatedAt: "asc",
                 },
               ],
+              include: {
+                options: {
+                  orderBy: [
+                    {
+                      isOtherOption: "asc",
+                    },
+                    {
+                      updatedAt: "asc",
+                    },
+                  ],
+                },
+              },
             },
           },
         },
       },
     });
 
-    if (!form) {
+    const createSubmissionForm = prisma.submission.create({
+      data: {
+        userId: session.user.id,
+        formId: input.id,
+      },
+    });
+
+    const submissionForm = await getSubmissionForm;
+
+    if (submissionForm) {
+      return {
+        status: "success",
+        data: {
+          submissionForm,
+        },
+      };
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, newSubmissionForm] = await prisma.$transaction([
+      createSubmissionForm,
+      getSubmissionForm,
+    ]);
+
+    if (!newSubmissionForm) {
       throw new TRPCError({
         code: "NOT_FOUND",
-        message: "Form with that ID not found",
+        message: "Failed to create shareable form",
       });
     }
 
     return {
       status: "success",
       data: {
-        form,
+        submissionForm: newSubmissionForm,
       },
     };
   } catch (err) {
