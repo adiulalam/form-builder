@@ -11,6 +11,7 @@ dayjs.extend(localizedFormat);
 export const LogCard = () => {
   const {
     updatedAt,
+    status,
     form: { id },
   } = useContext(LogContext);
   const href = `/share/${id}`;
@@ -24,11 +25,11 @@ export const LogCard = () => {
         </Typography>
 
         <Divider orientation="vertical" variant="middle" flexItem />
+
+        <Typography variant="subtitle2">{status}</Typography>
       </Link>
     ),
   };
 
-  return (
-    <CustomCard status={"COMPLETED"} href={href} headerProps={headerProps} />
-  );
+  return <CustomCard status={status} href={href} headerProps={headerProps} />;
 };
