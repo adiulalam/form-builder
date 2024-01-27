@@ -22,15 +22,17 @@ export const useReactHookForm = () => {
   const setControl = useReactForm((state) => state.setControl);
 
   const defaultValues = questions?.reduce(
-    (acc, { id }) => ({ ...acc, [id]: "" }),
+    (acc, { id }) => ({ ...acc, [id]: undefined }),
     {},
   );
 
-  const { handleSubmit, control, reset } = useForm<Record<string, Option>>({
+  const { handleSubmit, control, reset, setValue } = useForm<
+    Record<string, Option>
+  >({
     defaultValues,
     shouldUnregister: true,
   });
   setControl(control as ControlType);
 
-  return { handleSubmit, control, reset };
+  return { handleSubmit, control, reset, setValue };
 };

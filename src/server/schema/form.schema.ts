@@ -10,6 +10,7 @@ export const createFormSchema = z.object({
 });
 
 export const submitFormSchema = z.object({
+  submissionId: z.string().uuid(),
   formId: z.string().uuid(),
   submissionOptions: z
     .object({

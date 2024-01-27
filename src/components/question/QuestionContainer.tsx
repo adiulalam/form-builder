@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import {
   FormContext,
   QuestionProvider,
+  SubmissionContext,
   useReactHookForm,
   useSnackbarToast,
 } from "@/store";
@@ -18,6 +19,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
   const formData = useContext(FormContext);
+  const { id: submissionId } = useContext(SubmissionContext);
   const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
   const { handleSubmit, reset } = useReactHookForm();
 
@@ -59,6 +61,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
 
     const submitData = {
       formId: formData.id,
+      submissionId,
       submissionOptions,
     };
 

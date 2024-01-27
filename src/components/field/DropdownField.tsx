@@ -1,5 +1,5 @@
-import type { Option } from "@prisma/client";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useContext } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import {
   FormControl,
@@ -8,17 +8,16 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { useReactForm } from "@/store";
+import { QuestionContext, useReactForm } from "@/store";
 
 export const DropdownField = ({
   name,
-  options,
   setShowOtherField,
 }: {
   name: string;
-  options: Option[];
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { options, submissionOptions } = useContext(QuestionContext);
   const control = useReactForm((state) => state.control);
 
   const label = "Select";
@@ -31,6 +30,10 @@ export const DropdownField = ({
     }
   }, [watch, setShowOtherField]);
 
+  const defaultValue = options?.find(
+    (option) => option.id === submissionOptions?.[0]?.optionId,
+  );
+
   return (
     <Controller
       name={name}
@@ -38,14 +41,16 @@ export const DropdownField = ({
       rules={{
         required: { value: true, message: "Required Field" },
       }}
+      defaultValue={defaultValue}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl fullWidth error={!!error}>
           <InputLabel>{label}</InputLabel>
           <Select
             onChange={(e) => {
               const value = e.target.value;
+              console.log("🚀 ~ value:", value);
 
-              const isOtherField = options.find(
+              const isOtherField = options?.find(
                 (option) => option.id === value,
               );
               setShowOtherField(!!isOtherField?.showInput);
@@ -53,10 +58,9 @@ export const DropdownField = ({
               onChange(isOtherField);
             }}
             label={label}
-            defaultValue=""
-            value={value?.id ?? value}
+            value={value?.id ?? ""}
           >
-            {options.map((option, index) => (
+            {options?.map((option, index) => (
               <MenuItem key={index} value={option.id}>
                 {option.value}
               </MenuItem>

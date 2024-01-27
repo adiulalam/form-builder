@@ -1,6 +1,6 @@
 import { Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
-import type { Option } from "@prisma/client";
+import type { Option, SubmissionOption } from "@prisma/client";
 import { useReactForm } from "@/store";
 
 export const TextInput = ({
@@ -8,18 +8,25 @@ export const TextInput = ({
   multiline = false,
   rows = 1,
   option,
+  textOptionValue,
 }: {
   name: string;
-  option: Option | null;
+  option?: Option;
+  textOptionValue?: SubmissionOption;
   rows?: number;
   multiline?: boolean;
 }) => {
   const control = useReactForm((state) => state.control);
 
+  const defaultValue = option
+    ? { ...option, value: textOptionValue?.inputText ?? "" }
+    : undefined;
+
   return (
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       rules={{
         required: { value: true, message: "Required Field" },
       }}

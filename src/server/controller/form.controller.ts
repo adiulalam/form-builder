@@ -136,6 +136,10 @@ export const getPublicFormHandler = async ({
   session: Session;
 }) => {
   try {
+    const getFormPermission = prisma.form.findFirstOrThrow({
+      where: { id: input.id, isShareable: true },
+    });
+
     const getSubmissionForm = prisma.submission.findFirst({
       where: {
         form: { id: input.id, isShareable: true },
@@ -153,6 +157,7 @@ export const getPublicFormHandler = async ({
                 },
               ],
               include: {
+                submissionOptions: true,
                 options: {
                   orderBy: [
                     {
@@ -177,7 +182,11 @@ export const getPublicFormHandler = async ({
       },
     });
 
-    const submissionForm = await getSubmissionForm;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [checkPermission, submissionForm] = await prisma.$transaction([
+      getFormPermission,
+      getSubmissionForm,
+    ]);
 
     if (submissionForm) {
       return {
@@ -189,7 +198,7 @@ export const getPublicFormHandler = async ({
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, newSubmissionForm] = await prisma.$transaction([
+    const [createForm, newSubmissionForm] = await prisma.$transaction([
       createSubmissionForm,
       getSubmissionForm,
     ]);
@@ -308,7 +317,7 @@ export const createFormHandler = async ({
   }
 };
 
-export const SubmitFormHandler = async ({
+export const submitFormHandler = async ({
   input,
   session,
 }: {
@@ -318,12 +327,14 @@ export const SubmitFormHandler = async ({
   try {
     const userId = session.user.id;
 
-    const { formId, submissionOptions } = input;
+    const { formId, submissionId, submissionOptions } = input;
 
     const submissionCount = await prisma.submission.count({
       where: {
-        formId,
         userId,
+        formId,
+        id: submissionId,
+        status: { not: "DRAFT" },
       },
     });
 
@@ -334,10 +345,14 @@ export const SubmitFormHandler = async ({
       });
     }
 
-    const submission = await prisma.submission.create({
-      data: {
-        formId,
+    const submission = await prisma.submission.update({
+      where: {
         userId,
+        formId,
+        id: submissionId,
+      },
+      data: {
+        status: "COMPLETED",
         submissionOptions: {
           createMany: {
             data: submissionOptions,

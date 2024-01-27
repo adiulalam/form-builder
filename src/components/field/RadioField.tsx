@@ -1,5 +1,5 @@
-import type { Option } from "@prisma/client";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useContext } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import {
   FormControl,
@@ -8,20 +8,23 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { useReactForm } from "@/store";
+import { QuestionContext, useReactForm } from "@/store";
 
 export const RadioField = ({
   name,
-  options,
   setShowOtherField,
 }: {
   name: string;
-  options: Option[];
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { options, submissionOptions } = useContext(QuestionContext);
   const control = useReactForm((state) => state.control);
 
   const watch = useWatch({ control, name });
+
+  const defaultValue = options?.find(
+    (option) => option.id === submissionOptions?.[0]?.optionId,
+  );
 
   useEffect(() => {
     if (!watch) {
@@ -36,14 +39,15 @@ export const RadioField = ({
       rules={{
         required: { value: true, message: "Required Field" },
       }}
+      defaultValue={defaultValue}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl fullWidth error={!!error}>
           <RadioGroup
             onChange={(e) => {
               const id = e.target.value;
-              const value = options.find((option) => option.id === id);
+              const value = options?.find((option) => option.id === id);
 
-              const isOtherField = options.find(
+              const isOtherField = options?.find(
                 (option) => option.id === value?.id,
               );
               setShowOtherField(!!isOtherField?.showInput);
@@ -53,7 +57,7 @@ export const RadioField = ({
             defaultValue=""
             row={true}
           >
-            {options.map((option, index) => (
+            {options?.map((option, index) => (
               <FormControlLabel
                 key={index}
                 value={option.id}

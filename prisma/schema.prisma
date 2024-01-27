@@ -16,6 +16,7 @@ model Example {
 
 model Submission {
     id                String             @id @default(uuid())
+    status            Status             @default(DRAFT)
     userId            String
     formId            String
     createdAt         DateTime           @default(now())

@@ -1,5 +1,6 @@
 import type { Option } from "@prisma/client";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useContext } from "react";
 import { Controller } from "react-hook-form";
 import {
   FormControl,
@@ -8,18 +9,17 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { useReactForm } from "@/store";
+import { QuestionContext, useReactForm } from "@/store";
 import { useWatch } from "react-hook-form";
 
 export const CheckboxField = ({
   name,
-  options,
   setShowOtherField,
 }: {
   name: string;
-  options: Option[];
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { options, submissionOptions } = useContext(QuestionContext);
   const control = useReactForm((state) => state.control);
 
   const watch = useWatch({ control, name });
@@ -30,6 +30,11 @@ export const CheckboxField = ({
     }
   }, [watch, setShowOtherField]);
 
+  const defaultValues = options?.filter(
+    (option) =>
+      submissionOptions?.find(({ optionId }) => option.id === optionId),
+  );
+
   return (
     <Controller
       name={name}
@@ -37,6 +42,9 @@ export const CheckboxField = ({
       rules={{
         required: { value: true, message: "Required Field" },
       }}
+      // Had to use `any` to make eslint shut up.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+      defaultValue={defaultValues as any}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl fullWidth error={!!error}>
           <FormGroup
@@ -44,7 +52,7 @@ export const CheckboxField = ({
               const newValue = (value as unknown as Option[]) ?? [];
               const checked = (e.target as HTMLInputElement).checked;
               const id = (e.target as HTMLInputElement).value;
-              const selectedValue = options.find((option) => option.id === id);
+              const selectedValue = options?.find((option) => option.id === id);
 
               let result = [];
 
@@ -64,10 +72,10 @@ export const CheckboxField = ({
 
               setShowOtherField(!!isOtherField?.showInput);
             }}
-            defaultValue=""
+            // defaultValue=""
             row={true}
           >
-            {options.map((option, index) => (
+            {options?.map((option, index) => (
               <FormControlLabel
                 key={index}
                 control={
