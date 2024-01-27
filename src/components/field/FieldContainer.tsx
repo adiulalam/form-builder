@@ -7,17 +7,13 @@ export const FieldContainer = () => {
   const { id: questionId, type, options } = useContext(QuestionContext);
   const [showOtherField, setShowOtherField] = useState<boolean>(false);
 
-  const isOtherField = options?.find((option) => option.isOtherOption);
+  const textOption =
+    options?.find((option) => option.showInput || option.isOtherOption) ?? null;
 
   return (
     <Box className="flex flex-col gap-4">
       {type === "INPUT" ? (
-        <TextInput
-          name={questionId}
-          rows={2}
-          multiline
-          option={options?.find((option) => option.showInput) ?? null}
-        />
+        <TextInput name={questionId} rows={2} multiline option={textOption} />
       ) : type === "CHECKBOX" ? (
         <CheckboxField
           name={questionId}
@@ -37,8 +33,8 @@ export const FieldContainer = () => {
           setShowOtherField={setShowOtherField}
         />
       ) : null}
-      {isOtherField && showOtherField && (
-        <TextInput name={isOtherField.id} option={isOtherField} />
+      {textOption && showOtherField && (
+        <TextInput name={textOption.id} option={textOption} />
       )}
     </Box>
   );
