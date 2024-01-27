@@ -8,7 +8,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { QuestionContext, useReactForm } from "@/store";
+import { QuestionContext, SubmissionContext, useReactForm } from "@/store";
 
 export const RadioField = ({
   name,
@@ -18,10 +18,12 @@ export const RadioField = ({
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { options, submissionOptions } = useContext(QuestionContext);
+  const { status } = useContext(SubmissionContext);
   const control = useReactForm((state) => state.control);
 
   const watch = useWatch({ control, name });
 
+  const disabled = status === "COMPLETED";
   const defaultValue = options?.find(
     (option) => option.id === submissionOptions?.[0]?.optionId,
   );
@@ -41,7 +43,7 @@ export const RadioField = ({
       }}
       defaultValue={defaultValue}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <FormControl fullWidth error={!!error}>
+        <FormControl error={!!error} disabled={disabled} fullWidth>
           <RadioGroup
             onChange={(e) => {
               const id = e.target.value;

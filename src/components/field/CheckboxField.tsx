@@ -9,7 +9,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { QuestionContext, useReactForm } from "@/store";
+import { QuestionContext, SubmissionContext, useReactForm } from "@/store";
 import { useWatch } from "react-hook-form";
 
 export const CheckboxField = ({
@@ -20,6 +20,7 @@ export const CheckboxField = ({
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { options, submissionOptions } = useContext(QuestionContext);
+  const { status } = useContext(SubmissionContext);
   const control = useReactForm((state) => state.control);
 
   const watch = useWatch({ control, name });
@@ -34,6 +35,7 @@ export const CheckboxField = ({
     (option) =>
       submissionOptions?.find(({ optionId }) => option.id === optionId),
   );
+  const disabled = status === "COMPLETED";
 
   return (
     <Controller
@@ -46,7 +48,7 @@ export const CheckboxField = ({
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       defaultValue={defaultValues as any}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <FormControl fullWidth error={!!error}>
+        <FormControl disabled={disabled} error={!!error} fullWidth>
           <FormGroup
             onChange={(e) => {
               const newValue = (value as unknown as Option[]) ?? [];

@@ -1,7 +1,8 @@
 import { Controller } from "react-hook-form";
 import { FormControl, FormHelperText, TextField } from "@mui/material";
 import type { Option, SubmissionOption } from "@prisma/client";
-import { useReactForm } from "@/store";
+import { SubmissionContext, useReactForm } from "@/store";
+import { useContext } from "react";
 
 export const TextInput = ({
   name,
@@ -17,6 +18,8 @@ export const TextInput = ({
   multiline?: boolean;
 }) => {
   const control = useReactForm((state) => state.control);
+  const { status } = useContext(SubmissionContext);
+  const disabled = status === "COMPLETED";
 
   const defaultValue = option
     ? { ...option, value: textOptionValue?.inputText ?? "" }
@@ -49,6 +52,7 @@ export const TextInput = ({
             multiline={multiline}
             rows={rows}
             value={value}
+            disabled={disabled}
           />
           <FormHelperText>{error ? error.message : null}</FormHelperText>
         </FormControl>

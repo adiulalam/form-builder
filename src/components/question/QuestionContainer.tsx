@@ -19,9 +19,10 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
   const router = useRouter();
   const isEditor = router.pathname === "/form/[id]";
   const formData = useContext(FormContext);
+  const { form } = api.useContext();
   const { id: submissionId } = useContext(SubmissionContext);
   const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
-  const { handleSubmit, reset } = useReactHookForm();
+  const { handleSubmit } = useReactHookForm();
 
   const { mutate, isLoading } = api.form.submitForm.useMutation({
     onSuccess: () => {
@@ -30,7 +31,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
         severity: "success",
         message: "Form has been submitted",
       });
-      reset();
+      void form.getPublicForm.invalidate({ id: formData.id });
     },
     onError: (error) =>
       setSnackConfig({

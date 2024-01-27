@@ -8,7 +8,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { QuestionContext, useReactForm } from "@/store";
+import { QuestionContext, SubmissionContext, useReactForm } from "@/store";
 
 export const DropdownField = ({
   name,
@@ -17,6 +17,7 @@ export const DropdownField = ({
   name: string;
   setShowOtherField: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { status } = useContext(SubmissionContext);
   const { options, submissionOptions } = useContext(QuestionContext);
   const control = useReactForm((state) => state.control);
 
@@ -33,6 +34,7 @@ export const DropdownField = ({
   const defaultValue = options?.find(
     (option) => option.id === submissionOptions?.[0]?.optionId,
   );
+  const disabled = status === "COMPLETED";
 
   return (
     <Controller
@@ -43,12 +45,11 @@ export const DropdownField = ({
       }}
       defaultValue={defaultValue}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <FormControl fullWidth error={!!error}>
+        <FormControl error={!!error} disabled={disabled} fullWidth>
           <InputLabel>{label}</InputLabel>
           <Select
             onChange={(e) => {
               const value = e.target.value;
-              console.log("🚀 ~ value:", value);
 
               const isOtherField = options?.find(
                 (option) => option.id === value,
