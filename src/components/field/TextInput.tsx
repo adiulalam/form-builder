@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { FormControl, FormHelperText, TextField } from "@mui/material";
 import type { Option, SubmissionOption } from "@prisma/client";
 import { useReactForm } from "@/store";
 
@@ -28,21 +28,30 @@ export const TextInput = ({
       control={control}
       defaultValue={defaultValue}
       rules={{
-        required: { value: true, message: "Required Field" },
+        validate: {
+          required: ({ value }) => (value ? true : "Required Field"),
+        },
       }}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <TextField
-          helperText={error ? error.message : null}
-          error={!!error}
-          onChange={(e) => {
-            onChange({ ...option, value: e.target.value });
-          }}
-          label={option?.value ?? "Unknown"}
-          multiline={multiline}
-          rows={rows}
-          value={value?.value ?? ""}
-          fullWidth
-        />
+      render={({
+        field: {
+          onChange,
+          value: { value },
+        },
+        fieldState: { error },
+      }) => (
+        <FormControl error={!!error} fullWidth>
+          <TextField
+            error={!!error}
+            onChange={(e) => {
+              onChange({ ...option, value: e.target.value });
+            }}
+            label={option?.value ?? "Unknown"}
+            multiline={multiline}
+            rows={rows}
+            value={value}
+          />
+          <FormHelperText>{error ? error.message : null}</FormHelperText>
+        </FormControl>
       )}
     />
   );

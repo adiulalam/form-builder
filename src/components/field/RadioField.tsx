@@ -54,7 +54,6 @@ export const RadioField = ({
 
               onChange(value);
             }}
-            defaultValue=""
             row={true}
           >
             {options?.map((option, index) => (
