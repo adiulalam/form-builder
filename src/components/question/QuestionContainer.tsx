@@ -49,6 +49,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
 
     const submissionOptions = filtertedData.map((option) => ({
       optionId: option.id,
+      questionId: option.questionId,
       inputText: option.isOtherOption
         ? data[option.id]?.value ?? ""
         : option.showInput
