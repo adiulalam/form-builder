@@ -1,3 +1,5 @@
+import { DashboardFormCards } from ".";
+
 export const DashboardForm = () => {
-  return <p>Item One</p>;
+  return <DashboardFormCards />;
 };
