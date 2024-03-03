@@ -46,7 +46,11 @@ export const authOptions: NextAuthOptions = {
       clientId: env.AUTH0_CLIENT_ID,
       clientSecret: env.AUTH0_CLIENT_SECRET,
       issuer: env.AUTH0_ISSUER,
-      authorization: `https://${env.NEXTAUTH_URL}/authorize?response_type=code&prompt=login`,
+      authorization: {
+        params: {
+          prompt: "login",
+        },
+      },
     }),
     /**
      * ...add more providers here.
