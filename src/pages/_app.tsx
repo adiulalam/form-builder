@@ -46,7 +46,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         },
       },
     }),
-    [mode],
+    [mode]
   );
 
   const theme = responsiveFontSizes(createTheme(themeOption));

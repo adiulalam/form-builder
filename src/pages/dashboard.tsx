@@ -51,7 +51,7 @@ export default function Home() {
 
           {tabsList.map(
             ({ Component }, index) =>
-              index === currentTab && <Component key={index} />,
+              index === currentTab && <Component key={index} />
           )}
         </Box>
       </main>

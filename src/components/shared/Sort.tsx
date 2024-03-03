@@ -54,7 +54,7 @@ const SortMenu = styled((props: MenuProps) => (
       "&:active": {
         backgroundColor: alpha(
           theme.palette.primary.main,
-          theme.palette.action.selectedOpacity,
+          theme.palette.action.selectedOpacity
         ),
       },
     },
@@ -99,7 +99,7 @@ export const Sort = ({ items }: SortType) => {
       undefined,
       {
         shallow: true,
-      },
+      }
     );
     setAnchorEl(null);
   };

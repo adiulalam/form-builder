@@ -2,7 +2,7 @@ import type { FormProviderType } from "@/types/Provider.types";
 import { createContext, type ReactNode } from "react";
 
 export const FormContext = createContext<FormProviderType>(
-  {} as FormProviderType,
+  {} as FormProviderType
 );
 
 export const FormProvider = ({

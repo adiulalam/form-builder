@@ -18,7 +18,7 @@ export const questionRouter = createTRPCRouter({
   createQuestion: protectedProcedure
     .input(createQuestionSchema)
     .mutation(({ input, ctx: { session } }) =>
-      createQuestionHandler({ session, input }),
+      createQuestionHandler({ session, input })
     ),
   updateQuestionTitle: protectedProcedure
     .input(updateQuestionTitleSchema)
@@ -27,7 +27,7 @@ export const questionRouter = createTRPCRouter({
         session,
         paramsInput: input.params,
         input: input.body,
-      }),
+      })
     ),
   updateQuestionOrder: protectedProcedure
     .input(updateQuestionOrderSchema)
@@ -35,7 +35,7 @@ export const questionRouter = createTRPCRouter({
       updateQuestionOrderHandler({
         session,
         input,
-      }),
+      })
     ),
   updateQuestionType: protectedProcedure
     .input(updateQuestionTypeSchema)
@@ -44,11 +44,11 @@ export const questionRouter = createTRPCRouter({
         session,
         paramsInput: input.params,
         input: input.body,
-      }),
+      })
     ),
   deleteQuestion: protectedProcedure
     .input(params)
     .mutation(({ input, ctx: { session } }) =>
-      deleteQuestionHandler({ session, input }),
+      deleteQuestionHandler({ session, input })
     ),
 });

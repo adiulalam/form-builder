@@ -23,7 +23,7 @@ describe("Test the 'OptionValue' component", () => {
       />,
       {
         wrapper: DraftCheckboxOptionTRPC,
-      },
+      }
     );
 
     expect(screen.getByText(checkboxOptionData.value)).toBeInTheDocument();

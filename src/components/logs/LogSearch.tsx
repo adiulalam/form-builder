@@ -14,12 +14,12 @@ export const LogSearch = () => {
     {
       title: input,
     },
-    { enabled: !!input, keepPreviousData: true, staleTime: 1000 },
+    { enabled: !!input, keepPreviousData: true, staleTime: 1000 }
   );
 
   const isOptionEqualToValue: SearchType["isOptionEqualToValue"] = (
     option,
-    value,
+    value
   ) => (option as OptionType).form.title === (value as OptionType).form.title;
 
   const getOptionLabel: SearchType["getOptionLabel"] = (option) =>

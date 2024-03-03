@@ -23,7 +23,7 @@ export const useReactHookForm = () => {
 
   const defaultValues = questions?.reduce(
     (acc, { id }) => ({ ...acc, [id]: undefined }),
-    {},
+    {}
   );
 
   const { handleSubmit, control, reset, setValue } = useForm<

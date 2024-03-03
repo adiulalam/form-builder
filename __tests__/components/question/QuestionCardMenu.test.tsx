@@ -34,7 +34,7 @@ describe("Test the 'QuestionCardMenu' component", () => {
       if (type) {
         expect(screen.getByTestId(type)).toHaveAttribute(
           "aria-disabled",
-          "true",
+          "true"
         );
       }
     });

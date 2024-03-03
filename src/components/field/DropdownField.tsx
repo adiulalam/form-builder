@@ -32,7 +32,7 @@ export const DropdownField = ({
   }, [watch, setShowOtherField]);
 
   const defaultValue = options?.find(
-    (option) => option.id === submissionOptions?.[0]?.optionId,
+    (option) => option.id === submissionOptions?.[0]?.optionId
   );
   const disabled = status === "COMPLETED";
 
@@ -52,7 +52,7 @@ export const DropdownField = ({
               const value = e.target.value;
 
               const isOtherField = options?.find(
-                (option) => option.id === value,
+                (option) => option.id === value
               );
               setShowOtherField(!!isOtherField?.showInput);
 

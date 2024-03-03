@@ -23,7 +23,7 @@ export default function Forms() {
     { id },
     {
       enabled: z.string().uuid().safeParse(id).success,
-    },
+    }
   );
 
   if (isError) {

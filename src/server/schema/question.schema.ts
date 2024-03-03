@@ -22,7 +22,7 @@ export const updateQuestionOrderSchema = z.array(
   z.object({
     id: z.string().uuid(),
     order: z.number(),
-  }),
+  })
 );
 
 export const updateQuestionTypeSchema = z.object({

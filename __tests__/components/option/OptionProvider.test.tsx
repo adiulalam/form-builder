@@ -24,31 +24,31 @@ const optionData = (questionId: string, value: string): Option => ({
 
 export const checkboxOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07b",
-  "checkbox",
+  "checkbox"
 );
 export const checkboxOtherOptionData = otherOptionData(
-  "d81bd283-704f-43b1-aacc-108cedb2f07b",
+  "d81bd283-704f-43b1-aacc-108cedb2f07b"
 );
 
 export const dropdownOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07c",
-  "dropdown",
+  "dropdown"
 );
 export const dropdownOtherOptionData = otherOptionData(
-  "d81bd283-704f-43b1-aacc-108cedb2f07c",
+  "d81bd283-704f-43b1-aacc-108cedb2f07c"
 );
 
 export const radioOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
-  "radio",
+  "radio"
 );
 export const radioOtherOptionData = otherOptionData(
-  "d81bd283-704f-43b1-aacc-108cedb2f07d",
+  "d81bd283-704f-43b1-aacc-108cedb2f07d"
 );
 
 export const inputOptionData = optionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07e",
-  "input",
+  "input"
 );
 
 const OptionDataSchema = z

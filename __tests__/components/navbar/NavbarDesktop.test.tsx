@@ -7,7 +7,7 @@ describe("Test the 'NavbarDesktop' component", () => {
     render(<NavbarDesktop />);
 
     navbarPages.forEach((page) =>
-      expect(screen.getByText(page.name)).toBeInTheDocument(),
+      expect(screen.getByText(page.name)).toBeInTheDocument()
     );
   });
 });

@@ -27,7 +27,7 @@ export default function Logs() {
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
-    },
+    }
   );
 
   if (isError) {
@@ -65,7 +65,7 @@ export default function Logs() {
               dataLength={
                 data?.pages.reduce(
                   (total, page) => total + page.data.logs.length,
-                  0,
+                  0
                 ) ?? 0
               }
             >
@@ -80,7 +80,7 @@ export default function Logs() {
                           </LogProvider>
                         </Box>
                       </Grow>
-                    )),
+                    ))
                 )}
               </TransitionGroup>
             </InfiniteScroll>

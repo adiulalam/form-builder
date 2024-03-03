@@ -17,7 +17,7 @@ describe("Test the 'UserProfile' component", () => {
     expect(screen.getByText(/SIGN IN/i)).toBeInTheDocument();
 
     userPages.forEach((page) =>
-      expect(screen.queryByText(page.name)).not.toBeInTheDocument(),
+      expect(screen.queryByText(page.name)).not.toBeInTheDocument()
     );
   });
 
@@ -34,7 +34,7 @@ describe("Test the 'UserProfile' component", () => {
     render(<UserProfile />);
 
     userPages.forEach((page) =>
-      expect(screen.getByText(page.name)).toBeInTheDocument(),
+      expect(screen.getByText(page.name)).toBeInTheDocument()
     );
 
     expect(screen.queryByText(/SIGN IN/i)).not.toBeInTheDocument();

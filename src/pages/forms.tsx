@@ -27,7 +27,7 @@ export default function Forms() {
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
-    },
+    }
   );
 
   if (isError) {
@@ -65,7 +65,7 @@ export default function Forms() {
               dataLength={
                 data?.pages.reduce(
                   (total, page) => total + page.data.forms.length,
-                  0,
+                  0
                 ) ?? 0
               }
             >
@@ -80,7 +80,7 @@ export default function Forms() {
                           </FormProvider>
                         </Box>
                       </Grow>
-                    )),
+                    ))
                 )}
               </TransitionGroup>
             </InfiniteScroll>

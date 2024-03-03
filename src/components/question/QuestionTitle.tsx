@@ -21,7 +21,7 @@ export const QuestionTitle = () => {
   const onSubmitHandler = (
     e:
       | FormEvent<HTMLFormElement>
-      | FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>,
+      | FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>
   ) => {
     e.preventDefault();
 

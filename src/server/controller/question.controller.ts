@@ -166,7 +166,7 @@ export const updateQuestionTypeHandler = async ({
       },
     });
 
-    const isInput = input.type === "INPUT"
+    const isInput = input.type === "INPUT";
 
     if (isInput) {
       const result = await prisma.$transaction([
@@ -238,8 +238,8 @@ export const updateQuestionOrderHandler = async ({
           data: {
             order,
           },
-        }),
-      ),
+        })
+      )
     );
 
     if (!result) {

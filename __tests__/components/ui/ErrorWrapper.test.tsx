@@ -8,7 +8,7 @@ describe("Test the 'FormTitle' component", () => {
 
     expect(screen.getByText(message)).toBeInTheDocument();
     expect(
-      screen.getByText("Error - Something went wrong"),
+      screen.getByText("Error - Something went wrong")
     ).toBeInTheDocument();
 
     expect(screen.getAllByText("404 Not Found")).toHaveLength(2);

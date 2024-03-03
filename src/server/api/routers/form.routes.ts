@@ -28,12 +28,12 @@ export const formRouter = createTRPCRouter({
   submitForm: protectedProcedure
     .input(submitFormSchema)
     .mutation(({ input, ctx: { session } }) =>
-      submitFormHandler({ session, input }),
+      submitFormHandler({ session, input })
     ),
   createForm: protectedProcedure
     .input(createFormSchema)
     .mutation(({ input, ctx: { session } }) =>
-      createFormHandler({ session, input }),
+      createFormHandler({ session, input })
     ),
   updateFormFavourite: protectedProcedure
     .input(updateFormFavouriteSchema)
@@ -42,7 +42,7 @@ export const formRouter = createTRPCRouter({
         session,
         paramsInput: input.params,
         input: input.body,
-      }),
+      })
     ),
   updateFormShare: protectedProcedure
     .input(updateFormShareSchema)
@@ -51,7 +51,7 @@ export const formRouter = createTRPCRouter({
         session,
         paramsInput: input.params,
         input: input.body,
-      }),
+      })
     ),
   updateFormStatus: protectedProcedure
     .input(updateFormStatusSchema)
@@ -60,7 +60,7 @@ export const formRouter = createTRPCRouter({
         session,
         paramsInput: input.params,
         input: input.body,
-      }),
+      })
     ),
   updateFormTitle: protectedProcedure
     .input(updateFormTitleSchema)
@@ -69,31 +69,31 @@ export const formRouter = createTRPCRouter({
         session,
         paramsInput: input.params,
         input: input.body,
-      }),
+      })
     ),
   getForms: protectedProcedure
     .input(readAllSchema)
     .query(({ input, ctx: { session } }) =>
-      getFormsHandler({ session, input }),
+      getFormsHandler({ session, input })
     ),
   getPrivateForm: protectedProcedure
     .input(params)
     .query(({ input, ctx: { session } }) =>
-      getPrivateFormHandler({ session, input }),
+      getPrivateFormHandler({ session, input })
     ),
   getPublicForm: protectedProcedure
     .input(params)
     .query(({ input, ctx: { session } }) =>
-      getPublicFormHandler({ session, input }),
+      getPublicFormHandler({ session, input })
     ),
   getSearchForms: protectedProcedure
     .input(searchAllSchema)
     .query(({ input, ctx: { session } }) =>
-      getSearchFormsHandler({ session, input }),
+      getSearchFormsHandler({ session, input })
     ),
   deleteForm: protectedProcedure
     .input(params)
     .mutation(({ input, ctx: { session } }) =>
-      deleteFormHandler({ session, input }),
+      deleteFormHandler({ session, input })
     ),
 });

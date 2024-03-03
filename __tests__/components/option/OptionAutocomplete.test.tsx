@@ -36,7 +36,7 @@ describe("Test the 'OptionAutocomplete' component on draft", () => {
 
       expect(screen.getByText(/Add values/i)).toBeInTheDocument();
       expect(
-        screen.getByPlaceholderText(/Add values here/i),
+        screen.getByPlaceholderText(/Add values here/i)
       ).toBeInTheDocument();
       expect(screen.getByRole("combobox")).toBeInTheDocument();
 

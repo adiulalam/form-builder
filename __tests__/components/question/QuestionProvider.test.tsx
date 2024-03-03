@@ -28,7 +28,7 @@ const questionData = (
   id: string,
   question: string,
   type: Type | null,
-  options: Option[],
+  options: Option[]
 ): QuestionProviderType => ({
   id,
   question,
@@ -44,31 +44,31 @@ export const questionNullData = questionData(
   crypto.randomUUID(),
   "Null question",
   null,
-  [],
+  []
 );
 export const questionCheckboxData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07b",
   "Checkbox question",
   "CHECKBOX",
-  [checkboxOptionData, checkboxOtherOptionData],
+  [checkboxOptionData, checkboxOtherOptionData]
 );
 export const questionDropdownData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07c",
   "Dropdown question",
   "DROPDOWN",
-  [dropdownOptionData, dropdownOtherOptionData],
+  [dropdownOptionData, dropdownOtherOptionData]
 );
 export const questionRadioData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07d",
   "Radio question",
   "RADIO",
-  [radioOptionData, radioOtherOptionData],
+  [radioOptionData, radioOtherOptionData]
 );
 export const questionInputData = questionData(
   "d81bd283-704f-43b1-aacc-108cedb2f07e",
   "Input question",
   "INPUT",
-  [inputOptionData],
+  [inputOptionData]
 );
 
 export const allQuestionsData: FormProviderType = {
@@ -83,7 +83,7 @@ export const allQuestionsData: FormProviderType = {
 };
 
 const questionsData = (
-  questionData: QuestionProviderType,
+  questionData: QuestionProviderType
 ): { draft: FormProviderType; completed: FormProviderType } => ({
   draft: { ...formData, questions: [questionData] },
   completed: { ...formDataCompleted, questions: [questionData] },
@@ -150,7 +150,7 @@ export const FormDraftQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
     questionStore: { ...questionCheckboxData, index: 0 },
     optionStore: checkboxOptionData,
     ...props,
-  }),
+  })
 );
 
 export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
@@ -159,7 +159,7 @@ export const FormCompletedQuestionsCheckboxTRPC = api.withTRPC((props: Props) =>
     questionStore: questionCheckboxData,
     optionStore: checkboxOptionData,
     ...props,
-  }),
+  })
 );
 
 export const FormDraftQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
@@ -168,7 +168,7 @@ export const FormDraftQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
     questionStore: questionDropdownData,
     optionStore: dropdownOptionData,
     ...props,
-  }),
+  })
 );
 
 export const FormCompletedQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
@@ -177,7 +177,7 @@ export const FormCompletedQuestionsDropdownTRPC = api.withTRPC((props: Props) =>
     questionStore: questionDropdownData,
     optionStore: dropdownOptionData,
     ...props,
-  }),
+  })
 );
 
 export const FormDraftQuestionsRadioTRPC = api.withTRPC((props: Props) =>
@@ -186,7 +186,7 @@ export const FormDraftQuestionsRadioTRPC = api.withTRPC((props: Props) =>
     questionStore: questionRadioData,
     optionStore: radioOptionData,
     ...props,
-  }),
+  })
 );
 
 export const FormCompletedQuestionsRadioTRPC = api.withTRPC((props: Props) =>
@@ -194,7 +194,7 @@ export const FormCompletedQuestionsRadioTRPC = api.withTRPC((props: Props) =>
     store: completedFormQuestionsRadioData,
     questionStore: questionRadioData,
     ...props,
-  }),
+  })
 );
 
 export const FormDraftQuestionsInputTRPC = api.withTRPC((props: Props) =>
@@ -203,7 +203,7 @@ export const FormDraftQuestionsInputTRPC = api.withTRPC((props: Props) =>
     questionStore: questionInputData,
     optionStore: inputOptionData,
     ...props,
-  }),
+  })
 );
 
 export const FormCompletedQuestionsInputTRPC = api.withTRPC((props: Props) =>
@@ -211,7 +211,7 @@ export const FormCompletedQuestionsInputTRPC = api.withTRPC((props: Props) =>
     store: completedFormQuestionsInputData,
     questionStore: questionInputData,
     ...props,
-  }),
+  })
 );
 
 export const menuMapper = [

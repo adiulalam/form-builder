@@ -56,13 +56,13 @@ const AllTheProviders = ({
 
 export const AllWithTRPC = api.withTRPC(AllTheProviders);
 export const FormIsFavouriteTRPC = api.withTRPC((props: Props) =>
-  AllTheProviders({ store: formDataFavourite, ...props }),
+  AllTheProviders({ store: formDataFavourite, ...props })
 );
 export const FormIsShareTRPC = api.withTRPC((props: Props) =>
-  AllTheProviders({ store: formDataShare, ...props }),
+  AllTheProviders({ store: formDataShare, ...props })
 );
 export const FormCompletedTRPC = api.withTRPC((props: Props) =>
-  AllTheProviders({ store: formDataCompleted, ...props }),
+  AllTheProviders({ store: formDataCompleted, ...props })
 );
 
 describe("Test the 'formData'", () => {

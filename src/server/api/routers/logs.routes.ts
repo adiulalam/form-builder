@@ -12,6 +12,6 @@ export const logsRouter = createTRPCRouter({
   getSearchLogs: protectedProcedure
     .input(searchAllSchema)
     .query(({ input, ctx: { session } }) =>
-      getSearchLogsHandler({ session, input }),
+      getSearchLogsHandler({ session, input })
     ),
 });

@@ -5,7 +5,7 @@ export const SnackbarToast = () => {
   const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
 
   const { isOpen, severity, message, duration } = useSnackbarToast(
-    (state) => state.snackConfig,
+    (state) => state.snackConfig
   );
 
   const handleClose = () =>

@@ -11,7 +11,7 @@ export const FormShareClipboard = ({ text }: { text: string }) => {
     useShallow((state) => ({
       setSnackConfig: state.setSnackConfig,
       isOpen: state.snackConfig.isOpen,
-    })),
+    }))
   );
 
   const onClickHandler = () => {

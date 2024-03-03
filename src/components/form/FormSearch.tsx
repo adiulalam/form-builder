@@ -12,12 +12,12 @@ export const FormSearch = () => {
     {
       title: input,
     },
-    { enabled: !!input, keepPreviousData: true, staleTime: 1000 },
+    { enabled: !!input, keepPreviousData: true, staleTime: 1000 }
   );
 
   const isOptionEqualToValue: SearchType["isOptionEqualToValue"] = (
     option,
-    value,
+    value
   ) => (option as Form).title === (value as Form).title;
 
   const getOptionLabel: SearchType["getOptionLabel"] = (option) =>

@@ -13,10 +13,10 @@ export const FieldContainer = () => {
   const [showOtherField, setShowOtherField] = useState<boolean>(false);
 
   const textOption = options?.find(
-    (option) => option.showInput || option.isOtherOption,
+    (option) => option.showInput || option.isOtherOption
   );
   const textOptionValue = submissionOptions?.find(
-    (submissionOption) => submissionOption.optionId === textOption?.id,
+    (submissionOption) => submissionOption.optionId === textOption?.id
   );
 
   useEffect(() => {

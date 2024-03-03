@@ -28,7 +28,7 @@ export const FormTitle = ({
   });
 
   const onSubmitHandler = (
-    e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>,
+    e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>
   ) => {
     e.preventDefault();
 

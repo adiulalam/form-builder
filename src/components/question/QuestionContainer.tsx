@@ -45,7 +45,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
     if (isEditor) return;
 
     const filteredKeys = Object.keys(data).filter(
-      (id) => Array.isArray(data[id]) || id !== data[id]?.id,
+      (id) => Array.isArray(data[id]) || id !== data[id]?.id
     );
 
     const filtertedData = filteredKeys.map((id) => data[id]).flat() as Option[];

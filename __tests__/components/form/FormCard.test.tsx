@@ -12,7 +12,7 @@ describe("Test the 'FormCard' component", () => {
     expect(screen.getByText(formData.status)).toBeInTheDocument();
 
     expect(
-      screen.getByText(dayjs(formData.updatedAt).format("LL")),
+      screen.getByText(dayjs(formData.updatedAt).format("LL"))
     ).toBeInTheDocument();
 
     expect(screen.getByText(formData.title)).toBeInTheDocument();

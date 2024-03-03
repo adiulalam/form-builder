@@ -25,7 +25,7 @@ export const RadioField = ({
 
   const disabled = status === "COMPLETED";
   const defaultValue = options?.find(
-    (option) => option.id === submissionOptions?.[0]?.optionId,
+    (option) => option.id === submissionOptions?.[0]?.optionId
   );
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const RadioField = ({
               const value = options?.find((option) => option.id === id);
 
               const isOtherField = options?.find(
-                (option) => option.id === value?.id,
+                (option) => option.id === value?.id
               );
               setShowOtherField(!!isOtherField?.showInput);
 

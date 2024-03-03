@@ -2,7 +2,7 @@ import type { QuestionProviderType } from "@/types/Provider.types";
 import { createContext, type ReactNode } from "react";
 
 export const QuestionContext = createContext<QuestionProviderType>(
-  {} as QuestionProviderType,
+  {} as QuestionProviderType
 );
 
 export const QuestionProvider = ({

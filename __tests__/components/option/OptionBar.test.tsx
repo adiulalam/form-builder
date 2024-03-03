@@ -39,7 +39,7 @@ describe("Test the 'OptionBar' component", () => {
       }
 
       expect(
-        screen.getByLabelText(name === "input" ? "INPUT" : "OTHER"),
+        screen.getByLabelText(name === "input" ? "INPUT" : "OTHER")
       ).toBeInTheDocument();
       const otherInput = screen.getByPlaceholderText(/Type here/i);
       expect(otherInput).toHaveAttribute("readonly");

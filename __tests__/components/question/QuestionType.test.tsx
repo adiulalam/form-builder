@@ -22,7 +22,7 @@ describe("Test the 'QuestionType' component", () => {
       if (type) {
         expect(screen.getByTestId(type)).toHaveAttribute(
           "aria-disabled",
-          "true",
+          "true"
         );
       }
     });

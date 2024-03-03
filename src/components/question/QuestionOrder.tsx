@@ -40,7 +40,7 @@ export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
 
       body.push(
         { id: currentQuestionId, order: prevQuestionOrder },
-        { id: prevQuestionId, order: currentQuestionOrder },
+        { id: prevQuestionId, order: currentQuestionOrder }
       );
     } else if (!isUp && currentQuestionIndex < questions.length - 1) {
       const nextQuestion = questions[currentQuestionIndex + 1];
@@ -50,7 +50,7 @@ export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
 
       body.push(
         { id: currentQuestionId, order: nextQuestionOrder },
-        { id: nextQuestionId, order: currentQuestionOrder },
+        { id: nextQuestionId, order: currentQuestionOrder }
       );
     }
 

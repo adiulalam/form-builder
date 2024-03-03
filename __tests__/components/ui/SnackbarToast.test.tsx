@@ -53,6 +53,6 @@ describe("Test the 'SnackbarToast' component", () => {
       expect(screen.getByText(snackbars.data.message)).toBeInTheDocument();
       expect(screen.getByTestId(snackbars.icon)).toBeInTheDocument();
       expect(screen.getByTestId("CloseIcon")).toBeInTheDocument();
-    }),
+    })
   );
 });

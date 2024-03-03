@@ -2,7 +2,7 @@ import type { OptionProviderType } from "@/types/Provider.types";
 import { createContext, type ReactNode } from "react";
 
 export const OptionContext = createContext<OptionProviderType>(
-  {} as OptionProviderType,
+  {} as OptionProviderType
 );
 
 export const OptionProvider = ({

@@ -33,7 +33,7 @@ export const CheckboxField = ({
 
   const defaultValues = options?.filter(
     (option) =>
-      submissionOptions?.find(({ optionId }) => option.id === optionId),
+      submissionOptions?.find(({ optionId }) => option.id === optionId)
   );
   const disabled = status === "COMPLETED";
 
@@ -63,13 +63,13 @@ export const CheckboxField = ({
                 onChange(result);
               } else {
                 result = newValue.filter(
-                  (value) => value.id !== selectedValue?.id,
+                  (value) => value.id !== selectedValue?.id
                 );
                 onChange(result);
               }
 
               const isOtherField = result?.find(
-                (option) => option?.isOtherOption,
+                (option) => option?.isOtherOption
               );
 
               setShowOtherField(!!isOtherField?.showInput);
