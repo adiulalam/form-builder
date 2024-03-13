@@ -6,6 +6,7 @@ import { useReactForm, useReactHookForm } from "./useReactForm";
 import { useSnackbarToast } from "./useSnackbarToast";
 import { LogContext, LogProvider } from "./LogProvider";
 import { SubmissionProvider, SubmissionContext } from "./SubmissionProvider";
+import ThemeProvider from "./ThemeProvider";
 
 export {
   FormProvider,
@@ -22,4 +23,5 @@ export {
   LogProvider,
   SubmissionProvider,
   SubmissionContext,
+  ThemeProvider,
 };
