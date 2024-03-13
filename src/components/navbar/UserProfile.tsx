@@ -11,14 +11,15 @@ import {
   Skeleton,
   Divider,
 } from "@mui/material";
-import { type MouseEvent, useState } from "react";
+import type { MouseEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useThemeMode } from "@/hooks/useThemeMode";
 import { ThemeSwitcher } from ".";
+import { useTheme } from "next-themes";
 
 export const UserProfile = () => {
-  const { mode, setMode } = useThemeMode();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { data: sessionData, status } = useSession();
 
@@ -28,6 +29,11 @@ export const UserProfile = () => {
     setAnchorElUser(event.currentTarget);
 
   const handleCloseUserMenu = () => setAnchorElUser(null);
+
+  const toggleDarkMode = (e: ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked;
+    setTheme(isChecked ? "dark" : "light");
+  };
 
   return status === "loading" ? (
     <Skeleton animation="wave" variant="rounded" width={40} height={40} />
@@ -80,7 +86,10 @@ export const UserProfile = () => {
           </MenuItem>
           {process.env.NODE_ENV === "development" && (
             <MenuItem className="flex items-center justify-center p-0">
-              <ThemeSwitcher checked={mode === "dark"} onChange={setMode} />
+              <ThemeSwitcher
+                checked={theme === "dark"}
+                onChange={toggleDarkMode}
+              />
             </MenuItem>
           )}
         </Box>
@@ -97,7 +106,7 @@ export const UserProfile = () => {
         Sign In
       </Button>
       {process.env.NODE_ENV === "development" && (
-        <ThemeSwitcher checked={mode === "dark"} onChange={setMode} />
+        <ThemeSwitcher checked={theme === "dark"} onChange={toggleDarkMode} />
       )}
     </Box>
   );
