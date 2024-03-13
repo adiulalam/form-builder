@@ -4,7 +4,11 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import { api } from "@/utils/api";
 import { Navbar } from "@/components/navbar";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  CssBaseline,
+  StyledEngineProvider,
+  ThemeProvider,
+} from "@mui/material";
 import { Footer } from "@/components/footer";
 import { useThemeMode } from "@/hooks/useThemeMode";
 import { useMemo, useEffect } from "react";
@@ -61,13 +65,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
   return (
     <SessionProvider session={session}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline enableColorScheme />
-        <SnackbarToast />
-        <Navbar />
-        <Component {...pageProps} />
-        <Footer />
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <CssBaseline enableColorScheme />
+          <SnackbarToast />
+          <Navbar />
+          <Component {...pageProps} />
+          <Footer />
+        </ThemeProvider>
+      </StyledEngineProvider>
     </SessionProvider>
   );
 };

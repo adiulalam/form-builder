@@ -25,4 +25,8 @@ export default {
   },
   plugins: [],
   darkMode: "class",
+  // important: "#__next",
+  corePlugins: {
+    preflight: false,
+  },
 } satisfies Config;
