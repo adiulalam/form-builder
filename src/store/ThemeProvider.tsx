@@ -8,7 +8,7 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from "@mui/material";
 import { Footer } from "@/components/footer";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { createTheme, responsiveFontSizes } from "@mui/material";
 import { themeColors } from "@/utils/themeColors";
 import { SnackbarToast } from "@/components/ui";
@@ -52,15 +52,6 @@ const ThemeProvider: AppType<{
   );
 
   const theme = responsiveFontSizes(createTheme(themeOption));
-
-  // Needed for tailwind css
-  useEffect(() => {
-    if (mode === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [mode]);
 
   return (
     <SessionProvider session={session}>
