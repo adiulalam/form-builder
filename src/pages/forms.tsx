@@ -1,7 +1,6 @@
 import { type GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { getSession } from "next-auth/react";
 import { FormAdd, FormCard, FormSearch, FormSort } from "@/components/form";
 import { Box, Grow } from "@mui/material";
 import { useFormSort, FormProvider } from "@/store";
@@ -9,6 +8,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { TransitionGroup } from "react-transition-group";
 import { FormsCardsSkeletons } from "@/components/skeleton";
 import { ErrorWrapper } from "@/components/ui";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/server/auth";
 
 export default function Forms() {
   const { order, sort } = useFormSort();
@@ -95,7 +96,11 @@ export default function Forms() {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
-    const userSession = await getSession(context);
+    const userSession = await getServerSession(
+      context.req,
+      context.res,
+      authOptions
+    );
 
     if (!userSession?.user?.id)
       return { redirect: { destination: "/", permanent: false } };

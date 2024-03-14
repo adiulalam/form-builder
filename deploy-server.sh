@@ -1,10 +1,9 @@
 #!/bin/bash
 source .env
 
-PORT="4000"
 export DATABASE_URL="mysql://$MYSQL_USER:$MYSQL_PASSWORD@db:$MYSQL_PORT/$MYSQL_DATABASE"
-export PORT=$PORT
-export NEXTAUTH_URL="http://localhost:$PORT"
+export PORT=4000
+export NEXTAUTH_URL="http://localhost:4000"
 
 npx prisma migrate deploy
 npx prisma db push

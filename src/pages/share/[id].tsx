@@ -1,13 +1,14 @@
 import { type GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { api } from "@/utils/api";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { SubmissionProvider, FormProvider } from "@/store";
 import { QuestionContainer } from "@/components/question";
 import { QuestionsCardsSkeletons } from "@/components/skeleton";
 import { ErrorWrapper } from "@/components/ui";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/server/auth";
 
 export default function Forms() {
   const router = useRouter();
@@ -58,7 +59,11 @@ export default function Forms() {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
-    const userSession = await getSession(context);
+    const userSession = await getServerSession(
+      context.req,
+      context.res,
+      authOptions
+    );
 
     if (!userSession?.user?.id)
       return { redirect: { destination: "/", permanent: false } };
