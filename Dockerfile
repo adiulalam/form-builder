@@ -12,8 +12,8 @@ COPY . .
 
 RUN npx prisma generate
 RUN npm run build
-COPY deploy-db.sh .
-RUN chmod +x deploy-db.sh
+COPY deploy-server.sh .
+RUN chmod +x deploy-server.sh
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS runner
@@ -26,9 +26,9 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/deploy-db.sh .
+COPY --from=builder /app/deploy-server.sh .
 
-EXPOSE 3000
-ENV PORT 3000
+EXPOSE 4000
+ENV PORT 4000
 
-CMD source deploy-db.sh
+CMD source deploy-server.sh
