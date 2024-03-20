@@ -1,16 +1,18 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 import { DashboardCard, DashboardCardStepper } from ".";
+import type { ReadDashboardFormCardSchema } from "@/server/schema/dashboard.schema";
 
 type CardType = {
-  cards: {
-    heading: string;
-    button: string;
-  }[];
+  cards: ReadDashboardFormCardSchema[];
 };
 
 export const DashboardCardContainer = ({ cards }: CardType) => {
   const [cardsData, setCardsData] = useState(cards);
+
+  useEffect(() => {
+    setCardsData(cards);
+  }, [cards]);
 
   return (
     <Box>

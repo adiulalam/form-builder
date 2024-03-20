@@ -1,24 +1,13 @@
+import { api } from "@/utils/api";
 import { DashboardCardContainer } from ".";
 
 export const DashboardFormCards = () => {
-  const cards = [
-    {
-      heading: "test saa efdewwwwfwefwefwefwe wef wefwef we fwe f",
-      button: "Learn more",
-    },
-    {
-      heading: "test 2",
-      button: "Learn less",
-    },
-    {
-      heading: "test 4",
-      button: "Learn less",
-    },
-    {
-      heading: "test 4",
-      button: "Learn less",
-    },
-  ];
+  const { data, isError, isLoading } =
+    api.dashboard.getDashboardFormCard.useQuery();
 
-  return <DashboardCardContainer cards={cards} />;
+  if (isLoading) return <div>loading..</div>;
+
+  if (!data || isError) return;
+
+  return <DashboardCardContainer cards={data.data.result} />;
 };

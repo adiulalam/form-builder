@@ -1,22 +1,12 @@
-import MobileStepper from "@mui/material/MobileStepper";
-import Button from "@mui/material/Button";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { Button, MobileStepper } from "@mui/material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import type { ReadDashboardFormCardSchema } from "@/server/schema/dashboard.schema";
 
 type Props = {
-  cardsData: {
-    heading: string;
-    button: string;
-  }[];
-  setCardsData: Dispatch<
-    SetStateAction<
-      {
-        heading: string;
-        button: string;
-      }[]
-    >
-  >;
+  cardsData: ReadDashboardFormCardSchema[];
+  setCardsData: Dispatch<SetStateAction<ReadDashboardFormCardSchema[]>>;
 };
 
 export const DashboardCardStepper = ({ cardsData, setCardsData }: Props) => {
@@ -41,10 +31,9 @@ export const DashboardCardStepper = ({ cardsData, setCardsData }: Props) => {
 
   return (
     <MobileStepper
-      className="flex sm:hidden"
+      className="flex sm:hidden static"
       variant="dots"
       steps={cardsData?.length}
-      position="static"
       activeStep={activeStep}
       nextButton={
         <Button size="small" onClick={handleNext}>
