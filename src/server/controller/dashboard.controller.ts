@@ -2,7 +2,7 @@ import { type Session } from "next-auth";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
-import { ReadDashboardFormCardSchema } from "../schema/dashboard.schema";
+import type { ReadDashboardFormCardSchema } from "../schema/dashboard.schema";
 
 export const getDashboardFormCardHandler = async ({
   session,
@@ -72,7 +72,6 @@ export const getDashboardFormCardHandler = async ({
         link: "/logs?sort=status&order=desc",
       },
     ];
-    console.log("🚀 ~ data:", data);
 
     if (!result) {
       throw new TRPCError({
