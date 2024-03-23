@@ -24,16 +24,18 @@ export const DashboardCard = (props: ReadDashboardFormCardSchema) => {
           </Typography>
         </CardContent>
         <CardActions className="self-start">
-          <Button
-            size="small"
-            variant="outlined"
-            component="a"
-            href={props?.link ?? undefined}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {props.button}
-          </Button>
+          {props?.button && (
+            <Button
+              size="small"
+              variant="outlined"
+              component="a"
+              href={props?.link ?? undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {props.button}
+            </Button>
+          )}
         </CardActions>
       </Card>
     </Fade>
