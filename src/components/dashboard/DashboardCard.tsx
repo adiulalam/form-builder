@@ -15,13 +15,9 @@ export const DashboardCard = (props: ReadDashboardFormCardSchema) => {
         variant="outlined"
         className="flex w-screen min-w-full flex-1 flex-col justify-between sm:w-80 sm:min-w-[20rem]"
       >
-        <CardContent className="self-end">
-          <Typography variant="subtitle1" component="div">
-            {props.heading}
-          </Typography>
-          <Typography variant="h5" component="div" textAlign="right">
-            {props.value}
-          </Typography>
+        <CardContent className="self-end text-right">
+          <Typography variant="subtitle1">{props.heading}</Typography>
+          <Typography variant="h5">{props.value}</Typography>
         </CardContent>
         <CardActions className="self-start">
           {props?.button && (
