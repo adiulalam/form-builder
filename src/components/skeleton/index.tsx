@@ -1,3 +1,4 @@
+import { DashboardSkeleton } from "./DashboardSkeleton";
 import { FormCardSkeleton } from "./FormCardSkeleton";
 import { FormsCardsSkeletons } from "./FormsCardsSkeletons";
 import { QuestionsCardsSkeletons } from "./QuesstionsCardsSkeletons";
@@ -8,4 +9,5 @@ export {
   FormsCardsSkeletons,
   QuestionCardSkeleton,
   QuestionsCardsSkeletons,
+  DashboardSkeleton,
 };
