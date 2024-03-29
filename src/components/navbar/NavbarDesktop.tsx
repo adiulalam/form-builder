@@ -2,6 +2,7 @@ import { Box, Button } from "@mui/material";
 import { NavbarLogo } from ".";
 import { navbarPages } from "@/utils/navbar.config";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const NavbarDesktop = () => {
   const router = useRouter();
@@ -14,9 +15,10 @@ export const NavbarDesktop = () => {
         {navbarPages.map((page, index) => (
           <Button
             key={index}
-            onClick={() => void router.push(page.route)}
+            href={page.route}
             color="inherit"
             variant={router.pathname === page.route ? "contained" : "text"}
+            component={Link}
           >
             {page.name}
           </Button>

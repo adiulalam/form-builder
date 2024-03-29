@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { ThemeSwitcher } from ".";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 export const UserProfile = () => {
   const { theme, setTheme } = useTheme();
@@ -66,11 +67,10 @@ export const UserProfile = () => {
           {userPages.map((page, index) => (
             <MenuItem
               key={index}
-              onClick={() => {
-                handleCloseUserMenu();
-                void router.push(page.route);
-              }}
+              onClick={handleCloseUserMenu}
+              href={page.route}
               selected={router.pathname === page.route}
+              component={Link}
             >
               <Typography>{page.name}</Typography>
             </MenuItem>

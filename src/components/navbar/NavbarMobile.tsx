@@ -4,6 +4,7 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import { NavbarLogo } from ".";
 import { navbarPages } from "@/utils/navbar.config";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const NavbarMobile = () => {
   const router = useRouter();
@@ -38,11 +39,10 @@ export const NavbarMobile = () => {
           {navbarPages.map((page, index) => (
             <MenuItem
               key={index}
-              onClick={() => {
-                handleCloseNavMenu();
-                void router.push(page.route);
-              }}
+              onClick={handleCloseNavMenu}
+              href={page.route}
               selected={router.pathname === page.route}
+              component={Link}
             >
               <Typography>{page.name}</Typography>
             </MenuItem>
