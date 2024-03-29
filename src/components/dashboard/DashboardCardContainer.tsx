@@ -7,21 +7,21 @@ import type { DashboardSkeletonProps } from "@/types/Dashboard.types";
 import type { Dispatch, SetStateAction } from "react";
 
 type CardType = {
-  cards: ReadDashboardFormCardSchema[] | undefined;
+  data: ReadDashboardFormCardSchema[] | undefined;
 } & DashboardSkeletonProps;
 
 export const DashboardCardContainer = ({
-  cards,
+  data,
   isLoading,
   isError,
   isRefetching,
   refetch,
 }: CardType) => {
-  const [cardsData, setCardsData] = useState(cards);
+  const [cardsData, setCardsData] = useState(data);
 
   useEffect(() => {
-    setCardsData(cards);
-  }, [cards]);
+    setCardsData(data);
+  }, [data]);
 
   if (isLoading || !cardsData || isError) {
     return (

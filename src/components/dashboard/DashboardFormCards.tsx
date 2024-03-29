@@ -7,9 +7,9 @@ export const DashboardFormCards = () => {
 
   return (
     <DashboardCardContainer
-      cards={data?.data?.result}
+      data={data?.data?.result}
       isLoading={isLoading}
-      isError={(!data || isError) && !isLoading}
+      isError={isError}
       refetch={refetch}
       isRefetching={isRefetching}
     />
