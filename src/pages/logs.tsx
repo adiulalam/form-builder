@@ -60,7 +60,7 @@ export default function Logs() {
               hasMore={hasNextPage ?? false}
               loader={
                 isFetchingNextPage && (
-                  <FormsCardsSkeletons number={2} additionalClass="mt-4" />
+                  <FormsCardsSkeletons number={2} className="mt-4" />
                 )
               }
               dataLength={

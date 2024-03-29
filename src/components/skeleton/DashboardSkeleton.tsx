@@ -6,21 +6,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Refresh as RefreshIcon } from "@mui/icons-material";
-import type {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from "@tanstack/react-query";
-
-type DashboardSkeletonProps = {
-  isLoading: boolean;
-  isError: boolean;
-  isRefetching?: boolean;
-  refetch?: <TPageData>(
-    options?: RefetchOptions & RefetchQueryFilters<TPageData>
-  ) => Promise<QueryObserverResult<unknown, unknown>>;
-  className?: React.HTMLAttributes<HTMLDivElement>["className"];
-};
+import clsx from "clsx";
+import type { DashboardSkeletonProps } from "@/types/Dashboard.types";
 
 export const DashboardSkeleton = ({
   isLoading,
@@ -35,7 +22,7 @@ export const DashboardSkeleton = ({
 
   return (
     <Paper
-      className={`flex items-center justify-center ${className}`}
+      className={clsx(className, "flex items-center justify-center")}
       elevation={isLoading ? 0 : 6}
     >
       {isLoading && (
@@ -44,10 +31,14 @@ export const DashboardSkeleton = ({
           animation="wave"
           height="100%"
           width="100%"
+          className={clsx(
+            "after:bg-gradient-to-r from-transparent via-neutral-400 to-transparent",
+            "dark:after:bg-gradient-to-r dark:from-transparent dark:via-neutral-800 dark:to-transparent"
+          )}
         />
       )}
 
-      {isError && (
+      {isError && !isLoading && (
         <Tooltip
           title={isRefetching ? "Refetching.." : "Retry"}
           placement="top"
