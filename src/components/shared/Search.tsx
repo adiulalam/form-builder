@@ -30,6 +30,7 @@ export const Search = ({
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
           border: "1px solid",
           borderColor: "primary.main",
+          boxShadow: 5,
         },
         "& .MuiButtonBase-root": {
           color: "primary.main",
@@ -42,10 +43,9 @@ export const Search = ({
           label="Search"
           InputProps={{
             ...params.InputProps,
-            style: { color: "white" },
             endAdornment: (
               <Fragment>
-                {loading && <CircularProgress color="inherit" size={20} />}
+                {loading && <CircularProgress size={20} />}
                 {params.InputProps.endAdornment}
               </Fragment>
             ),

@@ -29,7 +29,9 @@ export const FormSearch = () => {
       key={(option as Form).id}
       color="inherit"
     >
-      <li {...props}>{(option as Form).title}</li>
+      <li {...props}>
+        {(option as Form).title} | {(option as Form).status}
+      </li>
     </Link>
   );
 

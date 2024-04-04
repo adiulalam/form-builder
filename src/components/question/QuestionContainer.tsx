@@ -71,7 +71,11 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
 
   return (
     <Box className="flex min-h-screen w-full flex-col items-center justify-center gap-6">
-      <Paper className="w-full max-w-screen-xl p-2">
+      <Paper
+        className="w-full max-w-screen-xl p-2"
+        elevation={0}
+        variant="outlined"
+      >
         <FormNavbar isFetching={isFetching} />
       </Paper>
 

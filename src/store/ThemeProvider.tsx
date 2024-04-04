@@ -6,6 +6,7 @@ import {
   CssBaseline,
   StyledEngineProvider,
   ThemeProvider as MuiThemeProvider,
+  Paper,
 } from "@mui/material";
 import { Footer } from "@/components/footer";
 import { useMemo } from "react";
@@ -60,7 +61,9 @@ const ThemeProvider: AppType<{
           <CssBaseline enableColorScheme />
           <SnackbarToast />
           <Navbar />
-          <Component {...pageProps} />
+          <Paper className="bg-neutral-200 dark:bg-inherit">
+            <Component {...pageProps} />
+          </Paper>
           <Footer />
         </MuiThemeProvider>
       </StyledEngineProvider>

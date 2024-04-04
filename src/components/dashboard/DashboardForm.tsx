@@ -1,5 +1,10 @@
 import { DashboardFormCards } from ".";
 
 export const DashboardForm = () => {
-  return <DashboardFormCards />;
+  return (
+    <>
+      <DashboardFormCards />
+      <DashboardFormCards />
+    </>
+  );
 };

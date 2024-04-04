@@ -36,7 +36,7 @@ export const DashboardCardContainer = ({
   }
 
   return (
-    <Box>
+    <Box className="flex w-full flex-col" maxWidth={"xl"}>
       <Box className="flex flex-row gap-1 overflow-x-hidden sm:overflow-x-auto">
         {cardsData.map((card, index) => (
           <DashboardCard key={index} {...card} />

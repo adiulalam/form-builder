@@ -14,7 +14,7 @@ export const QuestionCard = () => {
   const { type } = useContext(QuestionContext);
 
   return (
-    <Card className="flex w-full flex-col">
+    <Card className="flex w-full flex-col" variant="outlined">
       <CardHeader
         action={status === "DRAFT" && isEditor && <QuestionCardMenu />}
         title={<QuestionTitle />}

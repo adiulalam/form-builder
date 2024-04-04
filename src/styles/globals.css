@@ -1,13 +1,15 @@
 @tailwind base;
-@import './preflight.css';
-
 @tailwind components;
 @tailwind utilities;
+
+/* Tailwind preflight css */
+@import './preflight.css';
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
+  background-color: gray;
 }
 
 ::-webkit-scrollbar-track {
@@ -15,12 +17,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
+  background-color: #ffffff;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+  background-color: #f0f0f0;
   border: 0px;
 }

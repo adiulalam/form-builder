@@ -112,6 +112,7 @@ export const Sort = ({ items }: SortType) => {
         onClick={(e) => setAnchorEl(e.currentTarget)}
         size="large"
         role="SortButton"
+        className="shadow-md hover:shadow-xl"
       >
         <Typography className="mr-2 hidden sm:block">SORT</Typography>
         <SortIcon />

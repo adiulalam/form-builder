@@ -25,7 +25,10 @@ export const CustomCard = ({
   headerProps,
 }: CardType) => {
   return (
-    <Card className="flex w-full flex-col sm:max-w-sm">
+    <Card
+      className="flex w-full flex-col sm:max-w-sm shadow-md hover:shadow-lg"
+      variant="outlined"
+    >
       <CardHeader {...headerProps} />
 
       <Link className="w-1/1 flex self-center" href={href}>
