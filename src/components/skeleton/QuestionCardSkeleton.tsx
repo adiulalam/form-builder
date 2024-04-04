@@ -2,7 +2,7 @@ import { Box, CardHeader, Card, Skeleton } from "@mui/material";
 
 export const QuestionCardSkeleton = () => {
   return (
-    <Card className="flex w-full flex-col">
+    <Card className="flex w-full flex-col" variant="outlined">
       <CardHeader
         title={<Skeleton variant="text" animation="wave" />}
         subheader={

@@ -9,7 +9,7 @@ import {
 
 export const FormCardSkeleton = () => {
   return (
-    <Card className="flex w-full flex-col sm:max-w-sm">
+    <Card className="flex w-full flex-col sm:max-w-sm" variant="outlined">
       <CardHeader
         title={<Skeleton variant="text" animation="wave" />}
         subheader={

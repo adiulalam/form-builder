@@ -16,7 +16,7 @@ export const QuestionsCardsSkeletons = ({
         "flex min-h-screen flex-col items-center justify-center overflow-hidden"
       )}
     >
-      <Card className="flex w-full max-w-screen-xl flex-col">
+      <Card className="flex w-full max-w-screen-xl flex-col" variant="outlined">
         <CardHeader title={<Skeleton variant="text" animation="wave" />} />
       </Card>
 
