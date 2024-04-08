@@ -76,7 +76,72 @@ export const getDashboardFormCardHandler = async ({
     if (!result) {
       throw new TRPCError({
         code: "NOT_FOUND",
-        message: "Option with that ID not found",
+        message: "Dashboard data not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        result: data,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const getDashboardQuestionCardHandler = async ({
+  session,
+}: {
+  session: Session;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const allForms = prisma.form.count({
+      where: {
+        userId,
+      },
+    });
+
+    const allQuestions = prisma.question.count({
+      where: {
+        form: {
+          userId,
+        },
+      },
+    });
+
+    const result = await prisma.$transaction([allForms, allQuestions]);
+
+    const avgQuestions = Math.round(result[1] / result[0]);
+
+    const data: ReadDashboardCardSchema[] = [
+      {
+        heading: "Total questions created",
+        button: null,
+        value: result[0],
+        link: null,
+      },
+      {
+        heading: "Average questions per form",
+        button: null,
+        value: avgQuestions,
+        link: null,
+      },
+    ];
+
+    if (!result) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Dashboard data not found",
       });
     }
 
