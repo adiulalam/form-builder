@@ -2,7 +2,7 @@ import { type Session } from "next-auth";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
-import type { ReadDashboardFormCardSchema } from "../schema/dashboard.schema";
+import type { ReadDashboardCardSchema } from "../schema/dashboard.schema";
 
 export const getDashboardFormCardHandler = async ({
   session,
@@ -46,7 +46,7 @@ export const getDashboardFormCardHandler = async ({
       allSubmittedForms,
     ]);
 
-    const data: ReadDashboardFormCardSchema[] = [
+    const data: ReadDashboardCardSchema[] = [
       {
         heading: "Total Forms Created",
         button: "See All Forms",

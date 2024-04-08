@@ -6,9 +6,9 @@ import {
   Fade,
   Typography,
 } from "@mui/material";
-import type { ReadDashboardFormCardSchema } from "@/server/schema/dashboard.schema";
+import type { ReadDashboardCardSchema } from "@/server/schema/dashboard.schema";
 
-export const DashboardCard = (props: ReadDashboardFormCardSchema) => {
+export const DashboardCard = (props: ReadDashboardCardSchema) => {
   return (
     <Fade in>
       <Card

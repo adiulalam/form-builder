@@ -2,11 +2,11 @@ import { Button, MobileStepper } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type { ReadDashboardFormCardSchema } from "@/server/schema/dashboard.schema";
+import type { ReadDashboardCardSchema } from "@/server/schema/dashboard.schema";
 
 type Props = {
-  cardsData: ReadDashboardFormCardSchema[];
-  setCardsData: Dispatch<SetStateAction<ReadDashboardFormCardSchema[]>>;
+  cardsData: ReadDashboardCardSchema[];
+  setCardsData: Dispatch<SetStateAction<ReadDashboardCardSchema[]>>;
 };
 
 export const DashboardCardStepper = ({ cardsData, setCardsData }: Props) => {

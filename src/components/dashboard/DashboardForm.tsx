@@ -4,7 +4,6 @@ export const DashboardForm = () => {
   return (
     <>
       <DashboardFormCards />
-      <DashboardFormCards />
     </>
   );
 };

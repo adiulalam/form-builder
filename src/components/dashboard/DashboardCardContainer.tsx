@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DashboardCard, DashboardCardStepper } from ".";
-import type { ReadDashboardFormCardSchema } from "@/server/schema/dashboard.schema";
+import type { ReadDashboardCardSchema } from "@/server/schema/dashboard.schema";
 import { DashboardSkeleton } from "../skeleton";
 import type { DashboardSkeletonProps } from "@/types/Dashboard.types";
 import type { Dispatch, SetStateAction } from "react";
 
 type CardType = {
-  data: ReadDashboardFormCardSchema[] | undefined;
+  data: ReadDashboardCardSchema[] | undefined;
 } & DashboardSkeletonProps;
 
 export const DashboardCardContainer = ({
@@ -45,9 +45,7 @@ export const DashboardCardContainer = ({
       <DashboardCardStepper
         cardsData={cardsData}
         setCardsData={
-          setCardsData as Dispatch<
-            SetStateAction<ReadDashboardFormCardSchema[]>
-          >
+          setCardsData as Dispatch<SetStateAction<ReadDashboardCardSchema[]>>
         }
       />
     </Box>

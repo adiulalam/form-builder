@@ -6,6 +6,9 @@ import {
   DashboardForm,
   DashboardQuestion,
 } from "@/components/dashboard";
+import type { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/server/auth";
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
@@ -55,4 +58,22 @@ export default function Home() {
       </Box>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  try {
+    const userSession = await getServerSession(
+      context.req,
+      context.res,
+      authOptions
+    );
+
+    if (!userSession?.user?.id)
+      return { redirect: { destination: "/", permanent: false } };
+
+    return { props: { userSession } };
+  } catch (error) {
+    console.error(error);
+    return { redirect: { destination: "/", permanent: false } };
+  }
 }
