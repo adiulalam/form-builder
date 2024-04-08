@@ -1,3 +1,9 @@
+import { DashboardCards } from ".";
+
 export const DashboardQuestion = () => {
-  return <p>Item three</p>;
+  return (
+    <>
+      <DashboardCards route="getDashboardQuestionCard" />
+    </>
+  );
 };

@@ -1,3 +1,4 @@
+import type { RouterOutputs } from "@/utils/api";
 import type {
   QueryObserverResult,
   RefetchOptions,
@@ -13,3 +14,5 @@ export type DashboardSkeletonProps = {
   ) => Promise<QueryObserverResult<unknown, unknown>>;
   className?: React.HTMLAttributes<HTMLDivElement>["className"];
 };
+
+export type DashboardRoute = keyof RouterOutputs["dashboard"];

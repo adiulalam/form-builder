@@ -13,7 +13,7 @@ export const DashboardCard = (props: ReadDashboardCardSchema) => {
     <Fade in>
       <Card
         variant="outlined"
-        className="flex w-screen min-w-full flex-1 flex-col justify-between sm:w-80 sm:min-w-[20rem]"
+        className="flex w-screen min-w-full sm:w-80 sm:min-w-[20rem] flex-1 flex-col justify-between"
       >
         <CardContent className="self-end text-right">
           <Typography variant="subtitle1">{props.heading}</Typography>

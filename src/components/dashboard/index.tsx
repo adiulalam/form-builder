@@ -1,9 +1,8 @@
 import { DashboardAnswer } from "./DashboardAnswer";
 import { DashboardCard } from "./DashboardCard";
-import { DashboardCardContainer } from "./DashboardCardContainer";
+import { DashboardCards } from "./DashboardCards";
 import { DashboardCardStepper } from "./DashboardCardStepper";
 import { DashboardForm } from "./DashboardForm";
-import { DashboardFormCards } from "./DashboardFormCards";
 import { DashboardQuestion } from "./DashboardQuestion";
 
 export {
@@ -11,7 +10,6 @@ export {
   DashboardAnswer,
   DashboardQuestion,
   DashboardCard,
-  DashboardCardContainer,
+  DashboardCards,
   DashboardCardStepper,
-  DashboardFormCards,
 };

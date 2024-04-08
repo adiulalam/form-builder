@@ -1,9 +1,9 @@
-import { DashboardFormCards } from ".";
+import { DashboardCards } from ".";
 
 export const DashboardForm = () => {
   return (
     <>
-      <DashboardFormCards />
+      <DashboardCards route="getDashboardFormCard" />
     </>
   );
 };
