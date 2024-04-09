@@ -1,5 +1,4 @@
-import { z } from "zod";
-import { type TypeOf } from "zod";
+import { z, type TypeOf } from "zod";
 
 const buttonNotOptionalSchema = z.object({
   button: z.string().min(1),
