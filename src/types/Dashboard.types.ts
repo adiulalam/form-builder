@@ -15,4 +15,4 @@ export type DashboardSkeletonProps = {
   className?: React.HTMLAttributes<HTMLDivElement>["className"];
 };
 
-export type DashboardRoute = keyof RouterOutputs["dashboard"];
+export type DashboardCardRoute = keyof RouterOutputs["dashboardCard"];

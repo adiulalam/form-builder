@@ -1,23 +1,21 @@
 import type { ReadDashboardCardSchema } from "@/server/schema/dashboard.schema";
-import type { DashboardRoute } from "@/types/Dashboard.types";
+import type { DashboardCardRoute } from "@/types/Dashboard.types";
 import { api } from "@/utils/api";
 import { useState } from "react";
 
-type DashboardQueryType = typeof api.dashboard.getDashboardFormCard.useQuery;
+type DashboardQueryType =
+  typeof api.dashboardCard.getDashboardFormCard.useQuery;
 type CardsDataType = ReadDashboardCardSchema[];
 
-export const useDashboardCardQuery = (route: DashboardRoute) => {
+export const useDashboardCardQuery = (route: DashboardCardRoute) => {
   const [cardsData, setCardsData] = useState<CardsDataType>([]);
 
   // I don't like doing this, but should work
-  const dashboardCardQuery = api.dashboard[route]
+  const dashboardCardQuery = api.dashboardCard[route]
     .useQuery as DashboardQueryType;
-  const { isError, isLoading, refetch, isRefetching } = dashboardCardQuery(
-    void {},
-    {
-      onSuccess: ({ data }) => setCardsData(data.result),
-    }
-  );
+  const result = dashboardCardQuery(void {}, {
+    onSuccess: ({ data }) => setCardsData(data.result),
+  });
 
-  return { isError, isLoading, refetch, isRefetching, cardsData, setCardsData };
+  return { ...result, cardsData, setCardsData };
 };

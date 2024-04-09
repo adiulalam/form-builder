@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { DashboardCard, DashboardCardStepper } from ".";
 import { DashboardSkeleton } from "../skeleton";
-import type { DashboardRoute } from "@/types/Dashboard.types";
+import type { DashboardCardRoute } from "@/types/Dashboard.types";
 import { useDashboardCardQuery } from "@/hooks";
 
-export const DashboardCards = ({ route }: { route: DashboardRoute }) => {
+export const DashboardCards = ({ route }: { route: DashboardCardRoute }) => {
   const { cardsData, setCardsData, isError, isLoading, refetch, isRefetching } =
     useDashboardCardQuery(route);
 

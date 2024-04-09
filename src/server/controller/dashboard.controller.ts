@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
 import type { ReadDashboardCardSchema } from "../schema/dashboard.schema";
+import { roundIfNessesary } from "@/utils/helperFunctions";
 
 export const getDashboardFormCardHandler = async ({
   session,
@@ -121,7 +122,7 @@ export const getDashboardQuestionCardHandler = async ({
 
     const result = await prisma.$transaction([allForms, allQuestions]);
 
-    const avgQuestions = Math.round(result[1] / result[0]);
+    const avgQuestions = roundIfNessesary(result[1] / result[0]);
 
     const data: ReadDashboardCardSchema[] = [
       {

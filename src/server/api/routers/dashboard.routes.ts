@@ -4,7 +4,7 @@ import {
   getDashboardQuestionCardHandler,
 } from "@/server/controller/dashboard.controller";
 
-export const dashboardRouter = createTRPCRouter({
+export const dashboardCardRouter = createTRPCRouter({
   getDashboardFormCard: protectedProcedure.query(({ ctx: { session } }) =>
     getDashboardFormCardHandler({ session })
   ),
