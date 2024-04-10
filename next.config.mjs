@@ -7,7 +7,8 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  output: 'standalone',
+  output: "standalone",
+  transpilePackages: ["@mui/x-charts"],
 
   /**
    * If you are using `appDir` then you must comment the below `i18n` config out.
