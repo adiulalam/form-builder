@@ -14,18 +14,14 @@ export const DashboardGrid = ({
   className,
 }: DashboardGridProps) => {
   const colsMap = {
-    1: "grid-cols-1",
-    2: "grid-cols-2 md:grid-cols-1",
-    3: "md:grid-cols-3 sm:grid-cols-2 grid-cols-1",
+    1: "grid-cols-1 h-[20rem]",
+    2: "grid-cols-1 md:grid-cols-2 h-[40rem] md:h-[20rem]",
+    3: "grid-cols-1 md:grid-cols-3 h-[60rem] md:h-[20rem]",
   } as Record<number, string>;
 
   return (
     <Box
-      className={clsx(
-        "grid gap-2 w-full h-[44rem] sm:h-[40rem] md:h-[24rem]",
-        colsMap[maxCols],
-        className
-      )}
+      className={clsx("grid gap-2 w-full", colsMap[maxCols], className)}
       maxWidth="xl"
     >
       {children}
