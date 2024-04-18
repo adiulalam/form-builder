@@ -1,3 +1,5 @@
+import type { Theme } from "@mui/material";
+
 export const themeColors = {
   primary: {
     dark: "#357a38",
@@ -10,3 +12,17 @@ export const themeColors = {
     light: "#ffa733",
   },
 };
+
+export const chartLegendStyle = (theme: Theme) => ({
+  "& .MuiChartsLegend-series text": {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "10px !important",
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "12px !important",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "14px !important",
+    },
+  },
+});
