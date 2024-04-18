@@ -8,13 +8,10 @@ type BarChartType = {
   route: keyof RouterOutputs["dashboardBarChart"];
 };
 
-type BarChartDataType =
-  typeof api.dashboardBarChart.getDashboardBarChart.useQuery;
-
 export const DashboardBarChart = ({ route }: BarChartType) => {
-  const { data, isError, isLoading, refetch, isRefetching } = (
-    api.dashboardBarChart[route].useQuery as BarChartDataType
-  )();
+  route = route as "getDashboardBarChart";
+  const { data, isError, isLoading, refetch, isRefetching } =
+    api.dashboardBarChart[route].useQuery();
 
   if (isLoading || isError) {
     return (

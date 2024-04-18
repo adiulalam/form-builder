@@ -8,13 +8,10 @@ type ScatterChartType = {
   route: keyof RouterOutputs["dashboardScatterChart"];
 };
 
-type ScatterChartDataType =
-  typeof api.dashboardScatterChart.getDashboardScatterChart.useQuery;
-
 export const DashboardScatterChart = ({ route }: ScatterChartType) => {
-  const { data, isError, isLoading, refetch, isRefetching } = (
-    api.dashboardScatterChart[route].useQuery as ScatterChartDataType
-  )();
+  route = route as "getDashboardScatterChart";
+  const { data, isError, isLoading, refetch, isRefetching } =
+    api.dashboardScatterChart[route].useQuery();
 
   if (isLoading || isError) {
     return (

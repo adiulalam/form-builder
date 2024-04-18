@@ -8,13 +8,10 @@ type LineChartType = {
   route: keyof RouterOutputs["dashboardLineChart"];
 };
 
-type LineChartDataType =
-  typeof api.dashboardLineChart.getDashboardLineChart.useQuery;
-
 export const DashboardLineChart = ({ route }: LineChartType) => {
-  const { data, isError, isLoading, refetch, isRefetching } = (
-    api.dashboardLineChart[route].useQuery as LineChartDataType
-  )();
+  route = route as "getDashboardLineChart";
+  const { data, isError, isLoading, refetch, isRefetching } =
+    api.dashboardLineChart[route].useQuery();
 
   if (isLoading || isError) {
     return (

@@ -8,13 +8,10 @@ type PieChartType = {
   route: keyof RouterOutputs["dashboardPieChart"];
 };
 
-type PieChartDataType =
-  typeof api.dashboardPieChart.getDashboardPieChart.useQuery;
-
 export const DashboardPieChart = ({ route }: PieChartType) => {
-  const { data, isError, isLoading, refetch, isRefetching } = (
-    api.dashboardPieChart[route].useQuery as PieChartDataType
-  )();
+  route = route as "getDashboardPieChart";
+  const { data, isError, isLoading, refetch, isRefetching } =
+    api.dashboardPieChart[route].useQuery();
 
   if (isLoading || isError) {
     return (
