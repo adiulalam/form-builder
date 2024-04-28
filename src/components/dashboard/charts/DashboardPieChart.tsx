@@ -1,17 +1,18 @@
 import type { RouterOutputs } from "@/utils/api";
-import type { SxProps, Theme } from "@mui/material";
+import type { Theme } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import { Paper } from "@mui/material";
 import { api } from "@/utils/api";
 import { DashboardSkeleton } from "../../skeleton";
 import { chartLegendStyle } from "@/utils/themeColors";
+import type { SystemStyleObject } from "@mui/system";
 
 type PieChartType = {
   route: keyof RouterOutputs["dashboardPieChart"];
-  sx?: SxProps<Theme>;
+  sx?: SystemStyleObject<Theme>;
 };
 
-export const DashboardPieChart = ({ route, sx }: PieChartType) => {
+export const DashboardPieChart = ({ route, sx = {} }: PieChartType) => {
   route = route as "getDashboardPieChart";
   const { data, isError, isLoading, refetch, isRefetching } =
     api.dashboardPieChart[route].useQuery();
@@ -33,7 +34,7 @@ export const DashboardPieChart = ({ route, sx }: PieChartType) => {
       <PieChart
         series={data?.data.result.series}
         xAxis={data?.data.result.xAxis}
-        sx={{ ...(theme) => chartLegendStyle(theme), ...sx }}
+        sx={[(theme) => chartLegendStyle(theme), sx]}
       />
     </Paper>
   );

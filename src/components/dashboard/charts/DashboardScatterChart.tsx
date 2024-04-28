@@ -3,15 +3,16 @@ import { Paper } from "@mui/material";
 import { api } from "@/utils/api";
 import type { RouterOutputs } from "@/utils/api";
 import { DashboardSkeleton } from "../../skeleton";
-import type { SxProps, Theme } from "@mui/material";
+import type { Theme } from "@mui/material";
 import { chartLegendStyle } from "@/utils/themeColors";
+import type { SystemStyleObject } from "@mui/system";
 
 type ScatterChartType = {
   route: keyof RouterOutputs["dashboardScatterChart"];
-  sx?: SxProps<Theme>;
+  sx?: SystemStyleObject<Theme>;
 };
 
-export const DashboardScatterChart = ({ route, sx }: ScatterChartType) => {
+export const DashboardScatterChart = ({ route, sx = {} }: ScatterChartType) => {
   route = route as "getDashboardScatterChart";
   const { data, isError, isLoading, refetch, isRefetching } =
     api.dashboardScatterChart[route].useQuery();
@@ -33,7 +34,7 @@ export const DashboardScatterChart = ({ route, sx }: ScatterChartType) => {
       <ScatterChart
         series={data?.data.result.series}
         xAxis={data?.data.result.xAxis}
-        sx={{ ...(theme) => chartLegendStyle(theme), ...sx }}
+        sx={[(theme) => chartLegendStyle(theme), sx]}
       />
     </Paper>
   );

@@ -3,15 +3,16 @@ import { Paper } from "@mui/material";
 import { api } from "@/utils/api";
 import type { RouterOutputs } from "@/utils/api";
 import { DashboardSkeleton } from "../../skeleton";
-import type { SxProps, Theme } from "@mui/material";
+import type { Theme } from "@mui/material";
 import { chartLegendStyle } from "@/utils/themeColors";
+import type { SystemStyleObject } from "@mui/system";
 
 type LineChartType = {
   route: keyof RouterOutputs["dashboardLineChart"];
-  sx?: SxProps<Theme>;
+  sx?: SystemStyleObject<Theme>;
 };
 
-export const DashboardLineChart = ({ route, sx }: LineChartType) => {
+export const DashboardLineChart = ({ route, sx = {} }: LineChartType) => {
   route = route as "getDashboardLineChart";
   const { data, isError, isLoading, refetch, isRefetching } =
     api.dashboardLineChart[route].useQuery();
@@ -33,7 +34,7 @@ export const DashboardLineChart = ({ route, sx }: LineChartType) => {
       <LineChart
         series={data?.data.result.series}
         xAxis={data?.data.result.xAxis}
-        sx={{ ...(theme) => chartLegendStyle(theme), ...sx }}
+        sx={[(theme) => chartLegendStyle(theme), sx]}
       />
     </Paper>
   );
