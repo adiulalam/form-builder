@@ -34,7 +34,7 @@ export const DashboardLineChart = ({ route, sx = {} }: LineChartType) => {
       <LineChart
         series={data?.data.result.series}
         xAxis={data?.data.result.xAxis}
-        sx={[(theme) => chartLegendStyle(theme), sx]}
+        sx={[chartLegendStyle, sx]}
       />
     </Paper>
   );

@@ -34,7 +34,7 @@ export const DashboardScatterChart = ({ route, sx = {} }: ScatterChartType) => {
       <ScatterChart
         series={data?.data.result.series}
         xAxis={data?.data.result.xAxis}
-        sx={[(theme) => chartLegendStyle(theme), sx]}
+        sx={[chartLegendStyle, sx]}
       />
     </Paper>
   );
