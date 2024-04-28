@@ -22,7 +22,10 @@ export const DashboardSkeleton = ({
 
   return (
     <Paper
-      className={clsx(className, "flex w-full items-center justify-center")}
+      className={clsx(
+        className,
+        "flex w-full items-center justify-center max-w-screen-xl"
+      )}
       elevation={6}
     >
       {isLoading && (
