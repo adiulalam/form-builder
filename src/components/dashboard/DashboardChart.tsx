@@ -8,11 +8,14 @@ import type {
 import { Paper } from "@mui/material";
 import { DashboardSkeleton } from "../skeleton";
 import { chartLegendStyle } from "@/utils/themeColors";
-import type {
-  DashboardChartHookType,
-  DashboardChartType,
-} from "@/types/Dashboard.types";
+import type { DashboardChartHookType } from "@/types/Dashboard.types";
 import { useDashboardChart } from "@/hooks";
+import type { Theme } from "@mui/material";
+import type { SystemStyleObject } from "@mui/system";
+
+type DashboardChartType = {
+  sx?: SystemStyleObject<Theme>;
+} & DashboardChartHookType;
 
 export const DashboardChart = ({ sx = {}, ...props }: DashboardChartType) => {
   const { data, isError, isLoading, refetch, isRefetching } = useDashboardChart(

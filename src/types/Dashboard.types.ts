@@ -4,8 +4,6 @@ import type {
   RefetchOptions,
   RefetchQueryFilters,
 } from "@tanstack/react-query";
-import type { Theme } from "@mui/material";
-import type { SystemStyleObject } from "@mui/system";
 
 type ChartTypeToRouterType = {
   barchart: {
@@ -36,10 +34,6 @@ export type DashboardChartHookType =
   | RouteType<"piechart">
   | RouteType<"linechart">
   | RouteType<"scatterchart">;
-
-export type DashboardChartType = {
-  sx?: SystemStyleObject<Theme>;
-} & DashboardChartHookType;
 
 export type DashboardSkeletonProps = {
   isLoading: boolean;
