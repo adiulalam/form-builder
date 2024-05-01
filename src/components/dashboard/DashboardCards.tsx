@@ -1,12 +1,20 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
 import { DashboardCard, DashboardCardStepper } from ".";
 import { DashboardSkeleton } from "../skeleton";
+import { api } from "@/utils/api";
 import type { DashboardCardRoute } from "@/types/Dashboard.types";
-import { useDashboardCardQuery } from "@/hooks";
+import type { ReadDashboardCardSchema } from "@/server/schema/dashboard.schema";
+
+type CardsDataType = ReadDashboardCardSchema[];
 
 export const DashboardCards = ({ route }: { route: DashboardCardRoute }) => {
-  const { cardsData, setCardsData, isError, isLoading, refetch, isRefetching } =
-    useDashboardCardQuery(route);
+  const [cardsData, setCardsData] = useState<CardsDataType>([]);
+  const { isError, isLoading, refetch, isRefetching } = api.dashboardCard[
+    route as "getDashboardFormCard"
+  ].useQuery(void {}, {
+    onSuccess: ({ data }) => setCardsData(data.result),
+  });
 
   if (isLoading || isError) {
     return (

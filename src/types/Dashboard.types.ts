@@ -4,6 +4,42 @@ import type {
   RefetchOptions,
   RefetchQueryFilters,
 } from "@tanstack/react-query";
+import type { Theme } from "@mui/material";
+import type { SystemStyleObject } from "@mui/system";
+
+type ChartTypeToRouterType = {
+  barchart: {
+    type: "dashboardBarChart";
+    route: keyof RouterOutputs["dashboardBarChart"];
+  };
+  piechart: {
+    type: "dashboardPieChart";
+    route: keyof RouterOutputs["dashboardPieChart"];
+  };
+  linechart: {
+    type: "dashboardLineChart";
+    route: keyof RouterOutputs["dashboardLineChart"];
+  };
+  scatterchart: {
+    type: "dashboardScatterChart";
+    route: keyof RouterOutputs["dashboardScatterChart"];
+  };
+};
+
+type RouteType<T extends keyof ChartTypeToRouterType> = {
+  type: ChartTypeToRouterType[T]["type"];
+  route: ChartTypeToRouterType[T]["route"];
+};
+
+export type DashboardChartHookType =
+  | RouteType<"barchart">
+  | RouteType<"piechart">
+  | RouteType<"linechart">
+  | RouteType<"scatterchart">;
+
+export type DashboardChartType = {
+  sx?: SystemStyleObject<Theme>;
+} & DashboardChartHookType;
 
 export type DashboardSkeletonProps = {
   isLoading: boolean;

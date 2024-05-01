@@ -2,6 +2,7 @@ import { DashboardAnswer } from "./DashboardAnswer";
 import { DashboardCard } from "./DashboardCard";
 import { DashboardCards } from "./DashboardCards";
 import { DashboardCardStepper } from "./DashboardCardStepper";
+import { DashboardChart } from "./DashboardChart";
 import { DashboardForm } from "./DashboardForm";
 import { DashboardGrid } from "./DashboardGrid";
 import { DashboardQuestion } from "./DashboardQuestion";
@@ -14,4 +15,5 @@ export {
   DashboardCards,
   DashboardCardStepper,
   DashboardGrid,
+  DashboardChart,
 };

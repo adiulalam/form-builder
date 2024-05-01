@@ -1,10 +1,4 @@
-import { DashboardCards, DashboardGrid } from ".";
-import {
-  DashboardBarChart,
-  DashboardLineChart,
-  DashboardPieChart,
-  DashboardScatterChart,
-} from "./charts";
+import { DashboardCards, DashboardChart, DashboardGrid } from ".";
 
 export const DashboardForm = () => {
   return (
@@ -12,13 +6,19 @@ export const DashboardForm = () => {
       <DashboardCards route="getDashboardFormCard" />
 
       <DashboardGrid maxCols={2}>
-        <DashboardBarChart route="getDashboardBarChart" />
-        <DashboardPieChart route="getDashboardPieChart" />
+        <DashboardChart type="dashboardBarChart" route="getDashboardBarChart" />
+        <DashboardChart type="dashboardPieChart" route="getDashboardPieChart" />
       </DashboardGrid>
 
       <DashboardGrid maxCols={2}>
-        <DashboardLineChart route="getDashboardLineChart" />
-        <DashboardScatterChart route="getDashboardScatterChart" />
+        <DashboardChart
+          type="dashboardLineChart"
+          route="getDashboardLineChart"
+        />
+        <DashboardChart
+          type="dashboardScatterChart"
+          route="getDashboardScatterChart"
+        />
       </DashboardGrid>
     </>
   );

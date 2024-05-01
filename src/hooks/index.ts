@@ -1,3 +1,3 @@
-import { useDashboardCardQuery } from "./useDashboardCardQuery";
+import { useDashboardChart } from "./useDashboardChart";
 
-export { useDashboardCardQuery };
+export { useDashboardChart };
