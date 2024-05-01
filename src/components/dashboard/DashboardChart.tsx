@@ -14,19 +14,12 @@ import type {
 } from "@/types/Dashboard.types";
 import { useDashboardChart } from "@/hooks";
 
-export const DashboardChart = ({
-  route,
-  type,
-  sx = {},
-}: DashboardChartType) => {
+export const DashboardChart = ({ sx = {}, ...props }: DashboardChartType) => {
   const { data, isError, isLoading, refetch, isRefetching } = useDashboardChart(
-    {
-      route,
-      type,
-    } as DashboardChartHookType
+    props as DashboardChartHookType
   );
 
-  const props = {
+  const params = {
     series: data?.data.result.series,
     xAxis: data?.data.result.xAxis,
     sx: [chartLegendStyle, sx],
@@ -46,17 +39,17 @@ export const DashboardChart = ({
 
   return (
     <Paper variant="outlined" className="overflow-hidden">
-      {type === "dashboardBarChart" && (
-        <BarChart {...(props as BarChartProps)} />
+      {props.type === "dashboardBarChart" && (
+        <BarChart {...(params as BarChartProps)} />
       )}
-      {type === "dashboardPieChart" && (
-        <PieChart {...(props as PieChartProps)} />
+      {props.type === "dashboardPieChart" && (
+        <PieChart {...(params as PieChartProps)} />
       )}
-      {type === "dashboardLineChart" && (
-        <LineChart {...(props as LineChartProps)} />
+      {props.type === "dashboardLineChart" && (
+        <LineChart {...(params as LineChartProps)} />
       )}
-      {type === "dashboardScatterChart" && (
-        <ScatterChart {...(props as ScatterChartProps)} />
+      {props.type === "dashboardScatterChart" && (
+        <ScatterChart {...(params as ScatterChartProps)} />
       )}
     </Paper>
   );
