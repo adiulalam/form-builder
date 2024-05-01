@@ -27,6 +27,7 @@ export const DashboardChart = ({
   );
 
   const props = {
+    series: data?.data.result.series,
     xAxis: data?.data.result.xAxis,
     sx: [chartLegendStyle, sx],
   };
@@ -46,28 +47,16 @@ export const DashboardChart = ({
   return (
     <Paper variant="outlined" className="overflow-hidden">
       {type === "dashboardBarChart" && (
-        <BarChart
-          series={data?.data.result.series as BarChartProps["series"]}
-          {...props}
-        />
+        <BarChart {...(props as BarChartProps)} />
       )}
       {type === "dashboardPieChart" && (
-        <PieChart
-          series={data?.data.result.series as PieChartProps["series"]}
-          {...props}
-        />
+        <PieChart {...(props as PieChartProps)} />
       )}
       {type === "dashboardLineChart" && (
-        <LineChart
-          series={data?.data.result.series as LineChartProps["series"]}
-          {...props}
-        />
+        <LineChart {...(props as LineChartProps)} />
       )}
       {type === "dashboardScatterChart" && (
-        <ScatterChart
-          series={data?.data.result.series as ScatterChartProps["series"]}
-          {...props}
-        />
+        <ScatterChart {...(props as ScatterChartProps)} />
       )}
     </Paper>
   );
