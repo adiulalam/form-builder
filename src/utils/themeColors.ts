@@ -25,4 +25,22 @@ export const chartLegendStyle = (theme: Theme) => ({
       fontSize: "14px !important",
     },
   },
+  "& .MuiChartsLegend-mark": {
+    [theme.breakpoints.down("sm")]: {
+      height: "10px !important",
+      width: "10px !important",
+      y: "-5px !important",
+      x: "10px !important",
+    },
+    [theme.breakpoints.up("sm")]: {
+      height: "15px !important",
+      width: "15px !important",
+      y: "-7px !important",
+    },
+    [theme.breakpoints.up("md")]: {
+      height: "20px !important",
+      width: "20px !important",
+      y: "-10px !important",
+    },
+  },
 });

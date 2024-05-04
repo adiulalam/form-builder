@@ -8,7 +8,8 @@ type PieChartType = {
     PieSeriesType<MakeOptional<PieValueType, "id">>,
     "type"
   >[];
-  xAxis?: MakeOptional<AxisConfig, "id">[] | undefined;
+  xAxis?: MakeOptional<AxisConfig, "id">[];
+  yAxis?: MakeOptional<AxisConfig, "id">[];
 };
 
 type PieChartReturnType = {

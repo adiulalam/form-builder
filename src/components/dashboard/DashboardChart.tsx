@@ -5,7 +5,7 @@ import type {
   PieChartProps,
   ScatterChartProps,
 } from "@mui/x-charts";
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { DashboardSkeleton } from "../skeleton";
 import { chartLegendStyle } from "@/utils/themeColors";
 import type { DashboardChartHookType } from "@/types/Dashboard.types";
@@ -15,9 +15,20 @@ import type { SystemStyleObject } from "@mui/system";
 
 type DashboardChartType = {
   sx?: SystemStyleObject<Theme>;
+  title?: string;
 } & DashboardChartHookType;
 
-export const DashboardChart = ({ sx = {}, ...props }: DashboardChartType) => {
+type ParamsType =
+  | BarChartProps
+  | PieChartProps
+  | LineChartProps
+  | ScatterChartProps;
+
+export const DashboardChart = ({
+  sx = {},
+  title,
+  ...props
+}: DashboardChartType) => {
   const { data, isError, isLoading, refetch, isRefetching } = useDashboardChart(
     props as DashboardChartHookType
   );
@@ -25,8 +36,9 @@ export const DashboardChart = ({ sx = {}, ...props }: DashboardChartType) => {
   const params = {
     series: data?.data.result.series,
     xAxis: data?.data.result.xAxis,
+    yAxis: data?.data.result.yAxis,
     sx: [chartLegendStyle, sx],
-  };
+  } as ParamsType;
 
   if (isLoading || isError) {
     return (
@@ -41,7 +53,12 @@ export const DashboardChart = ({ sx = {}, ...props }: DashboardChartType) => {
   }
 
   return (
-    <Paper variant="outlined" className="overflow-hidden">
+    <Paper
+      variant="outlined"
+      className="flex flex-col text-center overflow-hidden p-2 gap-2"
+    >
+      {title && <Typography variant="h5">{title}</Typography>}
+
       {props.type === "dashboardBarChart" && (
         <BarChart {...(params as BarChartProps)} />
       )}

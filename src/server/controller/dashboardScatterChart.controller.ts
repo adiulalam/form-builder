@@ -5,7 +5,8 @@ import type { AxisConfig, ScatterSeriesType } from "@mui/x-charts";
 
 type ScatterChartType = {
   series: MakeOptional<ScatterSeriesType, "type">[];
-  xAxis?: MakeOptional<AxisConfig, "id">[] | undefined;
+  xAxis?: MakeOptional<AxisConfig, "id">[];
+  yAxis?: MakeOptional<AxisConfig, "id">[];
 };
 
 type ScatterChartReturnType = {

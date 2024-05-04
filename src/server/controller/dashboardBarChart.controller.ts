@@ -5,7 +5,8 @@ import type { AxisConfig, BarSeriesType } from "@mui/x-charts";
 
 type BarChartType = {
   series: MakeOptional<BarSeriesType, "type">[];
-  xAxis?: MakeOptional<AxisConfig, "id">[] | undefined;
+  xAxis?: MakeOptional<AxisConfig, "id">[];
+  yAxis?: MakeOptional<AxisConfig, "id">[];
 };
 
 type BarChartReturnType = {
@@ -24,7 +25,14 @@ export const getDashboardBarChartHandler = (): BarChartReturnType => {
         { data: [15, 25, 30, 50] },
         { data: [60, 50, 15, 25] },
       ],
-      xAxis: [{ data: ["Q1", "Q2", "Q3", "Q4"], scaleType: "band" }],
+      xAxis: [
+        {
+          data: ["Q1", "Q2", "Q3", "Q4"],
+          label: "Yearly Quaters",
+          scaleType: "band",
+        },
+      ],
+      yAxis: [{ label: "Yearly Revenue" }],
     };
 
     return {

@@ -5,7 +5,8 @@ import type { AxisConfig, LineSeriesType } from "@mui/x-charts";
 
 type LineChartType = {
   series: MakeOptional<LineSeriesType, "type">[];
-  xAxis?: MakeOptional<AxisConfig, "id">[] | undefined;
+  xAxis?: MakeOptional<AxisConfig, "id">[];
+  yAxis?: MakeOptional<AxisConfig, "id">[];
 };
 
 type LineChartReturnType = {
