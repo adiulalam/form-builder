@@ -23,14 +23,13 @@
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": [
-    "jest.setup.js",
+    "jest.setup.ts",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "jest.setup.js"
   ],
   "exclude": ["node_modules"]
 }
