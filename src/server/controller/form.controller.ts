@@ -182,8 +182,7 @@ export const getPublicFormHandler = async ({
       },
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [checkPermission, submissionForm] = await prisma.$transaction([
+    const [, submissionForm] = await prisma.$transaction([
       getFormPermission,
       getSubmissionForm,
     ]);
@@ -197,8 +196,7 @@ export const getPublicFormHandler = async ({
       };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [createForm, newSubmissionForm] = await prisma.$transaction([
+    const [, newSubmissionForm] = await prisma.$transaction([
       createSubmissionForm,
       getSubmissionForm,
     ]);

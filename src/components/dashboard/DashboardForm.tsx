@@ -8,8 +8,8 @@ export const DashboardForm = () => {
       <DashboardGrid maxCols={2}>
         <DashboardChart
           type="dashboardBarChart"
-          route="getDashboardBarChart"
-          title="Quarterly Revenue Trends: Monthly Breakdown"
+          route="getDashboardMonthlyForms"
+          title={`Monthly Form Creation Trends For ${new Date().getFullYear()}`}
         />
         <DashboardChart type="dashboardPieChart" route="getDashboardPieChart" />
       </DashboardGrid>
