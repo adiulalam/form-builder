@@ -1,4 +1,5 @@
 import type { Theme } from "@mui/material";
+import { axisClasses, legendClasses } from "@mui/x-charts";
 
 export const themeColors = {
   primary: {
@@ -14,7 +15,7 @@ export const themeColors = {
 };
 
 export const chartLegendStyle = (theme: Theme) => ({
-  "& .MuiChartsLegend-series text": {
+  [`& .${legendClasses.series} text`]: {
     [theme.breakpoints.down("sm")]: {
       fontSize: "10px !important",
     },
@@ -25,7 +26,7 @@ export const chartLegendStyle = (theme: Theme) => ({
       fontSize: "14px !important",
     },
   },
-  "& .MuiChartsLegend-mark": {
+  [`& .${legendClasses.mark}`]: {
     [theme.breakpoints.down("sm")]: {
       height: "10px !important",
       width: "10px !important",
@@ -42,5 +43,8 @@ export const chartLegendStyle = (theme: Theme) => ({
       width: "20px !important",
       y: "-10px !important",
     },
+  },
+  [`& .${axisClasses.left} .${axisClasses.label}`]: {
+    transform: "translateX(-5px)",
   },
 });
