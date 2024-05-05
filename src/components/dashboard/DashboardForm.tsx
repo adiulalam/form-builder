@@ -11,7 +11,11 @@ export const DashboardForm = () => {
           route="getDashboardMonthlyForms"
           title={`Monthly Form Creation Trends For ${new Date().getFullYear()}`}
         />
-        <DashboardChart type="dashboardPieChart" route="getDashboardPieChart" />
+        <DashboardChart
+          type="dashboardPieChart"
+          route="getDashboardFormsType"
+          title="User Forms Overview: Draft vs. Completed"
+        />
       </DashboardGrid>
 
       <DashboardGrid maxCols={2}>
