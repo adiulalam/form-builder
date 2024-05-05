@@ -7,7 +7,10 @@ import {
   getDashboardBarChartHandler,
   getDashboardMonthlyFormsHandler,
 } from "@/server/controller/dashboardBarChart.controller";
-import { getDashboardLineChartHandler } from "@/server/controller/dashboardLineChart.controller";
+import {
+  getDashboardLineChartHandler,
+  getDashboardMonthlySubmittedFormsHandler,
+} from "@/server/controller/dashboardLineChart.controller";
 import {
   getDashboarFormsTypeHandler,
   getDashboardPieChartHandler,
@@ -44,6 +47,10 @@ export const dashboardPieChartRouter = createTRPCRouter({
 export const dashboardLineChartRouter = createTRPCRouter({
   getDashboardLineChart: protectedProcedure.query(() =>
     getDashboardLineChartHandler()
+  ),
+  getDashboardMonthlySubmittedForms: protectedProcedure.query(
+    ({ ctx: { session } }) =>
+      getDashboardMonthlySubmittedFormsHandler({ session })
   ),
 });
 

@@ -20,12 +20,13 @@ export const DashboardForm = () => {
 
       <DashboardGrid maxCols={2}>
         <DashboardChart
-          type="dashboardLineChart"
-          route="getDashboardLineChart"
-        />
-        <DashboardChart
           type="dashboardScatterChart"
           route="getDashboardScatterChart"
+        />
+        <DashboardChart
+          type="dashboardLineChart"
+          route="getDashboardMonthlySubmittedForms"
+          title={`Monthly Form Submission Trends For ${new Date().getFullYear()}`}
         />
       </DashboardGrid>
     </>

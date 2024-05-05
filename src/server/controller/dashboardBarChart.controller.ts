@@ -52,7 +52,7 @@ export const getDashboardMonthlyFormsHandler = async ({
           scaleType: "band",
         },
       ],
-      yAxis: [{ label: "Number of forms" }],
+      yAxis: [{ label: "Number of Forms" }],
     };
 
     return {

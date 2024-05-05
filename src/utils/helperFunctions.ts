@@ -13,6 +13,7 @@ export const generateMonthDetailsArray = () => {
 
     return {
       id: index + 1,
+      index,
       month: startDate.format("MMMM"),
       short_month: startDate.format("MMM"),
       start_date: startDate.date(),
