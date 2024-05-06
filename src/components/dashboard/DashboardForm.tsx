@@ -15,6 +15,13 @@ export const DashboardForm = () => {
           type="dashboardPieChart"
           route="getDashboardFormsType"
           title="User Forms Overview: Draft vs. Completed"
+          slotProps={{
+            legend: {
+              direction: "row",
+              position: { vertical: "top", horizontal: "middle" },
+            },
+          }}
+          margin={{ top: 50, left: 100 }}
         />
       </DashboardGrid>
 

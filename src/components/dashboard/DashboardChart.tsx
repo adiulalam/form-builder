@@ -1,9 +1,14 @@
 import { BarChart, LineChart, PieChart, ScatterChart } from "@mui/x-charts";
 import type {
   BarChartProps,
+  BarChartSlotComponentProps,
+  CardinalDirections,
   LineChartProps,
+  LineChartSlotComponentProps,
   PieChartProps,
+  PieChartSlotComponentProps,
   ScatterChartProps,
+  ScatterChartSlotComponentProps,
 } from "@mui/x-charts";
 import { Paper, Typography } from "@mui/material";
 import { DashboardSkeleton } from "../skeleton";
@@ -16,6 +21,12 @@ import type { SystemStyleObject } from "@mui/system";
 type DashboardChartType = {
   sx?: SystemStyleObject<Theme>;
   title?: string;
+  margin?: Partial<CardinalDirections<number>>;
+  slotProps?:
+    | PieChartSlotComponentProps
+    | BarChartSlotComponentProps
+    | LineChartSlotComponentProps
+    | ScatterChartSlotComponentProps;
 } & DashboardChartHookType;
 
 type ParamsType =
@@ -27,6 +38,8 @@ type ParamsType =
 export const DashboardChart = ({
   sx = {},
   title,
+  slotProps,
+  margin,
   ...props
 }: DashboardChartType) => {
   const { data, isError, isLoading, refetch, isRefetching } = useDashboardChart(
@@ -34,6 +47,8 @@ export const DashboardChart = ({
   );
 
   const params = {
+    slotProps,
+    margin,
     series: data?.data.result.series,
     xAxis: data?.data.result.xAxis,
     yAxis: data?.data.result.yAxis,
