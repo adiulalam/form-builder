@@ -15,7 +15,10 @@ import {
   getDashboarFormsTypeHandler,
   getDashboardPieChartHandler,
 } from "@/server/controller/dashboardPieChart.controller";
-import { getDashboardScatterChartHandler } from "@/server/controller/dashboardScatterChart.controller";
+import {
+  getDashboardMonthlyInteractionFormsHandler,
+  getDashboardScatterChartHandler,
+} from "@/server/controller/dashboardScatterChart.controller";
 
 export const dashboardCardRouter = createTRPCRouter({
   getDashboardFormCard: protectedProcedure.query(({ ctx: { session } }) =>
@@ -57,5 +60,9 @@ export const dashboardLineChartRouter = createTRPCRouter({
 export const dashboardScatterChartRouter = createTRPCRouter({
   getDashboardScatterChart: protectedProcedure.query(() =>
     getDashboardScatterChartHandler()
+  ),
+  getDashboardMonthlyInteractionForms: protectedProcedure.query(
+    ({ ctx: { session } }) =>
+      getDashboardMonthlyInteractionFormsHandler({ session })
   ),
 });

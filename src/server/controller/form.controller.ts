@@ -142,7 +142,9 @@ export const getPublicFormHandler = async ({
 
     const getSubmissionForm = prisma.submission.findFirst({
       where: {
-        form: { id: input.id, isShareable: true },
+        formId: input.id,
+        userId: session.user.id,
+        form: { isShareable: true },
       },
       include: {
         form: {
@@ -157,7 +159,15 @@ export const getPublicFormHandler = async ({
                 },
               ],
               include: {
-                submissionOptions: true,
+                submissionOptions: {
+                  where: {
+                    submission: {
+                      formId: input.id,
+                      userId: session.user.id,
+                      form: { isShareable: true },
+                    },
+                  },
+                },
                 options: {
                   orderBy: [
                     {

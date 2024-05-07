@@ -1,3 +1,4 @@
+import { currentMonthName } from "@/utils/helperFunctions";
 import { DashboardCards, DashboardChart, DashboardGrid } from ".";
 
 export const DashboardForm = () => {
@@ -28,7 +29,8 @@ export const DashboardForm = () => {
       <DashboardGrid maxCols={2}>
         <DashboardChart
           type="dashboardScatterChart"
-          route="getDashboardScatterChart"
+          route="getDashboardMonthlyInteractionForms"
+          title={`User Interactions with Forms for ${currentMonthName}`}
         />
         <DashboardChart
           type="dashboardLineChart"

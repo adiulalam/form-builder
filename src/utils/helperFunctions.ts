@@ -26,3 +26,33 @@ export const generateMonthDetailsArray = () => {
 
   return monthsArray;
 };
+
+export const generateDaysDetailsForCurrentMonth = () => {
+  const currentDate = dayjs();
+  const daysInMonth = currentDate.daysInMonth();
+
+  const daysArray = Array.from({ length: daysInMonth }, (_, index) => {
+    const date = index + 1;
+    const dayDate = currentDate.date(date);
+    const isoDate = dayDate.format("YYYY-MM-DD");
+    const dayName = dayDate.format("dddd");
+    const shortDayName = dayDate.format("ddd");
+    const startTime = dayDate.startOf("day").toISOString();
+    const endTime = dayDate.endOf("day").toISOString();
+
+    return {
+      id: index + 1,
+      index: index,
+      iso_date: isoDate,
+      date: date,
+      day: dayName,
+      short_day: shortDayName,
+      start_time: startTime,
+      end_time: endTime,
+    };
+  });
+
+  return daysArray;
+};
+
+export const currentMonthName = dayjs().format("MMMM");
