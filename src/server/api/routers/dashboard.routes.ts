@@ -2,7 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   getDashboardFormCardHandler,
   getDashboardQuestionCardHandler,
-} from "@/server/controller/dashboard.controller";
+} from "@/server/controller/dashboardCard.controller";
 import {
   getDashboardBarChartHandler,
   getDashboardMonthlyFormsHandler,
