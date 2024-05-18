@@ -6,6 +6,7 @@ import {
 import {
   getDashboardBarChartHandler,
   getDashboardMonthlyFormsHandler,
+  getDashboardTypesInteractionQuestionsHandler,
 } from "@/server/controller/dashboardBarChart.controller";
 import {
   getDashboardLineChartHandler,
@@ -13,6 +14,7 @@ import {
 } from "@/server/controller/dashboardLineChart.controller";
 import {
   getDashboarFormsTypeHandler,
+  getDashboarQuestionsTypeHandler,
   getDashboardPieChartHandler,
 } from "@/server/controller/dashboardPieChart.controller";
 import {
@@ -36,6 +38,10 @@ export const dashboardBarChartRouter = createTRPCRouter({
   getDashboardMonthlyForms: protectedProcedure.query(({ ctx: { session } }) =>
     getDashboardMonthlyFormsHandler({ session })
   ),
+  getDashboardTypesInteractionQuestions: protectedProcedure.query(
+    ({ ctx: { session } }) =>
+      getDashboardTypesInteractionQuestionsHandler({ session })
+  ),
 });
 
 export const dashboardPieChartRouter = createTRPCRouter({
@@ -44,6 +50,9 @@ export const dashboardPieChartRouter = createTRPCRouter({
   ),
   getDashboardFormsType: protectedProcedure.query(({ ctx: { session } }) =>
     getDashboarFormsTypeHandler({ session })
+  ),
+  getDashboardQuestionsType: protectedProcedure.query(({ ctx: { session } }) =>
+    getDashboarQuestionsTypeHandler({ session })
   ),
 });
 
@@ -64,5 +73,9 @@ export const dashboardScatterChartRouter = createTRPCRouter({
   getDashboardMonthlyInteractionForms: protectedProcedure.query(
     ({ ctx: { session } }) =>
       getDashboardMonthlyInteractionFormsHandler({ session })
+  ),
+  getDashboardTypesInteractionQuestions: protectedProcedure.query(
+    ({ ctx: { session } }) =>
+      getDashboardTypesInteractionQuestionsHandler({ session })
   ),
 });

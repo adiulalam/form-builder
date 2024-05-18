@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { prisma } from "../db";
-import { Prisma } from "@prisma/client";
+import { Prisma, Type } from "@prisma/client";
 import { type Session } from "next-auth";
 import type { MakeOptional } from "@mui/x-charts/models/helpers";
 import type { AxisConfig, PieSeriesType, PieValueType } from "@mui/x-charts";
@@ -20,6 +20,61 @@ type PieChartReturnType = {
   data: {
     result: PieChartType;
   };
+};
+
+export const getDashboarQuestionsTypeHandler = async ({
+  session,
+}: {
+  session: Session;
+}): Promise<PieChartReturnType> => {
+  try {
+    const userId = session.user.id;
+    const types = Object.values(Type);
+
+    const queries = types.map((type) =>
+      prisma.question.count({
+        where: {
+          form: {
+            userId,
+          },
+          type,
+        },
+      })
+    );
+
+    const result = await prisma.$transaction(queries);
+
+    const seriesData = result.map((value, index) => ({
+      value,
+      id: index,
+      label: types[index],
+    }));
+
+    const data: PieChartType = {
+      series: [
+        {
+          data: seriesData,
+          highlightScope: { faded: "global", highlighted: "item" },
+          faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
+        },
+      ],
+    };
+
+    return {
+      status: "success",
+      data: {
+        result: data,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
 };
 
 export const getDashboarFormsTypeHandler = async ({

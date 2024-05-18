@@ -3,7 +3,7 @@ import type { MakeOptional } from "@mui/x-charts/models/helpers";
 import type { AxisConfig, BarSeriesType } from "@mui/x-charts";
 import { generateMonthDetailsArray } from "@/utils/helperFunctions";
 import { prisma } from "../db";
-import { Prisma } from "@prisma/client";
+import { Prisma, Type } from "@prisma/client";
 import { type Session } from "next-auth";
 
 type BarChartType = {
@@ -17,6 +17,58 @@ type BarChartReturnType = {
   data: {
     result: BarChartType;
   };
+};
+
+export const getDashboardTypesInteractionQuestionsHandler = async ({
+  session,
+}: {
+  session: Session;
+}): Promise<BarChartReturnType> => {
+  try {
+    const userId = session.user.id;
+    const types = Object.values(Type);
+
+    const queries = types.map((type) =>
+      prisma.submissionOption.count({
+        where: {
+          question: {
+            type,
+            form: {
+              userId,
+            },
+          },
+        },
+      })
+    );
+    const result = await prisma.$transaction(queries);
+
+    const data: BarChartType = {
+      series: [{ data: result }],
+      xAxis: [
+        {
+          data: types,
+          label: "Types",
+          scaleType: "band",
+        },
+      ],
+      yAxis: [{ label: "User Interaction" }],
+    };
+
+    return {
+      status: "success",
+      data: {
+        result: data,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
 };
 
 export const getDashboardMonthlyFormsHandler = async ({
