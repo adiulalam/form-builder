@@ -9,7 +9,7 @@ export const DashboardQuestion = () => {
         <DashboardChart
           type="dashboardPieChart"
           route="getDashboardQuestionsType"
-          title="Form Question Types Overview"
+          title="Question Types Breakdown in All Forms"
           slotProps={{
             legend: {
               direction: "row",
@@ -21,7 +21,7 @@ export const DashboardQuestion = () => {
         <DashboardChart
           type="dashboardBarChart"
           route="getDashboardTypesInteractionQuestions"
-          title="User Interaction With Different Types of Question"
+          title="User Interaction with Different Question Types"
         />
       </DashboardGrid>
     </>
