@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Box, Tabs, Tab } from "@mui/material";
-import { type SyntheticEvent, useState } from "react";
+import type { SyntheticEvent } from "react";
 import {
   DashboardAnswer,
   DashboardForm,
@@ -9,12 +9,27 @@ import {
 import type { GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+
+enum DashboardParamsMap {
+  form,
+  question,
+  answer,
+}
 
 export default function Home() {
-  const [currentTab, setCurrentTab] = useState(0);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tab = (searchParams.get("tab") ??
+    "form") as keyof typeof DashboardParamsMap;
+  const currentTab = DashboardParamsMap[tab] as number;
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
-    setCurrentTab(newValue);
+    void router.push({
+      pathname: "/dashboard",
+      query: { tab: DashboardParamsMap[newValue] },
+    });
   };
 
   const tabsList = [
