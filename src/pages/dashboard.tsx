@@ -23,7 +23,7 @@ export default function Home() {
   const searchParams = useSearchParams();
   const tab = (searchParams.get("tab") ??
     "form") as keyof typeof DashboardParamsMap;
-  const currentTab = DashboardParamsMap[tab] as number;
+  const currentTab = (DashboardParamsMap[tab] || 0) as number;
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     void router.push({
