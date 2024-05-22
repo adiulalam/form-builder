@@ -19,6 +19,58 @@ type BarChartReturnType = {
   };
 };
 
+export const getDashboardAnswersTypesHandler = async ({
+  session,
+}: {
+  session: Session;
+}): Promise<BarChartReturnType> => {
+  try {
+    const userId = session.user.id;
+    const types = Object.values(Type);
+
+    const queries = types.map((type) =>
+      prisma.option.count({
+        where: {
+          question: {
+            type,
+            form: {
+              userId,
+            },
+          },
+        },
+      })
+    );
+    const result = await prisma.$transaction(queries);
+
+    const data: BarChartType = {
+      series: [{ data: result }],
+      xAxis: [
+        {
+          data: types,
+          label: "Types",
+          scaleType: "band",
+        },
+      ],
+      yAxis: [{ label: "Number of Options" }],
+    };
+
+    return {
+      status: "success",
+      data: {
+        result: data,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
 export const getDashboardTypesInteractionQuestionsHandler = async ({
   session,
 }: {

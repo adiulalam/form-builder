@@ -22,7 +22,7 @@ type PieChartReturnType = {
   };
 };
 
-export const getDashboarQuestionsTypeHandler = async ({
+export const getDashboardQuestionsTypeHandler = async ({
   session,
 }: {
   session: Session;
