@@ -141,9 +141,12 @@ model Session {
 
 model User {
     id            String       @id @default(uuid())
-    name          String?
-    email         String?      @unique
+    name          String
+    email         String       @unique
     emailVerified DateTime?
+    phone         String?      @unique @db.VarChar(15)
+    gender        Gender?
+    dateOfBirth   DateTime?    @db.Date
     image         String?
     createdAt     DateTime     @default(now())
     updatedAt     DateTime     @updatedAt
@@ -151,6 +154,12 @@ model User {
     sessions      Session[]
     forms         Form[]
     submissions   Submission[]
+}
+
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
 }
 
 model VerificationToken {
