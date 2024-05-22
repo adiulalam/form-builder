@@ -128,13 +128,82 @@ export const getDashboardQuestionCardHandler = async ({
       {
         heading: "Total questions created",
         button: null,
-        value: result[0],
+        value: result[1],
         link: null,
       },
       {
         heading: "Average questions per form",
         button: null,
         value: avgQuestions,
+        link: null,
+      },
+    ];
+
+    if (!result) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Dashboard data not found",
+      });
+    }
+
+    return {
+      status: "success",
+      data: {
+        result: data,
+      },
+    };
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: err.message,
+      });
+    }
+    throw err;
+  }
+};
+
+export const getDashboardAnswerCardHandler = async ({
+  session,
+}: {
+  session: Session;
+}) => {
+  try {
+    const userId = session.user.id;
+
+    const allQuestions = prisma.question.count({
+      where: {
+        form: {
+          userId,
+        },
+      },
+    });
+
+    const allAnswers = prisma.option.count({
+      where: {
+        question: {
+          form: {
+            userId,
+          },
+        },
+      },
+    });
+
+    const result = await prisma.$transaction([allQuestions, allAnswers]);
+
+    const avgAnswers = roundIfNessesary(result[1] / result[0]);
+
+    const data: ReadDashboardCardSchema[] = [
+      {
+        heading: "Total answers created",
+        button: null,
+        value: result[1],
+        link: null,
+      },
+      {
+        heading: "Average answers per question",
+        button: null,
+        value: avgAnswers,
         link: null,
       },
     ];

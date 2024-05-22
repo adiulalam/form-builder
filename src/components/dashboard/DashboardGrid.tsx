@@ -27,7 +27,7 @@ export const DashboardGrid = ({
 
   return (
     <Box
-      className={clsx("grid gap-2 w-full", colsMap[maxCols], className)}
+      className={clsx("grid gap-1 w-full", colsMap[maxCols], className)}
       maxWidth="xl"
     >
       {children}

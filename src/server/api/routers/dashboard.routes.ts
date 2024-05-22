@@ -1,5 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
+  getDashboardAnswerCardHandler,
   getDashboardFormCardHandler,
   getDashboardQuestionCardHandler,
 } from "@/server/controller/dashboardCard.controller";
@@ -28,6 +29,9 @@ export const dashboardCardRouter = createTRPCRouter({
   ),
   getDashboardQuestionCard: protectedProcedure.query(({ ctx: { session } }) =>
     getDashboardQuestionCardHandler({ session })
+  ),
+  getDashboardAnswerCard: protectedProcedure.query(({ ctx: { session } }) =>
+    getDashboardAnswerCardHandler({ session })
   ),
 });
 
