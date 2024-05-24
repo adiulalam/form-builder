@@ -34,7 +34,7 @@ export const CheckboxField = ({
   const defaultValues = options?.filter(
     (option) =>
       submissionOptions?.find(({ optionId }) => option.id === optionId)
-  );
+  ) as unknown as Option;
   const disabled = status === "COMPLETED";
 
   return (
@@ -44,9 +44,7 @@ export const CheckboxField = ({
       rules={{
         required: { value: true, message: "Required Field" },
       }}
-      // Had to use `any` to make eslint shut up.
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-      defaultValue={defaultValues as any}
+      defaultValue={defaultValues}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl disabled={disabled} error={!!error} fullWidth>
           <FormGroup
@@ -74,7 +72,6 @@ export const CheckboxField = ({
 
               setShowOtherField(!!isOtherField?.showInput);
             }}
-            // defaultValue=""
             row={true}
           >
             {options?.map((option, index) => (
