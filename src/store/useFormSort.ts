@@ -1,8 +1,9 @@
+import type { ReadAllInput } from "@/server/schema/form.schema";
 import { create } from "zustand";
 
 type FormSortType = {
-  sort: string;
-  setSort: (name: string) => void;
+  sort: ReadAllInput["sort"];
+  setSort: (name: ReadAllInput["sort"]) => void;
   order: "asc" | "desc";
   setOrder: (name: "asc" | "desc") => void;
 };

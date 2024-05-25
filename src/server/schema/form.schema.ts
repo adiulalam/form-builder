@@ -22,12 +22,8 @@ export const submitFormSchema = z.object({
 });
 
 export const readAllSchema = z.object({
-  sort: z.string({
-    required_error: "Sort key is required",
-  }),
-  order: z.enum(["asc", "desc"], {
-    required_error: "Order key is required",
-  }),
+  sort: z.enum(["title", "status", "updatedAt", "isFavourite"]),
+  order: z.enum(["asc", "desc"]),
   cursor: z.string().nullish(),
 });
 

@@ -2,7 +2,7 @@ import { Avatar, Box, Card, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
 
-export const UserInfoEdit = () => {
+export const ProfileEdit = () => {
   const { data } = useSession();
 
   return (

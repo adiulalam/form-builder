@@ -1,4 +1,4 @@
-import { UserInfo } from "./UserInfo";
-import { UserInfoEdit } from "./UserInfoEdit";
+import { ProfileInfo } from "./ProfileInfo";
+import { ProfileEdit } from "./ProfileEdit";
 
-export { UserInfo, UserInfoEdit };
+export { ProfileInfo, ProfileEdit };

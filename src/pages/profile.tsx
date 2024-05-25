@@ -3,9 +3,22 @@ import { Box } from "@mui/material";
 import type { GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
-import { UserInfo, UserInfoEdit } from "@/components/profile";
+import { ProfileInfo, ProfileEdit } from "@/components/profile";
+import { api } from "@/utils/api";
+import { ErrorWrapper } from "@/components/ui";
+import { ProfileProvider } from "@/store/ProfileProvider";
 
 export default function Profile() {
+  const { data, isLoading, isError, error } = api.profile.getProfile.useQuery();
+
+  if (isError) {
+    return <ErrorWrapper message={error.message} />;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Head>
@@ -15,8 +28,10 @@ export default function Profile() {
       </Head>
       <Box className="flex min-h-screen p-2 justify-center">
         <Box className="grid grid-cols-3 gap-2 h-max" maxWidth={"xl"}>
-          <UserInfoEdit />
-          <UserInfo />
+          <ProfileProvider store={data?.data.result}>
+            <ProfileEdit />
+            <ProfileInfo />
+          </ProfileProvider>
         </Box>
       </Box>
     </>

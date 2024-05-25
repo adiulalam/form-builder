@@ -11,6 +11,7 @@ import {
   dashboardLineChartRouter,
   dashboardScatterChartRouter,
 } from "./routers/dashboard.routes";
+import { profileRouter } from "./routers/profile.routes";
 
 /**
  * This is the primary router for your server.
@@ -28,6 +29,7 @@ export const appRouter = createTRPCRouter({
   dashboardPieChart: dashboardPieChartRouter,
   dashboardLineChart: dashboardLineChartRouter,
   dashboardScatterChart: dashboardScatterChartRouter,
+  profile: profileRouter,
 });
 
 // export type definition of API
