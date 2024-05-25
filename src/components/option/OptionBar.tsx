@@ -7,19 +7,22 @@ import {
   OptionBarMenu,
 } from ".";
 import { QuestionContext } from "@/store";
+import { useIsInputType } from "@/hooks";
 
 export const OptionBar = () => {
-  const { type, options } = useContext(QuestionContext);
+  const { options } = useContext(QuestionContext);
   const isOtherOption = options?.find((option) => option.isOtherOption);
+
+  const isInputType = useIsInputType();
 
   return (
     <Box className="flex w-full flex-col items-center gap-4" maxWidth={"xl"}>
       <Box className="flex w-full flex-row items-center gap-2">
         <Paper className="w-full">
-          {type !== "INPUT" ? <OptionAutocomplete /> : <OptionInput />}
+          {isInputType ? <OptionInput /> : <OptionAutocomplete />}
         </Paper>
 
-        {type !== "INPUT" && <OptionBarMenu />}
+        {isInputType && <OptionBarMenu />}
       </Box>
       {isOtherOption && <OptionOtherInput label={isOtherOption.value} />}
     </Box>

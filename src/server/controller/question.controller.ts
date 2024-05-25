@@ -9,6 +9,7 @@ import type {
 } from "../schema/question.schema";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
+import { includesInputType } from "@/utils/arrayFunction";
 
 export const createQuestionHandler = async ({
   input,
@@ -166,9 +167,9 @@ export const updateQuestionTypeHandler = async ({
       },
     });
 
-    const isInput = input.type === "INPUT";
+    const isInputType = includesInputType(input.type);
 
-    if (isInput) {
+    if (isInputType) {
       const result = await prisma.$transaction([
         updateQuestion,
         deleteIsOtherOption,

@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { CheckboxField, DropdownField, RadioField, TextField } from ".";
 import { useContext, useEffect, useState } from "react";
 import { QuestionContext } from "@/store";
+import { useIsInputType } from "@/hooks";
 
 export const FieldContainer = () => {
   const {
@@ -10,6 +11,7 @@ export const FieldContainer = () => {
     options,
     submissionOptions,
   } = useContext(QuestionContext);
+  const isInputType = useIsInputType();
   const [showOtherField, setShowOtherField] = useState<boolean>(false);
 
   const textOption = options?.find(
@@ -20,10 +22,10 @@ export const FieldContainer = () => {
   );
 
   useEffect(() => {
-    if (type !== "INPUT" && textOptionValue) {
+    if (!isInputType && textOptionValue) {
       setShowOtherField(true);
     }
-  }, [textOptionValue, type]);
+  }, [textOptionValue, isInputType]);
 
   return (
     <Box className="flex flex-col gap-4">
