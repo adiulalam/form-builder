@@ -1,174 +1,173 @@
 generator client {
-    provider      = "prisma-client-js"
-    binaryTargets = ["native", "linux-musl"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Example {
-    id        String   @id @default(uuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Submission {
-    id                String             @id @default(uuid())
-    status            Status             @default(DRAFT)
-    userId            String
-    formId            String
-    createdAt         DateTime           @default(now())
-    updatedAt         DateTime           @updatedAt
-    form              Form               @relation(fields: [formId], references: [id], onDelete: Cascade)
-    user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-    submissionOptions SubmissionOption[]
+  id                String             @id @default(uuid())
+  status            Status             @default(DRAFT)
+  userId            String
+  formId            String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  form              Form               @relation(fields: [formId], references: [id], onDelete: Cascade)
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submissionOptions SubmissionOption[]
 
-    @@index([formId])
-    @@index([userId])
+  @@index([formId])
+  @@index([userId])
 }
 
 model SubmissionOption {
-    id           String     @id @default(uuid())
-    inputText    String?
-    submissionId String
-    optionId     String
-    questionId   String
-    createdAt    DateTime   @default(now())
-    updatedAt    DateTime   @updatedAt
-    submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
-    option       Option     @relation(fields: [optionId], references: [id], onDelete: Cascade)
-    question     Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  id           String     @id @default(uuid())
+  inputText    String?
+  submissionId String
+  optionId     String
+  questionId   String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  option       Option     @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  question     Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
-    @@index([submissionId])
-    @@index([optionId])
-    @@index([questionId])
+  @@index([submissionId])
+  @@index([optionId])
+  @@index([questionId])
 }
 
 model Form {
-    id          String       @id @default(uuid())
-    status      Status       @default(DRAFT)
-    isFavourite Boolean      @default(false)
-    isShareable Boolean      @default(false)
-    title       String
-    userId      String
-    createdAt   DateTime     @default(now())
-    updatedAt   DateTime     @updatedAt
-    user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-    questions   Question[]
-    submissions Submission[]
+  id          String       @id @default(uuid())
+  status      Status       @default(DRAFT)
+  isFavourite Boolean      @default(false)
+  isShareable Boolean      @default(false)
+  title       String
+  userId      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions   Question[]
+  submissions Submission[]
 
-    @@index([userId])
-}
-
-enum Status {
-    DRAFT
-    COMPLETED
+  @@index([userId])
 }
 
 model Question {
-    id                String             @id @default(uuid())
-    question          String
-    order             Int                @default(autoincrement())
-    type              Type?
-    formId            String
-    createdAt         DateTime           @default(now())
-    updatedAt         DateTime           @updatedAt
-    form              Form               @relation(fields: [formId], references: [id], onDelete: Cascade)
-    options           Option[]
-    submissionOptions SubmissionOption[]
+  id                String             @id @default(uuid())
+  question          String
+  order             Int                @default(autoincrement())
+  type              Type?
+  formId            String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  form              Form               @relation(fields: [formId], references: [id], onDelete: Cascade)
+  options           Option[]
+  submissionOptions SubmissionOption[]
 
-    @@index([formId])
-    @@index([order])
+  @@index([formId])
+  @@index([order])
 }
 
 model Option {
-    id                String             @id @default(uuid())
-    value             String
-    questionId        String
-    showInput         Boolean            @default(false)
-    isOtherOption     Boolean            @default(false)
-    createdAt         DateTime           @default(now())
-    updatedAt         DateTime           @updatedAt
-    question          Question           @relation(fields: [questionId], references: [id], onDelete: Cascade)
-    submissionOptions SubmissionOption[]
+  id                String             @id @default(uuid())
+  value             String
+  questionId        String
+  showInput         Boolean            @default(false)
+  isOtherOption     Boolean            @default(false)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  question          Question           @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  submissionOptions SubmissionOption[]
 
-    @@index([questionId])
+  @@index([questionId])
 }
 
-enum Type {
-    DROPDOWN
-    RADIO
-    INPUT
-    CHECKBOX
-}
-
-// Necessary for Next auth
 model Account {
-    id                String   @id @default(uuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String?  @db.Text
-    access_token      String?  @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?  @db.Text
-    session_state     String?
-    createdAt         DateTime @default(now())
-    updatedAt         DateTime @updatedAt
-    user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String   @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
-    @@index([userId])
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-    id           String   @id @default(uuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
+  @@index([userId])
 }
 
 model User {
-    id            String       @id @default(uuid())
-    name          String
-    email         String       @unique
-    emailVerified DateTime?
-    phone         String?      @unique @db.VarChar(15)
-    gender        Gender?
-    dateOfBirth   DateTime?    @db.Date
-    image         String?
-    createdAt     DateTime     @default(now())
-    updatedAt     DateTime     @updatedAt
-    accounts      Account[]
-    sessions      Session[]
-    forms         Form[]
-    submissions   Submission[]
-}
-
-enum Gender {
-    MALE
-    FEMALE
-    OTHER
+  id            String       @id @default(uuid())
+  name          String
+  email         String       @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  dateOfBirth   DateTime?    @db.Date
+  gender        Gender?
+  phone         String?      @unique @db.VarChar(15)
+  accounts      Account[]
+  sessions      Session[]
+  forms         Form[]
+  submissions   Submission[]
 }
 
 model VerificationToken {
-    id         String   @id @default(uuid())
-    identifier String
-    token      String   @unique
-    expires    DateTime
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+  id         String   @id @default(uuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
+}
+
+enum Status {
+  DRAFT
+  COMPLETED
+}
+
+enum Type {
+  DROPDOWN
+  RADIO
+  INPUT
+  CHECKBOX
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
