@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { CheckboxField, DropdownField, RadioField, TextInput } from ".";
+import { CheckboxField, DropdownField, RadioField, TextField } from ".";
 import { useContext, useEffect, useState } from "react";
 import { QuestionContext } from "@/store";
 
@@ -28,7 +28,7 @@ export const FieldContainer = () => {
   return (
     <Box className="flex flex-col gap-4">
       {type === "INPUT" ? (
-        <TextInput
+        <TextField
           name={questionId}
           rows={2}
           multiline
@@ -49,7 +49,7 @@ export const FieldContainer = () => {
         <RadioField name={questionId} setShowOtherField={setShowOtherField} />
       ) : null}
       {textOption && showOtherField && (
-        <TextInput
+        <TextField
           name={textOption.id}
           option={textOption}
           textOptionValue={textOptionValue}

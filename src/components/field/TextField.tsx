@@ -1,10 +1,14 @@
 import { Controller } from "react-hook-form";
-import { FormControl, FormHelperText, TextField } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  TextField as MuiTextField,
+} from "@mui/material";
 import type { Option, SubmissionOption } from "@prisma/client";
 import { SubmissionContext, useReactForm } from "@/store";
 import { useContext } from "react";
 
-export const TextInput = ({
+export const TextField = ({
   name,
   multiline = false,
   rows = 1,
@@ -43,7 +47,7 @@ export const TextInput = ({
         fieldState: { error },
       }) => (
         <FormControl error={!!error} fullWidth>
-          <TextField
+          <MuiTextField
             error={!!error}
             onChange={(e) => {
               onChange({ ...option, value: e.target.value });
