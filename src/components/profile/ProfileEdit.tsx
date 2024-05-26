@@ -1,39 +1,125 @@
-import { Avatar, Box, Card, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
+import type { UpdateProfileSchema } from "@/server/schema/profile.schema";
+import { useProfileInfo } from "@/store/ProfileProvider";
+import { Card, Typography } from "@mui/material";
 import clsx from "clsx";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { ProfileEditDate, ProfileEditRadio, ProfileEditTextField } from ".";
+import { Save as SaveIcon } from "@mui/icons-material";
+import { Gender } from "@prisma/client";
+import { api } from "@/utils/api";
+import { LoadingButton } from "@mui/lab";
+import { useSnackbarToast } from "@/store";
 
 export const ProfileEdit = () => {
-  const { data } = useSession();
+  const setSnackConfig = useSnackbarToast((state) => state.setSnackConfig);
+  const { name, phone, image, dateOfBirth, gender } = useProfileInfo();
+  const { profile } = api.useContext();
+
+  const { mutate, isLoading } = api.profile.updateProfile.useMutation({
+    onSuccess: () => {
+      setSnackConfig({
+        isOpen: true,
+        severity: "success",
+        message: "Profile has been updated",
+      });
+      void profile.getProfile.invalidate();
+    },
+    onError: (error) => {
+      setSnackConfig({
+        isOpen: true,
+        severity: "error",
+        message: error.message,
+      });
+    },
+  });
+
+  const {
+    handleSubmit,
+    control,
+    formState: { isDirty },
+  } = useForm<UpdateProfileSchema>({
+    defaultValues: {
+      name,
+      phone,
+      image,
+      dateOfBirth,
+      gender,
+    },
+  });
+
+  const onSubmit: SubmitHandler<UpdateProfileSchema> = (data) => {
+    mutate(data);
+  };
 
   return (
     <Card
       variant="outlined"
       className={clsx(
         "md:col-span-2 col-span-3",
-        "flex flex-col items-center justify-center lg:flex-row lg:gap-10 shadow-md w-full h-fit p-5 gap-5"
+        "flex flex-col items-center justify-center shadow-md w-full h-fit p-5 gap-8"
       )}
     >
-      <Avatar
-        className="w-32 h-32 object-cover rounded-full lg:w-40 lg:h-40 lg:pb-0"
-        alt={data?.user.name ?? ""}
-        src={data?.user.image ?? ""}
-      />
+      <Typography component="h1" className="text-2xl font-bold">
+        Edit Profile
+      </Typography>
+      <form
+        onSubmit={handleSubmit(onSubmit) as () => void}
+        className="w-full flex flex-col gap-5"
+      >
+        <ProfileEditTextField
+          controllerProps={{ name: "name", control, rules: { required: true } }}
+          fieldProps={{ label: "Name", required: true }}
+        />
+        <ProfileEditTextField
+          controllerProps={{
+            name: "image",
+            control,
+            rules: { required: true },
+          }}
+          fieldProps={{
+            label: "Profile Image",
+            disabled: true,
+            required: true,
+          }}
+        />
+        <ProfileEditTextField
+          controllerProps={{
+            name: "phone",
+            control,
+            rules: { required: false },
+          }}
+          fieldProps={{ label: "Phone", required: false }}
+        />
+        <ProfileEditRadio
+          controllerProps={{
+            name: "gender",
+            control,
+            rules: { required: true },
+          }}
+          options={Object.keys(Gender)}
+          label="Gender *"
+        />
+        <ProfileEditDate
+          controllerProps={{
+            name: "dateOfBirth",
+            control,
+            rules: { required: true },
+          }}
+          label="Date of Birth *"
+        />
 
-      <Box className="text-center text-md lg:text-left">
-        <Typography
-          component="h2"
-          className="text-2xl font-bold text-purple-600"
+        <LoadingButton
+          loading={isLoading}
+          loadingPosition="end"
+          endIcon={<SaveIcon />}
+          variant="contained"
+          className="flex self-end w-min"
+          type="submit"
+          disabled={!isDirty}
         >
-          QuackStack EDIT
-        </Typography>
-        <Typography component="span" className="text-gray-500">
-          Software Developer
-        </Typography>
-        <Typography component="p" className="text-gray-400 my-3">
-          Meet QuackStack, the coding duck—making web magic from frontend to
-          backend with a touch of feathered flair! 🦆💻✨
-        </Typography>
-      </Box>
+          <span>Save</span>
+        </LoadingButton>
+      </form>
     </Card>
   );
 };

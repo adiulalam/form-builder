@@ -1,9 +1,9 @@
 import { Avatar, Box, Card, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import clsx from "clsx";
+import { useProfileInfo } from "@/store/ProfileProvider";
 
 export const ProfileInfo = () => {
-  const { data } = useSession();
+  const { name, email, phone, image } = useProfileInfo();
 
   return (
     <Card
@@ -15,24 +15,22 @@ export const ProfileInfo = () => {
     >
       <Avatar
         className="w-32 h-32 object-cover rounded-full lg:w-40 lg:h-40 lg:pb-0"
-        alt={data?.user.name ?? ""}
-        src={data?.user.image ?? ""}
+        alt={name ?? ""}
+        src={image ?? ""}
       />
 
       <Box className="text-center text-md lg:text-left">
-        <Typography
-          component="h2"
-          className="text-2xl font-bold text-purple-600"
-        >
-          QuackStack
+        <Typography component="h2" className="text-2xl font-bold text-primary">
+          {name}
         </Typography>
         <Typography component="span" className="text-gray-500">
-          Software Developer
+          {email}
         </Typography>
-        <Typography component="p" className="text-gray-400 my-3">
-          Meet QuackStack, the coding duck—making web magic from frontend to
-          backend with a touch of feathered flair! 🦆💻✨
-        </Typography>
+        {phone && (
+          <Typography component="span" className="text-gray-500">
+            {phone}
+          </Typography>
+        )}
       </Box>
     </Card>
   );

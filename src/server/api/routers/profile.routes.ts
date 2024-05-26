@@ -11,7 +11,7 @@ export const profileRouter = createTRPCRouter({
   ),
   updateProfile: protectedProcedure
     .input(updateProfileSchema)
-    .query(({ input, ctx: { session } }) =>
+    .mutation(({ input, ctx: { session } }) =>
       updateProfileHandler({ session, input })
     ),
 });

@@ -27,7 +27,7 @@ export default function Profile() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box className="flex min-h-screen p-2 justify-center">
-        <Box className="grid grid-cols-3 gap-2 h-max" maxWidth={"xl"}>
+        <Box className="grid grid-cols-3 gap-2 h-max w-full" maxWidth={"xl"}>
           <ProfileProvider store={data?.data.result}>
             <ProfileEdit />
             <ProfileInfo />

@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { prisma } from "../db";
 import { Prisma } from "@prisma/client";
 import type { UpdateProfileSchema } from "../schema/profile.schema";
+import dayjs from "dayjs";
 
 export const getProfileHandler = async ({ session }: { session: Session }) => {
   try {
@@ -51,7 +52,7 @@ export const updateProfileHandler = async ({
     const result = await prisma.user.update({
       where: { id },
       data: {
-        dateOfBirth,
+        dateOfBirth: dayjs(dateOfBirth).toISOString(),
         gender,
         image,
         name,

@@ -5,8 +5,8 @@ export const updateProfileSchema = z
   .object({
     name: z.string(),
     image: z.string().nullable(),
-    dateOfBirth: z.date(),
-    gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]),
+    dateOfBirth: z.string().nullable().or(z.date()),
+    gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]).nullable(),
     phone: z.string().nullable(),
   })
   .strict();
