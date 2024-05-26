@@ -15,6 +15,27 @@ export const ProfileEdit = () => {
   const { name, phone, image, dateOfBirth, gender } = useProfileInfo();
   const { profile } = api.useContext();
 
+  const {
+    handleSubmit,
+    control,
+    formState: { isDirty },
+  } = useForm<UpdateProfileSchema>({
+    defaultValues: {
+      name,
+      phone,
+      image,
+      dateOfBirth,
+      gender,
+    },
+    values: {
+      name,
+      phone,
+      image,
+      dateOfBirth,
+      gender,
+    },
+  });
+
   const { mutate, isLoading } = api.profile.updateProfile.useMutation({
     onSuccess: () => {
       setSnackConfig({
@@ -30,20 +51,6 @@ export const ProfileEdit = () => {
         severity: "error",
         message: error.message,
       });
-    },
-  });
-
-  const {
-    handleSubmit,
-    control,
-    formState: { isDirty },
-  } = useForm<UpdateProfileSchema>({
-    defaultValues: {
-      name,
-      phone,
-      image,
-      dateOfBirth,
-      gender,
     },
   });
 
