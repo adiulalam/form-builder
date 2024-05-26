@@ -11,6 +11,6 @@ type FormSortType = {
 export const useFormSort = create<FormSortType>((set) => ({
   sort: "title",
   setSort: (name) => set({ sort: name }),
-  order: "asc",
+  order: "desc",
   setOrder: (name) => set({ order: name }),
 }));
