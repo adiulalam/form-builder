@@ -6,6 +6,7 @@ import { QuestionDelete } from "./QuestionDelete";
 import { QuestionType } from "./QuestionType";
 import { QuestionContainer } from "./QuestionContainer";
 import { QuestionCardMenu } from "./QuestionCardMenu";
+import { QuestionCards } from "./QuestionCards";
 
 export {
   QuestionCard,
@@ -16,4 +17,5 @@ export {
   QuestionType,
   QuestionContainer,
   QuestionCardMenu,
+  QuestionCards,
 };

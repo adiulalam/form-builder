@@ -1,3 +1,4 @@
+import type { PlaygroundAction } from "@/hooks/usePlaygroundReducer";
 import type {
   Question,
   Form,
@@ -5,6 +6,7 @@ import type {
   Submission,
   SubmissionOption,
 } from "@prisma/client";
+import type { Dispatch } from "react";
 
 export type SubmissionOptionProviderType = SubmissionOption;
 export type OptionProviderType = Option;
@@ -24,3 +26,10 @@ export type SubmissionProviderType = Submission & {
 export type LogProviderType = Submission & {
   form: Form;
 };
+
+export type PlaygroundProviderType =
+  | ({ isPlayground: true } & {
+      form: FormProviderType;
+      dispatch: Dispatch<PlaygroundAction>;
+    })
+  | { isPlayground: false };

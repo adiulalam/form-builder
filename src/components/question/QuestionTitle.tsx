@@ -3,12 +3,8 @@ import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useState } from "react";
 import { FormContext, QuestionContext } from "@/store";
-import { useRouter } from "next/router";
 
 export const QuestionTitle = () => {
-  const router = useRouter();
-  const isEditor = router.pathname === "/form/[id]";
-
   const { id, question, formId } = useContext(QuestionContext);
   const { status } = useContext(FormContext);
   const [input, setInput] = useState<string>(question);
@@ -35,10 +31,10 @@ export const QuestionTitle = () => {
     <Box className="w-auto">
       <Input
         fullWidth
-        readOnly={status === "COMPLETED" || !isEditor}
+        readOnly={status === "COMPLETED"}
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onBlur={(e) => status === "DRAFT" && isEditor && onSubmitHandler(e)}
+        onBlur={(e) => status === "DRAFT" && onSubmitHandler(e)}
         className="text-2xl"
         multiline
       />

@@ -22,7 +22,7 @@ export const OptionBar = () => {
           {isInputType ? <OptionInput /> : <OptionAutocomplete />}
         </Paper>
 
-        {isInputType && <OptionBarMenu />}
+        {!isInputType && <OptionBarMenu />}
       </Box>
       {isOtherOption && <OptionOtherInput label={isOtherOption.value} />}
     </Box>

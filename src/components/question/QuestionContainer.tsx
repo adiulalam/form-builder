@@ -1,15 +1,13 @@
 import { useRouter } from "next/router";
 import {
   FormContext,
-  QuestionProvider,
   SubmissionContext,
   useReactHookForm,
   useSnackbarToast,
 } from "@/store";
 import { FormNavbar, FormSubmit } from "@/components/form";
-import { Box, Paper, Grow, Backdrop, CircularProgress } from "@mui/material";
-import { QuestionAdd, QuestionCard } from "@/components/question";
-import { TransitionGroup } from "react-transition-group";
+import { Box, Paper, Backdrop, CircularProgress } from "@mui/material";
+import { QuestionAdd, QuestionCards } from "@/components/question";
 import type { SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
 import type { Option } from "@prisma/client";
@@ -83,17 +81,7 @@ export const QuestionContainer = ({ isFetching }: { isFetching: boolean }) => {
         onSubmit={handleSubmit(onSubmit) as () => void}
         className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4"
       >
-        <TransitionGroup className="flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4">
-          {formData.questions?.map((question, index) => (
-            <Grow key={question.id}>
-              <Box maxWidth={"xl"} className="flex w-full">
-                <QuestionProvider store={{ ...question, index }}>
-                  <QuestionCard />
-                </QuestionProvider>
-              </Box>
-            </Grow>
-          ))}
-        </TransitionGroup>
+        <QuestionCards />
         {isEditor ? <QuestionAdd /> : <FormSubmit />}
       </form>
 

@@ -6,6 +6,7 @@ import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
 } from "@mui/icons-material";
 import { FormContext, QuestionContext } from "@/store";
+import { usePlaygroundContext } from "@/store/PlaygroundProvider";
 
 export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
   const {
@@ -20,6 +21,8 @@ export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
   const { mutate } = api.question.updateQuestionOrder.useMutation({
     onSuccess: () => form.getPrivateForm.invalidate({ id: formId }),
   });
+
+  const playgroundContext = usePlaygroundContext();
 
   const onClickHandler = () => {
     if (
@@ -56,7 +59,11 @@ export const QuestionOrder = ({ isUp }: { isUp: boolean }) => {
 
     if (body.length !== 2) return;
 
-    mutate(body);
+    if (playgroundContext.isPlayground) {
+      playgroundContext.dispatch({ type: "reOrderQuestion", payload: body });
+    } else {
+      mutate(body);
+    }
   };
 
   return (

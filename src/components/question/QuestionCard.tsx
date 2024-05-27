@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 export const QuestionCard = () => {
   const router = useRouter();
-  const isEditor = router.pathname === "/form/[id]";
+  const isEditor = router.pathname === "/form/[id]" || router.pathname === "/";
 
   const { status } = useContext(FormContext);
   const { type } = useContext(QuestionContext);
