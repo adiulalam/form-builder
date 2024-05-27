@@ -7,6 +7,10 @@ export type PlaygroundAction =
       type: "name";
       payload?: undefined;
     }
+  | {
+      type: "changeQuestionName";
+      payload: { id: string; title: string };
+    }
   | { type: "reOrderQuestion"; payload: { id: string; order: number }[] };
 
 const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
@@ -15,6 +19,14 @@ const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
   switch (action.type) {
     case "name": {
       state.form.title = "New Form Clicked";
+      return { ...state };
+    }
+
+    case "changeQuestionName": {
+      const { payload } = action;
+      state.form.questions!.find(
+        (question) => question.id === payload.id
+      )!.question = payload.title;
       return { ...state };
     }
 

@@ -3,8 +3,10 @@ import { Input, Box } from "@mui/material";
 import { api } from "@/utils/api";
 import { useContext, useState } from "react";
 import { FormContext, QuestionContext } from "@/store";
+import { usePlaygroundContext } from "@/store/PlaygroundProvider";
 
 export const QuestionTitle = () => {
+  const playground = usePlaygroundContext();
   const { id, question, formId } = useContext(QuestionContext);
   const { status } = useContext(FormContext);
   const [input, setInput] = useState<string>(question);
@@ -21,10 +23,15 @@ export const QuestionTitle = () => {
   ) => {
     e.preventDefault();
 
-    mutate({
-      body: { question: input },
-      params: { id },
-    });
+    if (playground.isPlayground) {
+      const payload = { title: input, id };
+      playground.dispatch({ type: "changeQuestionName", payload });
+    } else {
+      mutate({
+        body: { question: input },
+        params: { id },
+      });
+    }
   };
 
   return (
