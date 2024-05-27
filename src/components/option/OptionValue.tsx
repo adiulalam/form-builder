@@ -1,4 +1,5 @@
-import { FormContext } from "@/store";
+import { FormContext, QuestionContext } from "@/store";
+import { usePlaygroundContext } from "@/store/PlaygroundProvider";
 import { api } from "@/utils/api";
 import { Chip, type AutocompleteRenderGetTagProps } from "@mui/material";
 import type { Option } from "@prisma/client";
@@ -15,7 +16,9 @@ export const OptionValue = ({
   option,
   index,
 }: OptionValueType) => {
+  const playground = usePlaygroundContext();
   const { id: formId } = useContext(FormContext);
+  const { id: questionId } = useContext(QuestionContext);
   const { form } = api.useContext();
 
   const { mutate } = api.option.deleteOption.useMutation({
@@ -23,7 +26,12 @@ export const OptionValue = ({
   });
 
   const onClickHandler = () => {
-    mutate({ id: option.id });
+    if (playground.isPlayground) {
+      const payload = { id: option.id, questionId };
+      playground.dispatch({ type: "deleteOption", payload });
+    } else {
+      mutate({ id: option.id });
+    }
   };
 
   return (

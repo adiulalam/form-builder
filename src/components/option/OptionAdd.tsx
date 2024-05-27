@@ -8,6 +8,7 @@ import {
 } from "react";
 import { FormContext, QuestionContext } from "@/store";
 import { api } from "@/utils/api";
+import { usePlaygroundContext } from "@/store/PlaygroundProvider";
 
 export const OptionAdd = ({
   value,
@@ -16,6 +17,7 @@ export const OptionAdd = ({
   value: string;
   autocompleteRef: MutableRefObject<HTMLInputElement | null>;
 }) => {
+  const playground = usePlaygroundContext();
   const { form } = api.useContext();
   const { id } = useContext(FormContext);
   const { id: questionId } = useContext(QuestionContext);
@@ -25,11 +27,16 @@ export const OptionAdd = ({
   });
 
   const onSubmitHandler = useCallback(() => {
-    mutate({
-      value,
-      questionId,
-    });
-  }, [mutate, questionId, value]);
+    if (playground.isPlayground) {
+      const payload = { id: questionId, value };
+      playground.dispatch({ type: "addOption", payload });
+    } else {
+      mutate({
+        value,
+        questionId,
+      });
+    }
+  }, [mutate, questionId, value, playground]);
 
   useEffect(() => {
     const handlekeydownEvent = (e: KeyboardEvent) =>
@@ -38,8 +45,9 @@ export const OptionAdd = ({
     const enterKeyPressed = autocompleteRef.current;
     enterKeyPressed?.addEventListener("keydown", handlekeydownEvent);
 
-    return () =>
+    return () => {
       enterKeyPressed?.removeEventListener("keydown", handlekeydownEvent);
+    };
   }, [autocompleteRef, onSubmitHandler]);
 
   return (

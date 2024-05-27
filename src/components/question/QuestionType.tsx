@@ -10,6 +10,7 @@ import {
 import { api } from "@/utils/api";
 import { useContext } from "react";
 import { FormContext, QuestionContext } from "@/store";
+import { usePlaygroundContext } from "@/store/PlaygroundProvider";
 
 type TypeMap = {
   type: Type;
@@ -17,6 +18,7 @@ type TypeMap = {
 }[];
 
 export const QuestionType = ({ handleClose }: { handleClose: () => void }) => {
+  const playground = usePlaygroundContext();
   const { id: formId } = useContext(FormContext);
   const { id: questionId, type: currentType } = useContext(QuestionContext);
 
@@ -27,10 +29,15 @@ export const QuestionType = ({ handleClose }: { handleClose: () => void }) => {
   });
 
   const onClickHandler = ({ type }: { type: Type }) => {
-    mutate({
-      body: { type },
-      params: { id: questionId },
-    });
+    if (playground.isPlayground) {
+      const payload = { id: questionId, type };
+      playground.dispatch({ type: "changeQuestionType", payload });
+    } else {
+      mutate({
+        body: { type },
+        params: { id: questionId },
+      });
+    }
     handleClose();
   };
 

@@ -39,23 +39,17 @@ export const TextField = ({
           required: ({ value }) => (value ? true : "Required Field"),
         },
       }}
-      render={({
-        field: {
-          onChange,
-          value: { value },
-        },
-        fieldState: { error },
-      }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl error={!!error} fullWidth>
           <MuiTextField
             error={!!error}
             onChange={(e) => {
               onChange({ ...option, value: e.target.value });
             }}
-            label={option?.value ?? "Unknown"}
+            label={option?.value ?? "Input"}
             multiline={multiline}
             rows={rows}
-            value={value}
+            value={value?.value}
             disabled={disabled}
           />
           <FormHelperText>{error ? error.message : null}</FormHelperText>
