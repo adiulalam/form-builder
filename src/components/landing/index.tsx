@@ -1,4 +1,11 @@
-import { LadingAddQuestions } from "./LadingAddQuestions";
+import { LandingAddQuestions } from "./LandingAddQuestions";
+import { LandingChangeStatus } from "./LandingChangeStatus";
+import { LandingInfo } from "./LandingInfo";
 import { LandingPlayground } from "./LandingPlayground";
 
-export { LandingPlayground, LadingAddQuestions };
+export {
+  LandingPlayground,
+  LandingAddQuestions,
+  LandingChangeStatus,
+  LandingInfo,
+};

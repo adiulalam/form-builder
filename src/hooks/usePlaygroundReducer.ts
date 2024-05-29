@@ -88,7 +88,7 @@ const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
       const questionLength = (state.form.questions?.length ?? 0) + 1;
       const question = {
         id: crypto.randomUUID(),
-        question: `New Question ${questionLength}`,
+        question: `New ${type} question ${questionLength}`,
         order: questionLength,
         type,
         formId: formId,

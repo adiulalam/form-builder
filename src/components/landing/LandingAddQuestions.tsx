@@ -10,13 +10,13 @@ import {
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import type { Dispatch } from "react";
+import type { PlaygroundAction } from "@/hooks/usePlaygroundReducer";
 import { useRef, useState } from "react";
 import { Type } from "@prisma/client";
-import type { PlaygroundAction } from "@/hooks/usePlaygroundReducer";
 
 const options = Object.keys(Type).map((type) => type);
 
-export const LadingAddQuestions = ({
+export const LandingAddQuestions = ({
   dispatch,
 }: {
   dispatch: Dispatch<PlaygroundAction>;
