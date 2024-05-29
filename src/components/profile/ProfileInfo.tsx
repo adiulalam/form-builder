@@ -19,7 +19,7 @@ export const ProfileInfo = () => {
         src={image ?? ""}
       />
 
-      <Box className="text-center text-md lg:text-left">
+      <Box className="flex flex-col gap-1 items-center text-center text-md lg:text-left">
         <Typography component="h2" className="text-2xl font-bold text-primary">
           {name}
         </Typography>
