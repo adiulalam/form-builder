@@ -22,6 +22,7 @@ import type { PlaygroundAction } from "@/hooks/usePlaygroundReducer";
 import { useRef, useState } from "react";
 import { Type } from "@prisma/client";
 import type { TypeMap } from "../question/QuestionType";
+import type { PlaygroundProviderType } from "@/types/Provider.types";
 
 const options: TypeMap = [
   {
@@ -43,8 +44,10 @@ const options: TypeMap = [
 ];
 
 export const LandingAddQuestions = ({
+  state,
   dispatch,
 }: {
+  state: PlaygroundProviderType;
   dispatch: Dispatch<PlaygroundAction>;
 }) => {
   const anchorRef = useRef<HTMLDivElement>(null);
@@ -76,13 +79,17 @@ export const LandingAddQuestions = ({
     setOpen(false);
   };
 
+  if (!state.isPlayground) return null;
+
+  const isCompleted = state.form.status === "COMPLETED";
+
   return (
     <>
       <ButtonGroup variant="contained" ref={anchorRef}>
-        <Button onClick={handleClick}>
+        <Button onClick={handleClick} disabled={isCompleted}>
           ADD {options[selectedIndex]!.type} Question
         </Button>
-        <Button size="small" onClick={handleToggle}>
+        <Button size="small" onClick={handleToggle} disabled={isCompleted}>
           <ArrowDropDownIcon />
         </Button>
       </ButtonGroup>
@@ -110,7 +117,7 @@ export const LandingAddQuestions = ({
                     <MenuItem
                       key={index}
                       selected={index === selectedIndex}
-                      disabled={index === selectedIndex}
+                      disabled={index === selectedIndex || isCompleted}
                       onClick={() => handleMenuItemClick(index)}
                     >
                       <ListItemIcon>

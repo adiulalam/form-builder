@@ -13,7 +13,7 @@ export const LandingPlayground = () => {
   return (
     <Box className="flex w-full flex-wrap items-center justify-center gap-4 p-2">
       <LandingChangeStatus state={state} dispatch={dispatch} />
-      <LandingAddQuestions dispatch={dispatch} />
+      <LandingAddQuestions dispatch={dispatch} state={state} />
       <PlaygroundProvider store={{ ...state, dispatch }}>
         <FormProvider store={state.form}>
           <QuestionCards />

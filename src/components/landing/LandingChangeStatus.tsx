@@ -21,7 +21,7 @@ export const LandingChangeStatus = ({
   return (
     <Button
       variant="contained"
-      color={state.form.status === "DRAFT" ? "error" : "primary"}
+      color={state.form.status === "DRAFT" ? "primary" : "error"}
       onClick={() =>
         dispatch({
           type: "changeFormStatus",
