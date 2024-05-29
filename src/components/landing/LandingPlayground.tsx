@@ -3,6 +3,8 @@ import { QuestionCards } from "../question";
 import { PlaygroundProvider } from "@/store/PlaygroundProvider";
 import { usePlaygroundReducer } from "@/hooks";
 import { Status } from "@prisma/client";
+import { Button } from "@mui/material";
+import { LadingAddQuestions } from ".";
 
 const oppositeStatus = {
   [Status.COMPLETED]: Status.DRAFT,
@@ -15,10 +17,10 @@ export const LandingPlayground = () => {
   console.log("🚀 ~ LandingPlayground ~ state:", state);
 
   return (
-    <div className="m-auto flex h-full w-full flex-col flex-wrap items-center justify-evenly gap-4 p-2">
-      <div>{state.form.title}</div>
-      <button onClick={() => dispatch({ type: "name" })}>Change name</button>
-      <button
+    <div className="m-auto flex h-full w-full flex-wrap items-center justify-evenly gap-4 p-2">
+      <Button
+        variant="outlined"
+        color={state.form.status === "DRAFT" ? "error" : "primary"}
         onClick={() =>
           dispatch({
             type: "changeFormStatus",
@@ -26,11 +28,9 @@ export const LandingPlayground = () => {
           })
         }
       >
-        Change status
-      </button>
-      <button onClick={() => dispatch({ type: "addQuestion" })}>
-        Add Question
-      </button>
+        Change status to {oppositeStatus[state.form.status]}
+      </Button>
+      <LadingAddQuestions dispatch={dispatch} />
       <PlaygroundProvider store={{ ...state, dispatch }}>
         <FormProvider store={state.form}>
           <QuestionCards />

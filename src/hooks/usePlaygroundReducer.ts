@@ -5,10 +5,8 @@ import type { Status, Type } from "@prisma/client";
 
 export type PlaygroundAction =
   | {
-      type: "name";
-    }
-  | {
       type: "addQuestion";
+      payload: { type: Type };
     }
   | {
       type: "addOption";
@@ -35,11 +33,6 @@ const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
   if (!state.isPlayground) return state;
 
   switch (action.type) {
-    case "name": {
-      state.form.title = "New Form Clicked";
-      return { ...state };
-    }
-
     case "deleteOption": {
       const { questionId, id } = action.payload;
 
@@ -91,12 +84,13 @@ const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
 
     case "addQuestion": {
       const formId = state.form.id;
+      const type = action.payload.type;
       const questionLength = (state.form.questions?.length ?? 0) + 1;
       const question = {
         id: crypto.randomUUID(),
         question: `New Question ${questionLength}`,
         order: questionLength,
-        type: null,
+        type,
         formId: formId,
         createdAt: new Date(),
         updatedAt: new Date(),
