@@ -7,14 +7,40 @@ import {
   Popper,
   MenuItem,
   MenuList,
+  ListItemText,
+  ListItemIcon,
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import {
+  ArrowDropDownCircle as ArrowDropDownCircleIcon,
+  CheckBox as CheckBoxIcon,
+  RadioButtonChecked as RadioButtonCheckedIcon,
+  Keyboard as KeyboardIcon,
+} from "@mui/icons-material";
 import type { Dispatch } from "react";
 import type { PlaygroundAction } from "@/hooks/usePlaygroundReducer";
 import { useRef, useState } from "react";
 import { Type } from "@prisma/client";
+import type { TypeMap } from "../question/QuestionType";
 
-const options = Object.keys(Type).map((type) => type);
+const options: TypeMap = [
+  {
+    type: Type.DROPDOWN,
+    Icon: ArrowDropDownCircleIcon,
+  },
+  {
+    type: Type.CHECKBOX,
+    Icon: CheckBoxIcon,
+  },
+  {
+    type: Type.RADIO,
+    Icon: RadioButtonCheckedIcon,
+  },
+  {
+    type: Type.INPUT,
+    Icon: KeyboardIcon,
+  },
+];
 
 export const LandingAddQuestions = ({
   dispatch,
@@ -26,7 +52,7 @@ export const LandingAddQuestions = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleClick = () => {
-    const type = options[selectedIndex] as Type;
+    const type = options[selectedIndex]!.type;
     dispatch({ type: "addQuestion", payload: { type } });
   };
 
@@ -53,7 +79,9 @@ export const LandingAddQuestions = ({
   return (
     <>
       <ButtonGroup variant="contained" ref={anchorRef}>
-        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+        <Button onClick={handleClick}>
+          ADD {options[selectedIndex]!.type} Question
+        </Button>
         <Button size="small" onClick={handleToggle}>
           <ArrowDropDownIcon />
         </Button>
@@ -78,13 +106,17 @@ export const LandingAddQuestions = ({
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem>
-                  {options.map((option, index) => (
+                  {options.map(({ type, Icon }, index) => (
                     <MenuItem
                       key={index}
                       selected={index === selectedIndex}
+                      disabled={index === selectedIndex}
                       onClick={() => handleMenuItemClick(index)}
                     >
-                      {option}
+                      <ListItemIcon>
+                        <Icon />
+                      </ListItemIcon>
+                      <ListItemText>SELECT {type} Question</ListItemText>
                     </MenuItem>
                   ))}
                 </MenuList>

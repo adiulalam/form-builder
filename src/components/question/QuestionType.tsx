@@ -12,7 +12,7 @@ import { useContext } from "react";
 import { FormContext, QuestionContext } from "@/store";
 import { usePlaygroundContext } from "@/store/PlaygroundProvider";
 
-type TypeMap = {
+export type TypeMap = {
   type: Type;
   Icon: SvgIconComponent;
 }[];
