@@ -1,46 +1,50 @@
-# Create T3 App
+# Form Builder
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A full-stack form builder that can be used for creating and sharing forms. The application also includes authentication, authorization, and a dashboard for comprehensive information visualization.
 
-## What's next? How do I make an app with this?
+Created with Next.js, NextAuth, TRPC, MUI, and Tailwind.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Installation
+To use the application please make sure to clone the package, open terminal and then follow the instruction below.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### Setup the environment varibles, see `.env.example`
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Install the packages
+```
+npm i
+```
 
-## Learn More
+### Running the tests
+```
+npm run test
+```
+### Running in DEV environment
+```
+npm run dev
+```
+### Running in PROD environment
+```
+npm start
+```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Additional Commands
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
-
-## Commands
-
+### Running prisma studio
 ```bash
 npx prisma studio
 ```
 
+### Running migrate reset
 ```bash
 npx prisma migrate reset
 ```
 
+### Running db push
 ```bash
 npx prisma db push
 ```
 
+### Running migrate deploy
 ```bash
 npx prisma migrate deploy
 ```
