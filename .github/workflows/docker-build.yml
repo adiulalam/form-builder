@@ -27,6 +27,14 @@ jobs:
         id: extract_version
         run: echo "version=${{ github.run_number }}" >> $GITHUB_ENV
 
+      - name: Set up .env file
+        run: |
+          # echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          # echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          # echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          # echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "MYSQL_PORT=3306" >> .env
+
       - name: Build Docker image
         run: |
           docker-compose build nextjs-app
