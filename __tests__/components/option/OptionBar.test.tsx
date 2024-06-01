@@ -6,43 +6,42 @@ import {
   DraftDropdownOptionTRPC,
   DraftRadioOptionTRPC,
 } from ".";
+import { Type } from "@prisma/client";
+import { includesInputType } from "@/utils/arrayFunction";
 
 const optionBarMapper = [
   {
-    name: "checkbox",
+    name: Type.CHECKBOX,
     wrapper: DraftCheckboxOptionTRPC,
   },
   {
-    name: "dropdown",
+    name: Type.DROPDOWN,
     wrapper: DraftDropdownOptionTRPC,
   },
   {
-    name: "radio",
+    name: Type.RADIO,
     wrapper: DraftRadioOptionTRPC,
   },
   {
-    name: "input",
+    name: Type.INPUT,
     wrapper: DraftInputOptionTRPC,
   },
 ];
 
 describe("Test the 'OptionBar' component", () => {
   optionBarMapper.forEach(({ wrapper, name }) => {
-    it(`Should test OptionBar ${name}`, () => {
+    it(`Should test OptionBar ${name} children`, () => {
       render(<OptionBar />, {
         wrapper,
       });
 
-      if (name !== "input") {
-        const input = screen.getByPlaceholderText(/Add values here/i);
-        expect(input).not.toHaveAttribute("readonly");
-      }
+      const isInputType = includesInputType(name);
 
-      expect(
-        screen.getByLabelText(name === "input" ? "INPUT" : "OTHER")
-      ).toBeInTheDocument();
-      const otherInput = screen.getByPlaceholderText(/Type here/i);
-      expect(otherInput).toHaveAttribute("readonly");
+      if (isInputType) {
+        expect(screen.getByTestId("OptionTextField")).toBeInTheDocument();
+      } else {
+        expect(screen.getByTestId("OptionAutocomplete")).toBeInTheDocument();
+      }
     });
   });
 });

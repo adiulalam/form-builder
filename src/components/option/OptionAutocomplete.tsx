@@ -11,6 +11,7 @@ export const OptionAutocomplete = () => {
 
   return (
     <Autocomplete
+      data-testid="OptionAutocomplete"
       open={false}
       multiple
       autoHighlight

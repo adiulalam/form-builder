@@ -1,11 +1,13 @@
 import { TextField } from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
 
-export const OptionOtherInput = ({ label }: { label: string }) => {
+export const OptionTextField = (props: TextFieldProps) => {
   return (
     <TextField
+      {...props}
+      data-testid="OptionTextField"
       fullWidth
       multiline
-      label={label}
       InputProps={{ readOnly: true, placeholder: "Type here" }}
     />
   );
