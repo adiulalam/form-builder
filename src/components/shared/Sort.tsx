@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useFormSort } from "@/store";
 import { useRouter } from "next/router";
+import type { ReadAllInput } from "@/server/schema/form.schema";
 
 type SortType = { items: { name: string; value: string }[] };
 
@@ -64,7 +65,10 @@ const SortMenu = styled((props: MenuProps) => (
 export const Sort = ({ items }: SortType) => {
   const { setOrder, setSort } = useFormSort();
   const { pathname, query, replace, push } = useRouter();
-  const { sort, order } = query as { sort: string; order: "asc" | "desc" };
+  const { sort, order } = query as {
+    sort: ReadAllInput["sort"];
+    order: "asc" | "desc";
+  };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
