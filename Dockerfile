@@ -1,4 +1,8 @@
 FROM node:18-alpine AS deps
+
+RUN apk --update add bash && \
+    apk add dos2unix
+
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -20,15 +24,16 @@ FROM node:18-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV production
 
+COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
+
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/node_modules ./node_modules
+
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/deploy-server.sh .
 
-EXPOSE 4000
-ENV PORT 4000
+RUN dos2unix ./deploy-server.sh
 
 CMD source deploy-server.sh

@@ -9,6 +9,9 @@ To use the application please make sure to clone the package, open terminal and 
 
 ### Setup the environment varibles, see `.env.example`
 
+
+#### Use `.env` for Production and `.env.local` for development
+
 ### Install the packages
 ```
 npm i

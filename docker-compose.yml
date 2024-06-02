@@ -15,6 +15,10 @@ services:
       - $MYSQL_PORT:3306
     volumes:
       - mysql-volume:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 3s
+      retries: 10
 
   nextjs-app:
     container_name: nextjs-app
@@ -23,12 +27,15 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file: ./.env
+    environment:
+      - PORT=4000
     ports:
       - 4000:4000
     expose:
       - 4000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes: 
   mysql-volume:
