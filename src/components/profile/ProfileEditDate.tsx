@@ -18,13 +18,19 @@ export const ProfileEditDate = ({
   return (
     <Controller
       {...controllerProps}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
           <DatePicker
             format="DD/MM/YYYY"
             label={label}
             value={value ? dayjs(value) : undefined}
             onChange={onChange}
+            slotProps={{
+              textField: {
+                error: !!error,
+                helperText: error?.message,
+              },
+            }}
           />
         </LocalizationProvider>
       )}
