@@ -1,4 +1,4 @@
-import { FormProvider } from "@/store";
+import { FormProvider, useReactHookForm } from "@/store";
 import { QuestionCards } from "../question";
 import { PlaygroundProvider } from "@/store/PlaygroundProvider";
 import { usePlaygroundReducer } from "@/hooks";
@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 
 export const LandingPlayground = () => {
   const [state, dispatch] = usePlaygroundReducer();
+  useReactHookForm();
 
   if (!state.isPlayground) return null;
 

@@ -1,11 +1,10 @@
-import { FormContext, QuestionProvider, useReactHookForm } from "@/store";
+import { FormContext, QuestionProvider } from "@/store";
 import { Box, Grow } from "@mui/material";
 import { QuestionCard } from "@/components/question";
 import { TransitionGroup } from "react-transition-group";
 import { useContext } from "react";
 
 export const QuestionCards = () => {
-  useReactHookForm();
   const { questions } = useContext(FormContext);
 
   return (
