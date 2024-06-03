@@ -3,7 +3,7 @@ import { createForms, createOptions, createQuestions } from "./create";
 
 const prisma = new PrismaClient();
 
-export const seedforms = async (userId: string) => {
+export const seedForms = async (userId: string) => {
   // Create 5 forms
   const forms = await prisma.$transaction(
     createForms(userId, 5).map((form) => prisma.form.create({ data: form }))
@@ -30,4 +30,6 @@ export const seedforms = async (userId: string) => {
 
   const options = await prisma.$transaction(questionsOptions);
   console.log("Options Created", options);
+
+  return options;
 };

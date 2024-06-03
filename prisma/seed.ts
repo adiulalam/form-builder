@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { seedforms } from "./seedforms";
+import { seedForms } from "./seedForms";
+import { seedSubmissions } from "./seedSubmissions";
 
 const prisma = new PrismaClient();
 
@@ -10,7 +11,10 @@ const main = async () => {
 
   if (!user) return new Error("No user id found");
 
-  await seedforms(user.id);
+  const options = await seedForms(user.id);
+  const optionIds = options.map(({ id }) => id);
+
+  await seedSubmissions(user.id, optionIds);
 };
 
 main()
