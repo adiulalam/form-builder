@@ -12,7 +12,6 @@ export const seedSubmissions = async (userId: string, optionIds: string[]) => {
     distinct: "questionId",
     include: { question: true },
   });
-  console.log("🚀 ~ seedSubmissions ~ options:", options.length);
 
   const formIds = options.map((option) => option.question.formId);
 
