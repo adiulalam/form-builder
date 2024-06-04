@@ -3,7 +3,7 @@ import { createForms, createOptions, createQuestions } from "./create";
 
 const prisma = new PrismaClient();
 
-const limit = { form: 5, question: 5, option: 5 };
+const limit = { form: 50, question: 10, option: 5 };
 
 export const seedForms = async (userId: string) => {
   // Create X forms
