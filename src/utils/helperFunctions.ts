@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 export const roundIfNessesary = (input: number | string, maxRound = 1) => {
+  input ||= 0;
   const inputToString = input.toString();
   return parseFloat(inputToString).toFixed(maxRound);
 };
