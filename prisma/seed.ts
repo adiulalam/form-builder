@@ -5,11 +5,9 @@ import { seedSubmissions } from "./seedSubmissions";
 const prisma = new PrismaClient();
 
 const main = async () => {
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findFirstOrThrow({
     orderBy: { createdAt: "desc" },
   });
-
-  if (!user) return new Error("No user id found");
 
   const options = await seedForms(user.id);
   const optionIds = options.map(({ id }) => id);
