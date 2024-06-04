@@ -13,15 +13,14 @@ export const createSubmissionsOptions = (
   options: Options,
   submissionIds: string[]
 ): CreateSubmissionOptionsType => {
-  const createSubmissionOptions: CreateSubmissionOptionsType =
-    submissionIds.flatMap((submissionId) =>
-      options.map((option) => ({
-        submissionId,
-        optionId: option.id,
-        questionId: option.questionId,
-        inputText: option.questionType === "INPUT" ? faker.word.sample() : null,
-      }))
-    );
+  const createSubmissionOptions: CreateSubmissionOptionsType = options.map(
+    (option, index) => ({
+      submissionId: submissionIds[index]!,
+      optionId: option.id,
+      questionId: option.questionId,
+      inputText: option.questionType === "INPUT" ? faker.word.sample() : null,
+    })
+  );
 
   return createSubmissionOptions;
 };
