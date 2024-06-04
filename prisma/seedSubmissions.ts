@@ -12,17 +12,32 @@ export const seedSubmissions = async (userId: string, optionIds: string[]) => {
     distinct: "questionId",
     include: { question: true },
   });
+  console.log("🚀 ~ seedSubmissions ~ options:", options.length);
+
+  const formIds = options.map((option) => option.question.formId);
 
   const submissions = await prisma.$transaction(
-    createSubmissions(options, userId).map((submission) =>
+    createSubmissions(formIds, userId).map((submission) =>
       prisma.submission.create({ data: submission })
     )
   );
+  console.log("Submissions Created");
+
+  const minimialOptions = options.map((option) => ({
+    id: option.id,
+    questionId: option.question.id,
+    questionType: option.question.type,
+  }));
+
+  const submissionIds = submissions.map((submission) => submission.id);
 
   const submissionOptions = await prisma.$transaction(
-    createSubmissionsOptions(options, submissions).map((submissionOption) =>
-      prisma.submissionOption.create({ data: submissionOption })
+    createSubmissionsOptions(minimialOptions, submissionIds).map(
+      (submissionOption) =>
+        prisma.submissionOption.create({ data: submissionOption })
     )
   );
-  console.log("🚀 ~ submissionOptions ~ submissions:", submissionOptions);
+  console.log("Submission Options Created");
+
+  console.log("Options Created", submissionOptions.length);
 };

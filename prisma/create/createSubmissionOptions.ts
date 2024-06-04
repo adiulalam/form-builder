@@ -1,20 +1,25 @@
 import { faker } from "@faker-js/faker";
-import type { Option, Prisma, Question, Submission } from "@prisma/client";
+import type { Prisma, Type } from "@prisma/client";
 
 type CreateSubmissionOptionsType = Prisma.SubmissionOptionCreateManyInput[];
 
+type Options = {
+  id: string;
+  questionId: string;
+  questionType: Type | null;
+}[];
+
 export const createSubmissionsOptions = (
-  options: (Option & { question: Question })[],
-  submissions: Submission[]
+  options: Options,
+  submissionIds: string[]
 ): CreateSubmissionOptionsType => {
   const createSubmissionOptions: CreateSubmissionOptionsType =
-    submissions.flatMap((submission) =>
+    submissionIds.flatMap((submissionId) =>
       options.map((option) => ({
-        submissionId: submission.id,
+        submissionId,
         optionId: option.id,
         questionId: option.questionId,
-        inputText:
-          option.question.type === "INPUT" ? faker.word.sample() : null,
+        inputText: option.questionType === "INPUT" ? faker.word.sample() : null,
       }))
     );
 
