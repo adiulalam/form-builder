@@ -5,12 +5,13 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "migrate:sql": "dotenv -e .env.development -- npx prisma migrate deploy",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "start": "next start",
     "test": "jest ./__tests__ --watch",
     "commit_test": "jest ./__tests__ --ci",
-    "seed": "tsx prisma/seed.ts",
+    "seed": "dotenv -e .env.development -- tsx prisma/seed.ts",
     "prepare": "husky install",
     "db": "docker-compose up db -d",
     "docker": "docker-compose up -d --build --force-recreate"
@@ -66,6 +67,7 @@
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "autoprefixer": "^10.4.15",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.48.0",
     "eslint-config-next": "^13.4.19",
     "husky": "^8.0.0",
