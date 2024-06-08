@@ -26,12 +26,10 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file: ./.env
-    environment:
-      - PORT=4000
     ports:
-      - 4000:4000
+      - $PORT:$PORT
     expose:
-      - 4000
+      - $PORT
     depends_on:
       db:
         condition: service_healthy
