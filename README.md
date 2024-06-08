@@ -51,9 +51,3 @@ npx prisma db push
 ```bash
 npx prisma migrate deploy
 ```
-
-## Todo
-- [ ] Finish off tests
-- [ ] Add Docker container deployment
-- [ ] Add seed file
-- [ ] Finish off markdown 
