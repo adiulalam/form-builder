@@ -10,20 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
       - name: Execute remote SSH commands
         uses: appleboy/ssh-action@master
         with:
@@ -38,6 +24,11 @@ jobs:
             git fetch origin
             git reset --hard origin/main
             echo 'Pulled latest changes from main branch'
+
+            # Install dependencies and run tests
+            npm install
+            npm test
+            echo 'Tests passed'
 
             # Build and run the Docker container
             npm run docker
