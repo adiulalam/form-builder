@@ -2,6 +2,7 @@ import type { PlaygroundProviderType } from "@/types/Provider.types";
 import { useReducer } from "react";
 import { getPlaygroundForm } from "@/utils/landing.config";
 import type { Status, Type } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 
 export type PlaygroundAction =
   | {
@@ -58,7 +59,7 @@ const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
       const { id, value } = action.payload;
 
       const option = {
-        id: crypto.randomUUID(),
+        id: faker.string.uuid(),
         value: value,
         questionId: id,
         showInput: false,
@@ -87,7 +88,7 @@ const reducer = (state: PlaygroundProviderType, action: PlaygroundAction) => {
       const type = action.payload.type;
       const questionLength = (state.form.questions?.length ?? 0) + 1;
       const question = {
-        id: crypto.randomUUID(),
+        id: faker.string.uuid(),
         question: `New ${type} question ${questionLength}`,
         order: questionLength,
         type,

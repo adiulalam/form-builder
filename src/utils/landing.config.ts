@@ -4,12 +4,13 @@ import type {
 } from "@/types/Provider.types";
 import type { Dispatch } from "react";
 import type { PlaygroundAction } from "@/hooks/usePlaygroundReducer";
+import { faker } from "@faker-js/faker";
 
 export const getPlaygroundForm = (): PlaygroundProviderType => {
   const dispatch = () => ({}) as Dispatch<PlaygroundAction>;
-  const formId = crypto.randomUUID();
-  const questionDropdownId = crypto.randomUUID();
-  const questionRadioId = crypto.randomUUID();
+  const formId = faker.string.uuid();
+  const questionDropdownId = faker.string.uuid();
+  const questionRadioId = faker.string.uuid();
 
   const form: FormProviderType = {
     id: formId,
@@ -17,7 +18,7 @@ export const getPlaygroundForm = (): PlaygroundProviderType => {
     isFavourite: false,
     isShareable: false,
     title: "Create a form",
-    userId: crypto.randomUUID(),
+    userId: faker.string.uuid(),
     createdAt: new Date(),
     updatedAt: new Date(),
     questions: [
@@ -31,7 +32,7 @@ export const getPlaygroundForm = (): PlaygroundProviderType => {
         updatedAt: new Date(),
         options: [
           {
-            id: crypto.randomUUID(),
+            id: faker.string.uuid(),
             value: "DROPDOWN_option_1",
             questionId: questionDropdownId,
             showInput: false,
@@ -51,7 +52,7 @@ export const getPlaygroundForm = (): PlaygroundProviderType => {
         updatedAt: new Date(),
         options: [
           {
-            id: crypto.randomUUID(),
+            id: faker.string.uuid(),
             value: "RADIO_option_1",
             questionId: questionRadioId,
             showInput: false,
