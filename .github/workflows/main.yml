@@ -17,6 +17,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
           script: |
+            set -e # Exit immediately if a command exits with a non-zero status
+
             cd form-builder/
             echo 'Inside form-builder directory'
 
@@ -27,7 +29,7 @@ jobs:
 
             # Install dependencies and run tests
             npm install
-            npm test
+            npm commit_test
             echo 'Tests passed'
 
             # Build and run the Docker container
