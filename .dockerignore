@@ -4,4 +4,15 @@
 .results
 scripts
 *Dockerfile*
-.env.development
+.env*
+node_modules
+.next
+.swc
+.husky
+.vscode
+.github
+__tests__
+jest.config.mjs
+jest.setup.ts
+docker-compose*.yml
+README.md

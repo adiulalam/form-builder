@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    container_name: db
+    container_name: form-builder-db
     image: mysql:8.0.37
     restart: unless-stopped
     env_file: ./.env
@@ -11,7 +11,7 @@ services:
       - MYSQL_PASSWORD=$MYSQL_PASSWORD
       - MYSQL_DATABASE=$MYSQL_DATABASE
     ports:
-      - $MYSQL_PORT:3306
+      - 127.0.0.1:$MYSQL_PORT:3306
     volumes:
       - mysql-volume:/var/lib/mysql
     healthcheck:
@@ -20,7 +20,8 @@ services:
       retries: 10
 
   nextjs-app:
-    container_name: nextjs-app
+    container_name: form-builder-app
+    image: form-builder-app
     build:
       context: .
       dockerfile: Dockerfile

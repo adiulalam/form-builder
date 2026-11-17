@@ -1,28 +1,25 @@
-FROM node:18-alpine AS deps
+FROM node:24-alpine AS base
+RUN apk add --no-cache openssl
 
-RUN apk --update add bash && \
-    apk add dos2unix
+# Rebuild the source code only when needed
+FROM base AS builder
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+COPY prisma ./prisma
+RUN npm ci \
+    && rm -rf node_modules/@next/swc-linux-*-gnu \
+    && npm cache clean --force
 
-# Rebuild the source code only when needed
-FROM node:18-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN npx prisma generate
-RUN npm run build
-COPY deploy-server.sh .
-RUN chmod +x deploy-server.sh
+RUN SKIP_ENV_VALIDATION=1 npm run build
 
 # Production image, copy all the files and run next
-FROM node:18-alpine AS runner
+FROM base AS runner
 WORKDIR /app
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
@@ -32,6 +29,8 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/deploy-server.sh .
 
 RUN dos2unix ./deploy-server.sh
